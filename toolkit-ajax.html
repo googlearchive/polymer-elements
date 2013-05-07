@@ -5,20 +5,20 @@ license that can be found in the LICENSE file.
 -->
 <!--
 /**
- * @module Google Elements
+ * @module Toolkit Elements
  */
 /**
- * google-ajax can be used to perform XMLHttpRequests.
+ * toolkit-ajax can be used to perform XMLHttpRequests.
  *
  * Example:
  *
- *     <google-ajax auto url="http://gdata.youtube.com/feeds/api/videos/" 
+ *     <toolkit-ajax auto url="http://gdata.youtube.com/feeds/api/videos/" 
  *         params='{"alt":"json", "q":"chrome"}'
  *         handleAs="json"
  *         on-response="handleResponse">
- *     </google-ajax>
+ *     </toolkit-ajax>
  *
- * @class google-ajax
+ * @class toolkit-ajax
  */
 /**
  * Fired when a response is received.
@@ -36,8 +36,8 @@ license that can be found in the LICENSE file.
  * @event complete
  */
 -->
-<link rel="import" href="google-xhr.html">
-<element name="google-ajax" attributes="url handleAs auto params response">
+<link rel="import" href="toolkit-xhr.html">
+<element name="toolkit-ajax" attributes="url handleAs auto params response">
   <script>
     Toolkit.register(this, {
       /**
@@ -89,7 +89,7 @@ license that can be found in the LICENSE file.
        * @default null
        */
       ready: function() {
-        this.xhr = document.createElement('google-xhr');
+        this.xhr = document.createElement('toolkit-xhr');
       },
       response: '',
       receive: function(response, xhr) {

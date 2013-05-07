@@ -9,12 +9,12 @@ license that can be found in the LICENSE file.
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script src="../../toolkit/toolkit.js"></script>
-    <link rel="import" href="google-jsapi.html">
+    <link rel="import" href="toolkit-google-jsapi.html">
   </head>
   <body>
-    <google-jsapi id="jsapi"></google-jsapi>
+    <toolkit-google-jsapi id="jsapi"></toolkit-google-jsapi>
     <script>
-      jsapi.addEventListener('google-jsapi-loaded', function() {
+      jsapi.addEventListener('toolkit-google-jsapi-loaded', function() {
         google.load("feeds", "1", {callback: feedsLoaded});
       });
       function feedsLoaded() {

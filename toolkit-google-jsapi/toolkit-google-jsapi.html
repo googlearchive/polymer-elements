@@ -3,9 +3,8 @@ Copyright 2013 The Toolkitchen Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
-<element name="google-jsapi">
+<element name="toolkit-google-jsapi">
   <script>
-    var api;
     Toolkit.register(this, {
       ready: function() {
         switch (state) {
@@ -24,7 +23,7 @@ license that can be found in the LICENSE file.
         this.asyncMethod('notify');
       },
       notify: function() {
-        this.send('google-jsapi-loaded');
+        this.send('toolkit-google-jsapi-loaded');
       },
       get google() {
         return api;
@@ -40,18 +39,18 @@ license that can be found in the LICENSE file.
       d.write(loader);
       d.close();
     }
+    var api;
     loaded = function(google) {
-      window.google_jsapi = undefined;
-      api = google;
-      window.google = google;
+      window.__toolkit_google_jsapi = undefined;
+      window.google = api = google;
       instances.forEach(function(i) {
         i.notify();
       });
     }
     var loader =  
       '<script type="text/javascript" src="https://www.google.com/jsapi"></scr' + 'ipt>' +
-      '<script>top.google_jsapi(google);</scr' + 'ipt>'
+      '<script>top.__toolkit_google_jsapi(google);</scr' + 'ipt>'
     ;
-    window.google_jsapi = loaded;
+    window.__toolkit_google_jsapi = loaded;
   </script>
 </element>
