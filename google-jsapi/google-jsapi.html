@@ -1,0 +1,57 @@
+<!--
+Copyright 2013 The Toolkitchen Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+-->
+<element name="google-jsapi">
+  <script>
+    var api;
+    Toolkit.register(this, {
+      ready: function() {
+        switch (state) {
+          case '':
+            load();
+            state = 'pending';
+          case 'pending':
+            instances.push(this);
+            break;
+          case 'ready':
+            this.provide();
+            break;
+        }
+      },
+      provide: function() {
+        this.asyncMethod('notify');
+      },
+      notify: function() {
+        this.send('google-jsapi-loaded');
+      },
+      get google() {
+        return api;
+      }
+    });
+    var state = '', instances = [], f;
+    function load() {
+      f = document.createElement('iframe');
+      f.style.display = 'none';
+      document.body.appendChild(f);
+      var d = f.contentWindow ? f.contentWindow.document : (f.contentDocument.document ? f.contentDocument.document : f.contentDocument);
+      d.open();
+      d.write(loader);
+      d.close();
+    }
+    loaded = function(google) {
+      window.google_jsapi = undefined;
+      api = google;
+      window.google = google;
+      instances.forEach(function(i) {
+        i.notify();
+      });
+    }
+    var loader =  
+      '<script type="text/javascript" src="https://www.google.com/jsapi"></scr' + 'ipt>' +
+      '<script>top.google_jsapi(google);</scr' + 'ipt>'
+    ;
+    window.google_jsapi = loaded;
+  </script>
+</element>
