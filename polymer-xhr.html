@@ -5,7 +5,7 @@ license that can be found in the LICENSE file.
 -->
 <!--
 /**
- * @module Toolkit Elements
+ * @module Polymer Elements
  */
 /**
  * toolkit-xhr can be used to perform XMLHttpRequests.
@@ -30,7 +30,7 @@ license that can be found in the LICENSE file.
     </style>
   </template>
   <script>
-    Toolkit.register(this, {
+    Polymer.register(this, {
       makeReadyStateHandler: function(xhr, callback) {
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4) {
