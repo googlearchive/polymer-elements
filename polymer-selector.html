@@ -8,20 +8,20 @@ license that can be found in the LICENSE file.
  * @module Polymer Elements
  */
 /**
- * toolkit-selector is used to display a list of elements that can be selected.
+ * polymer-selector is used to display a list of elements that can be selected.
  * The attribute "selected" indicates which element is being selected.
  * Tapping on the element to change selection would fire "activate"
  * event.
  *
  * Example:
  *
- *     <toolkit-selector selected="0" on-activate="activateHandler">
+ *     <polymer-selector selected="0" on-activate="activateHandler">
  *       <div>Item 1</div>
  *       <div>Item 2</div>
  *       <div>Item 3</div>
- *     </toolkit-selector>
+ *     </polymer-selector>
  *
- * toolkit-selector is not styled.  So one needs to use "selected" CSS class
+ * polymer-selector is not styled.  So one needs to use "selected" CSS class
  * to style the selected element.
  * 
  *     <style>
@@ -30,13 +30,13 @@ license that can be found in the LICENSE file.
  *       }
  *     </style>
  *     ...
- *     <toolkit-selector>
+ *     <polymer-selector>
  *       <div class="item">Item 1</div>
  *       <div class="item">Item 2</div>
  *       <div class="item">Item 3</div>
- *     </toolkit-selector>
+ *     </polymer-selector>
  *
- * @class toolkit-selector
+ * @class polymer-selector
  */
 /**
  * Fired when an element is selected via tap.
@@ -46,10 +46,10 @@ license that can be found in the LICENSE file.
  *   @param {Object} inDetail.item the selected element
  */
 -->
-<link rel="import" href="toolkit-selection.html">
-<element name="toolkit-selector" on-tap="activateHandler" attributes="selected selectedClass selectedModel multi valueattr notap">
+<link rel="import" href="polymer-selection.html">
+<element name="polymer-selector" on-tap="activateHandler" attributes="selected selectedClass selectedModel multi valueattr notap">
   <template>
-    <toolkit-selection id="selection" multi="{{multi}}" on-select="selectionSelect"></toolkit-selection>
+    <polymer-selection id="selection" multi="{{multi}}" on-select="selectionSelect"></polymer-selection>
     <content id="items" select="*"></content>
   </template>
   <script>
@@ -63,11 +63,11 @@ license that can be found in the LICENSE file.
        *
        * Example:
        *
-       *     <toolkit-selector valueattr="label" selected="foo">
+       *     <polymer-selector valueattr="label" selected="foo">
        *       <div label="foo"></div>
        *       <div label="bar"></div>
        *       <div label="zot"></div>
-       *     </toolkit-selector>
+       *     </polymer-selector>
        *
        * @attribute selected
        * @type string
@@ -141,7 +141,7 @@ license that can be found in the LICENSE file.
       valueForNode: function(inNode) {
         return inNode[this.valueattr] || inNode.getAttribute(this.valueattr);
       },
-      // events fired from <toolkit-selection> object
+      // events fired from <polymer-selection> object
       selectionSelect: function(inEvent, inInfo) {
         if (inInfo.item && this.selectedClass) {
           inInfo.item.classList.toggle(this.selectedClass, inInfo.isSelected);

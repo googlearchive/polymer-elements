@@ -8,14 +8,14 @@ license that can be found in the LICENSE file.
  * @module Polymer Elements
  */
 /**
- * toolkit-jsonp can be used to perform JSONP requests.
+ * polymer-jsonp can be used to perform JSONP requests.
  
  * Example:
  *
- *     <toolkit-jsonp url="https://clients1.google.com/finance/info?q=GOOG&client=ig&callback="
- *         response="{{data}}"></toolkit-jsonp>
+ *     <polymer-jsonp url="https://clients1.google.com/finance/info?q=GOOG&client=ig&callback="
+ *         response="{{data}}"></polymer-jsonp>
  *
- * @class toolkit-jsonp
+ * @class polymer-jsonp
  */
 /**
  * Fired when a response is received.
@@ -23,7 +23,7 @@ license that can be found in the LICENSE file.
  * @event response
  */
 -->
-<element name="toolkit-jsonp" attributes="url response auto">
+<element name="polymer-jsonp" attributes="url response auto">
   <script>
     Polymer.register(this, {
       /**
@@ -85,7 +85,7 @@ license that can be found in the LICENSE file.
         this.send('response', {response: inResponse});
       }
     });
-    var JSONP_CALLBACK_FUNC_NAME = '_toolkit_jsonp_callback_';
+    var JSONP_CALLBACK_FUNC_NAME = '_polymer_jsonp_callback_';
     var callbackId = 0;
   </script>
 </element>
