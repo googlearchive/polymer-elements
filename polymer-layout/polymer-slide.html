@@ -1,0 +1,129 @@
+<!--
+Copyright 2013 The Polymer Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+-->
+<element name="polymer-slide" attributes="open closed vertical target targetId">
+  <template>
+    <style>
+      @host {   
+        * {
+          display: none;
+        }
+      }
+    </style>
+  </template>
+  <script>
+    Polymer.register(this, {
+      closed: false,
+      open: true,
+      vertical: false,
+      targetId: '',
+      target: null,
+      ready: function() {
+        this.setAttribute('nolayout', '');
+      },
+      targetIdChanged: function() {
+        var p = this.parentNode;
+        while (p.parentNode) {p = p.parentNode;};
+        this.target = p.querySelector('#' + this.targetId);
+        if (this.closed) {
+          this.update();
+        }
+      },
+      toggle: function() {
+        this.open = !this.open;
+      },
+      closedChanged: function() {
+        this.open = !this.closed;
+      },
+      openChanged: function() {
+        this.update();
+      },
+      update: function() {
+        this.closed = !this.open;
+        if (this.target) {
+          if (this.vertical) {
+            if (this.target.style.top !== '') {
+              this.updateTop();
+            } else {
+              this.updateBottom();
+            }
+          } else {
+            if (this.target.style.left !== '') {
+              this.updateLeft();
+            } else {
+              this.updateRight();
+            }
+          }
+        }
+      },
+      updateLeft: function() {
+        var w = this.target.offsetWidth, l;
+        if (!this.open) {
+          l = -w + 'px';
+        } else {
+          w = -w;
+          l = 0;
+        }
+        this.target.style.left = l;
+        var s = this.target.nextElementSibling;
+        while (s) {
+          if (s.style.left === '' && s.style.right !== '') {
+            break;
+          }
+          s.style.left = s.offsetLeft - w + 'px';  
+          s = s.nextElementSibling;
+        }
+      },
+      updateRight: function() {
+        var w = this.target.offsetWidth;
+        var r = this.open ? 0 : -w;
+        this.target.style.right = r + 'px';
+        var s = this.target.previousElementSibling;
+        while (s) {
+          if (s.style.right === '' && s.style.left !== '') {
+            break;
+          }
+          r = r + w;
+          s.style.right = r + 'px';  
+          w = s.offsetWidth;
+          s = s.previousElementSibling;
+        }
+      },
+      updateTop: function() {
+        var h = this.target.offsetHeight, t;
+        if (!this.open) {
+          t = -h + 'px';
+        } else {
+          h = -h;
+          t = 0;
+        }
+        this.target.style.top = t;
+        var s = this.target.nextElementSibling;
+        while (s) {
+          if (s.style.top === '' && s.style.bottom !== '') {
+            break;
+          }
+          s.style.top = s.offsetTop - h + 'px';  
+          s = s.nextElementSibling;
+        }
+      },
+      updateBottom: function() {
+        var h = this.target.offsetHeight;
+        var b = this.open ? 0 : -h;
+        this.target.style.bottom = b + 'px';
+        var s = this.target.previousElementSibling;
+        while (s) {
+          if (s.style.bottom === '' && s.style.top !== '') {
+            break;
+          }
+          b = b + h;
+          s.style.bottom = b + 'px';  
+          h = s.offsetHeight;
+          s = s.previousElementSibling;
+        }
+      }
+    });
+  </script>
+</element>

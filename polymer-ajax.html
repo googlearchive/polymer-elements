@@ -1,24 +1,24 @@
 <!--
-Copyright 2013 The Toolkitchen Authors. All rights reserved.
+Copyright 2013 The Polymer Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
 <!--
 /**
- * @module Toolkit Elements
+ * @module Polymer Elements
  */
 /**
- * toolkit-ajax can be used to perform XMLHttpRequests.
+ * polymer-ajax can be used to perform XMLHttpRequests.
  *
  * Example:
  *
- *     <toolkit-ajax auto url="http://gdata.youtube.com/feeds/api/videos/" 
+ *     <polymer-ajax auto url="http://gdata.youtube.com/feeds/api/videos/" 
  *         params='{"alt":"json", "q":"chrome"}'
  *         handleAs="json"
  *         on-response="handleResponse">
- *     </toolkit-ajax>
+ *     </polymer-ajax>
  *
- * @class toolkit-ajax
+ * @class polymer-ajax
  */
 /**
  * Fired when a response is received.
@@ -36,10 +36,10 @@ license that can be found in the LICENSE file.
  * @event complete
  */
 -->
-<link rel="import" href="toolkit-xhr.html">
-<element name="toolkit-ajax" attributes="url handleAs auto params response">
+<link rel="import" href="polymer-xhr.html">
+<element name="polymer-ajax" attributes="url handleAs auto params response">
   <script>
-    Toolkit.register(this, {
+    Polymer.register(this, {
       /**
        * The URL target of the request.
        * 
@@ -89,7 +89,7 @@ license that can be found in the LICENSE file.
        * @default null
        */
       ready: function() {
-        this.xhr = document.createElement('toolkit-xhr');
+        this.xhr = document.createElement('polymer-xhr');
       },
       response: '',
       receive: function(response, xhr) {
