@@ -1,25 +1,25 @@
 <!--
-Copyright 2013 The Toolkitchen Authors. All rights reserved.
+Copyright 2013 The Polymer Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
 <!--
 /**
- * @module Toolkit Elements
+ * @module Polymer Elements
  */
 /**
- * toolkit-xhr can be used to perform XMLHttpRequests.
+ * polymer-xhr can be used to perform XMLHttpRequests.
  
  * Example:
  *
- *     <toolkit-xhr id="xhr"></toolkit-xhr>
+ *     <polymer-xhr id="xhr"></polymer-xhr>
  *     ...
  *     this.$.xhr.request({url: url, params: params, callback: callback});
  *
- * @class toolkit-xhr
+ * @class polymer-xhr
  */
 -->
-<element name="toolkit-xhr">
+<element name="polymer-xhr">
   <template>
     <style>
       @host {
@@ -30,7 +30,7 @@ license that can be found in the LICENSE file.
     </style>
   </template>
   <script>
-    Toolkit.register(this, {
+    Polymer.register(this, {
       makeReadyStateHandler: function(xhr, callback) {
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4) {
