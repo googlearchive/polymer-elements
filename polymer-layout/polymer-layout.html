@@ -20,8 +20,11 @@ license that can be found in the LICENSE file.
         this.setAttribute('nolayout', '');
       },
       insertedCallback: function() {
-        this.prepare();
-        this.layout();
+        // some values not ready yet?
+        this.asyncMethod(function() {
+          this.prepare();
+          this.layout();
+        });
       },
       prepare: function() {
         var parent = this.parentNode.host || this.parentNode;
@@ -37,6 +40,7 @@ license that can be found in the LICENSE file.
             stylize(c, {
               position: 'absolute',
               boxSizing: 'border-box',
+              MozBoxSizing: 'border-box',
               overflow: 'hidden'
             });
             // test for auto-vertical
@@ -52,11 +56,12 @@ license that can be found in the LICENSE file.
         var vertical = this.vertical;
         var ww = 0, hh = 0, pre = [], fit, post = [];
         var list = pre;
+        // offset* - client* measures border only
         var mx = (parent.offsetWidth - parent.clientWidth) / 2;
         var my = (parent.offsetHeight - parent.clientHeight) /2;
         // gather element information (at most one recalc)
         this.parentNode.childNodes.forEach(function(c, i) {
-          if (c.nodeType===Node.ELEMENT_NODE && !c.getAttribute('nolayout')) {
+          if (c.nodeType===Node.ELEMENT_NODE && !c.hasAttribute('nolayout')) {
             var info = {
               element: c,
               w: c.offsetWidth,
@@ -74,8 +79,10 @@ license that can be found in the LICENSE file.
           }
         });
         // update layout styles (invalidate, no recalc)
-        var v = vertical ? my : mx;
-        var mxp = (mx/2) + 'px', myp = (my/2) + 'px';
+        //var v = vertical ? 0 : 0;
+        var v = 0;
+        //var mxp = (mx/2) + 'px', myp = (my/2) + 'px';
+        var mxp = 0, myp = 0;
         pre.forEach(function(info) {
           if (vertical) {
             stylize(info.element, {
@@ -98,7 +105,7 @@ license that can be found in the LICENSE file.
               top: myp, right: ww + 'px', bottom: myp, left: v + 'px'
             });
           }
-          v = vertical ? hh + my : ww + mx;
+          v = vertical ? hh : ww;
           post.forEach(function(info) {
             v -= vertical ? info.h : info.w;
             if (vertical) {
