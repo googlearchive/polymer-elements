@@ -82,7 +82,7 @@ license that can be found in the LICENSE file.
         this.response = inResponse;
         this.removeScript();
         delete window[this.callbackFunc];
-        this.send('response', {response: inResponse});
+        this.fire('polymer-response', {response: inResponse});
       }
     });
     var JSONP_CALLBACK_FUNC_NAME = '_polymer_jsonp_callback_';

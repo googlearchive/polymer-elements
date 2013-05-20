@@ -23,7 +23,7 @@ license that can be found in the LICENSE file.
         this.asyncMethod('notify');
       },
       notify: function() {
-        this.send('polymer-google-jsapi-loaded');
+        this.fire('polymer-google-jsapi-loaded');
       },
       get google() {
         return api;

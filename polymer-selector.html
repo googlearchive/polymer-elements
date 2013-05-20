@@ -15,7 +15,7 @@ license that can be found in the LICENSE file.
  *
  * Example:
  *
- *     <polymer-selector selected="0" on-activate="activateHandler">
+ *     <polymer-selector selected="0" on-polymer-activate="activateHandler">
  *       <div>Item 1</div>
  *       <div>Item 2</div>
  *       <div>Item 3</div>
@@ -49,7 +49,7 @@ license that can be found in the LICENSE file.
 <link rel="import" href="polymer-selection.html">
 <element name="polymer-selector" on-tap="activateHandler" attributes="selected selectedClass selectedModel multi valueattr notap">
   <template>
-    <polymer-selection id="selection" multi="{{multi}}" on-select="selectionSelect"></polymer-selection>
+    <polymer-selection id="selection" multi="{{multi}}" on-polymer-select="selectionSelect"></polymer-selection>
     <content id="items" select="*"></content>
   </template>
   <script>
@@ -161,7 +161,7 @@ license that can be found in the LICENSE file.
           } else {
             this.selected = selected;
           }
-          this.asend('activate', {item: items[i]});
+          this.asyncFire('polymer-activate', {item: items[i]});
         }
       }
     });
