@@ -1,0 +1,42 @@
+<!--
+Copyright 2013 The Polymer Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+-->
+<element name="polymer-layout" attributes="vertical align justify">
+  <link rel="stylesheet" polymer-scope="controller" href="polymer-layout.css" />
+  <template>
+    <style>
+      @host {   
+        * {
+          display: none;
+        }
+      }
+    </style>
+  </template>
+  <script>
+    var element = this;
+    
+    Polymer.register(this, {
+      vertical: false,
+      ready: function() {
+        Polymer.installControllerStyles(this, element);
+      },
+      insertedCallback: function() {
+        this.layoutContainer = this.parentNode.host || this.parentNode;
+        this.layoutContainer.classList.add('flexbox');
+      },
+      verticalChanged: function() {
+        this.layoutContainer.classList.toggle('column', this.vertical);
+      },
+      alignChanged: function(old) {
+        this.layoutContainer.classList.remove('align-' + old);
+        this.layoutContainer.classList.add('align-' + this.align);
+      },
+      justifyChanged: function(old) {
+        this.layoutContainer.classList.remove('justify-' + old);
+        this.layoutContainer.classList.add('justify-' + this.justify);
+      }
+    });
+  </script>
+</element>
