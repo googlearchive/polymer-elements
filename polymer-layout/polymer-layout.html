@@ -20,7 +20,6 @@ license that can be found in the LICENSE file.
         this.setAttribute('nolayout', '');
       },
       insertedCallback: function() {
-        // some values not ready yet?
         this.asyncMethod(function() {
           this.prepare();
           this.layout();
@@ -33,6 +32,7 @@ license that can be found in the LICENSE file.
         if (cs.position === 'static') {
           parent.style.position = 'relative';
         }
+        parent.style.overflow = 'hidden';
         // changes will cause another recalc at next validation step
         var vertical;
         this.parentNode.childNodes.forEach(function(c, i) {
@@ -41,7 +41,6 @@ license that can be found in the LICENSE file.
               position: 'absolute',
               boxSizing: 'border-box',
               MozBoxSizing: 'border-box',
-              overflow: 'hidden'
             });
             // test for auto-vertical
             if (vertical === undefined) {
@@ -56,9 +55,6 @@ license that can be found in the LICENSE file.
         var vertical = this.vertical;
         var ww = 0, hh = 0, pre = [], fit, post = [];
         var list = pre;
-        // offset* - client* measures border only
-        var mx = (parent.offsetWidth - parent.clientWidth) / 2;
-        var my = (parent.offsetHeight - parent.clientHeight) /2;
         // gather element information (at most one recalc)
         this.parentNode.childNodes.forEach(function(c, i) {
           if (c.nodeType===Node.ELEMENT_NODE && !c.hasAttribute('nolayout')) {
@@ -79,9 +75,7 @@ license that can be found in the LICENSE file.
           }
         });
         // update layout styles (invalidate, no recalc)
-        //var v = vertical ? 0 : 0;
         var v = 0;
-        //var mxp = (mx/2) + 'px', myp = (my/2) + 'px';
         var mxp = 0, myp = 0;
         pre.forEach(function(info) {
           if (vertical) {
