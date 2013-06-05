@@ -23,10 +23,15 @@ license that can be found in the LICENSE file.
       ready: function() {
         this.setAttribute('nolayout', '');
       },
+      insertedCallback: function() {
+        this.target = this.parentNode;
+      },
       targetIdChanged: function() {
         var p = this.parentNode;
         while (p.parentNode) {p = p.parentNode;};
         this.target = p.querySelector('#' + this.targetId);
+      },
+      targetChanged: function() {
         if (this.closed) {
           this.asyncMethod(this.update);
         }
@@ -38,7 +43,7 @@ license that can be found in the LICENSE file.
         this.open = !this.closed;
       },
       openChanged: function() {
-        this.update();
+        this.asyncMethod(this.update);
       },
       update: function() {
         this.closed = !this.open;
