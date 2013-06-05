@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title></title>
+  <script src="../../polymer/polymer.js"></script>
+  <link rel="import" href="polymer-localstorage.html">
+  <style>
+  </style>
+</head>
+<body>
+  <element name="x-test">
+    <template>
+      string entered below will be stored in localStorage and automatically retrived from localStorage when the page is reloaded<br>
+      <input value="{{value}}">
+      <polymer-localstorage name="localstorage-test" value="{{value}}"></polymer-localstorage>
+    </template>
+    <script>
+      Polymer.register(this);
+    </script>
+  </element>
+  
+  <x-test></x-test>
+</body>
+</html>
