@@ -22,7 +22,7 @@ license that can be found in the LICENSE file.
       ready: function() {
         Polymer.installControllerStyles(this, element);
       },
-      insertedCallback: function() {
+      inserted: function() {
         this.layoutContainer = this.parentNode.host || this.parentNode;
         this.layoutContainer.classList.add('flexbox');
         this.verticalChanged();
