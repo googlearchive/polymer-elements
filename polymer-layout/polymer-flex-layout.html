@@ -19,10 +19,8 @@ license that can be found in the LICENSE file.
     
     Polymer.register(this, {
       vertical: false,
-      ready: function() {
-        Polymer.installControllerStyles(this, element);
-      },
       inserted: function() {
+        Polymer.installControllerStyles(this, element);
         this.layoutContainer = this.parentNode.host || this.parentNode;
         this.layoutContainer.classList.add('flexbox');
         this.verticalChanged();
