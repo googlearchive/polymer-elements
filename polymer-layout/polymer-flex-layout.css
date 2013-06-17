@@ -22,7 +22,7 @@
   flex-direction: column;
 }
 
-.flex, [fit] {
+.flex, [flex], [fit] {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   -moz-flex: 1;

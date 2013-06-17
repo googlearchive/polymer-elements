@@ -19,7 +19,7 @@ license that can be found in the LICENSE file.
       ready: function() {
         this.setAttribute('nolayout', '');
       },
-      insertedCallback: function() {
+      inserted: function() {
         this.asyncMethod(function() {
           this.prepare();
           this.layout();
