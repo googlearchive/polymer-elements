@@ -120,6 +120,7 @@ license that can be found in the LICENSE file.
       },
       valueToSelection: function(inValue) {
         var item = this.items[this.valueToIndex(inValue)];
+        this.selectedItem = item;
         if (item) {
           this.$.selection.select(item);
           var t = item.templateInstance;

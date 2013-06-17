@@ -19,31 +19,30 @@ license that can be found in the LICENSE file.
     
     Polymer.register(this, {
       vertical: false,
-      ready: function() {
+      inserted: function() {
         Polymer.installControllerStyles(this, element);
-      },
-      insertedCallback: function() {
         this.layoutContainer = this.parentNode.host || this.parentNode;
         this.layoutContainer.classList.add('flexbox');
         this.verticalChanged();
         this.alignChanged();
         this.justifyChanged();
       },
-      toggleContainerClass: function(name, add) {
+      switchContainerClass: function(prefix, old, name) {
         if (this.layoutContainer && name) {
-          this.layoutContainer.classList.toggle(name, add);
+          this.layoutContainer.classList.switch(
+              prefix + old, prefix + name);
         }
       },
       verticalChanged: function() {
-        this.toggleContainerClass('column', this.vertical);
+        if (this.layoutContainer) {
+          this.layoutContainer.classList.toggle('column', this.vertical);
+        }
       },
       alignChanged: function(old) {
-        this.toggleContainerClass(old && 'align-' + old, false);
-        this.toggleContainerClass(this.align && 'align-' + this.align, true);
+        this.switchContainerClass('align-', old, this.align);
       },
       justifyChanged: function(old) {
-        this.toggleContainerClass(old && 'justify-' + old, false);
-        this.toggleContainerClass(this.justify && 'justify-' + this.justify, true);
+        this.switchContainerClass('justify-', old, this.justify);
       }
     });
   </script>
