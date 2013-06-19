@@ -118,8 +118,7 @@ license that can be found in the LICENSE file.
        */
       selectedModel: null,
       get items() {
-        var nodes = this.$.items.getDistributedNodes();
-        return nodes.array().filter(function(n) {
+        return this.$.items.getDistributedNodes().array().filter(function(n) {
           return n && n.localName !== 'template';
         });
       },
@@ -166,18 +165,17 @@ license that can be found in the LICENSE file.
       },
       // event fired from host
       activateHandler: function(e) {
-        if (this.notap) {
-          return;
-        }
-        var i = this.findDistributedTarget(e.target, this.items);
-        if (i >= 0) {
-          var selected = this.valueForNode(this.items[i]) || i;
-          if (this.multi) {
-            this.valueToSelection(selected);
-          } else {
-            this.selected = selected;
+        if (!this.notap) {
+          var i = this.findDistributedTarget(e.target, this.items);
+          if (i >= 0) {
+            var selected = this.valueForNode(this.items[i]) || i;
+            if (this.multi) {
+              this.valueToSelection(selected);
+            } else {
+              this.selected = selected;
+            }
+            this.asyncFire('polymer-activate', {item: this.items[i]});
           }
-          this.asyncFire('polymer-activate', {item: this.items[i]});
         }
       },
       findDistributedTarget: function(target, nodes) {
