@@ -10,12 +10,12 @@ license that can be found in the LICENSE file.
 /**
  * polymer-selector is used to display a list of elements that can be selected.
  * The attribute "selected" indicates which element is being selected.
- * Tapping on the element to change selection would fire "activate"
+ * Tapping on the element to change selection would fire "polymer-activate"
  * event.
  *
  * Example:
  *
- *     <polymer-selector selected="0" on-polymer-activate="activateHandler">
+ *     <polymer-selector selected="0" on-polymer-activate="activateAction">
  *       <div>Item 1</div>
  *       <div>Item 2</div>
  *       <div>Item 3</div>
@@ -42,8 +42,8 @@ license that can be found in the LICENSE file.
  * Fired when an element is selected via tap.
  * 
  * @event activate
- * @param {Object} inDetail
- *   @param {Object} inDetail.item the selected element
+ * @param {Object} detail
+ *   @param {Object} detail.item the selected element
  */
 -->
 <link rel="import" href="polymer-selection.html">
