@@ -48,7 +48,7 @@ license that can be found in the LICENSE file.
 -->
 <link rel="import" href="polymer-selection.html">
 
-<polymer-element name="polymer-selector" on-tap="activateHandler"
+<polymer-element name="polymer-selector" on-tap="activateHandler" touch-action="none"
     attributes="selected multi valueattr selectedClass setectedProperty selectedModel notap">
   <template>
     <polymer-selection id="selection" multi="{{multi}}" on-polymer-select="selectionSelect"></polymer-selection>
@@ -117,12 +117,9 @@ license that can be found in the LICENSE file.
        * @default null
        */
       selectedModel: null,
-      ready: function() {
-        this.setAttribute('touch-action', 'none');
-      },
       get items() {
         var nodes = this.$.items.getDistributedNodes();
-        return Array.prototype.filter.call(nodes, function(n) {
+        return nodes.array().filter(function(n) {
           return n && n.localName !== 'template';
         });
       },
@@ -172,16 +169,26 @@ license that can be found in the LICENSE file.
         if (this.notap) {
           return;
         }
-        var items = this.items;
-        var i = Polymer.findDistributedTarget(e.target, items);
+        var i = this.findDistributedTarget(e.target, this.items);
         if (i >= 0) {
-          var selected = this.valueForNode(items[i]) || i;
+          var selected = this.valueForNode(this.items[i]) || i;
           if (this.multi) {
             this.valueToSelection(selected);
           } else {
             this.selected = selected;
           }
-          this.asyncFire('polymer-activate', {item: items[i]});
+          this.asyncFire('polymer-activate', {item: this.items[i]});
+        }
+      },
+      findDistributedTarget: function(target, nodes) {
+        // find first ancestor of target (including itself) that
+        // is in inNodes, if any
+        while (target && target != this) {
+          var i = Array.prototype.indexOf.call(nodes, target);
+          if (i >= 0) {
+            return i;
+          }
+          target = target.parentNode;
         }
       }
     });
