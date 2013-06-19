@@ -48,14 +48,14 @@ license that can be found in the LICENSE file.
 -->
 <link rel="import" href="polymer-selection.html">
 
-<element name="polymer-selector" on-tap="activateHandler"
+<polymer-element name="polymer-selector" on-tap="activateHandler"
     attributes="selected multi valueattr selectedClass setectedProperty selectedModel notap">
   <template>
     <polymer-selection id="selection" multi="{{multi}}" on-polymer-select="selectionSelect"></polymer-selection>
     <content id="items" select="*"></content>
   </template>
   <script>
-    Polymer.register(this, {
+    Polymer('polymer-selector', {
       /**
        * Gets or sets the selected element.  Default is to use the index
        * of the currently selected element.
@@ -186,4 +186,4 @@ license that can be found in the LICENSE file.
       }
     });
   </script>
-</element>
+</polymer-element>
