@@ -19,7 +19,7 @@ license that can be found in the LICENSE file.
  * @class polymer-xhr
  */
 -->
-<element name="polymer-xhr">
+<polymer-element name="polymer-xhr">
   <template>
     <style>
       @host {
@@ -30,7 +30,7 @@ license that can be found in the LICENSE file.
     </style>
   </template>
   <script>
-    Polymer.register(this, {
+    Polymer('polymer-xhr', {
       makeReadyStateHandler: function(xhr, callback) {
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4) {
@@ -89,4 +89,4 @@ license that can be found in the LICENSE file.
       }
     });
   </script>
-</element>
+</polymer-element>

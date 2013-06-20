@@ -3,7 +3,7 @@ Copyright 2013 The Polymer Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
-<element name="polymer-slide" attributes="open closed vertical target targetId">
+<polymer-element name="polymer-slide" attributes="open closed vertical target targetId">
   <template>
     <style>
       @host {   
@@ -14,7 +14,7 @@ license that can be found in the LICENSE file.
     </style>
   </template>
   <script>
-    Polymer.register(this, {
+    Polymer('polymer-slide', {
       closed: false,
       open: true,
       vertical: false,
@@ -152,4 +152,4 @@ license that can be found in the LICENSE file.
       return e;
     };
   </script>
-</element>
+</polymer-element>

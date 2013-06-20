@@ -1,0 +1,141 @@
+<!--
+Copyright 2013 The Polymer Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+-->
+<!--
+/**
+ * @module Polymer Elements
+ */
+/**
+ * polymer-collapse is used to add collapsible behavior to another element.
+ *
+ * Example:
+ *
+ *     <button on-click="toggle">toggle collapse</button>
+ *     <div id="demo" style="overflow: hidden">
+ *       ...
+ *     </div>
+ *     <polymer-collapse id="collapse" targetId="demo"></polymer-collapse>
+ *
+ *     ...
+ *
+ *     toggle: function() {
+ *       this.$.collapse.toggle();
+ *     }
+ *
+ * @class polymer-collapse
+ */
+-->
+<polymer-element name="polymer-collapse" attributes="targetId target horizontal closed duration fixedSize">
+  <template>
+    <style>
+      @host {   
+        * {
+          display: none;
+        }
+      }
+    </style>
+  </template>
+  <script>
+    Polymer('polymer-collapse', {
+      targetId: '',
+      target: null,
+      horizontal: false,
+      closed: false,
+      duration: 0.5,
+      fixedSize: false,
+      size: null,
+      removed: function() {
+        this.removeListeners(this.target);
+      },
+      targetIdChanged: function() {
+        var p = this.parentNode;
+        while (p.parentNode) {
+          p = p.parentNode;
+        }
+        this.target = p.querySelector('#' + this.targetId);
+      },
+      targetChanged: function(old) {
+        if (old) {
+          this.removeListeners(old);
+        }
+        this.horizontalChanged();
+        if (this.target) {
+          if (this.fixedSize) {
+            this.size = getComputedStyle(this.target)[this.dimension];
+          }
+          this.addListeners(this.target);
+        }
+        if (this.closed) {
+          this.update();
+        }
+      },
+      addListeners: function(node) {
+        node.addEventListener('webkitTransitionEnd', this.transitionEnd.bind(this));
+        node.addEventListener('transitionend', this.transitionEnd.bind(this));
+      },
+      removeListeners: function(node) {
+        node.removeEventListener('webkitTransitionEnd', this.transitionEnd.bind(this));
+        node.removeEventListener('transitionend', this.transitionEnd.bind(this));
+      },
+      horizontalChanged: function() {
+        this.dimension = this.horizontal ? 'width' : 'height';
+      },
+      closedChanged: function() {
+        this.update();
+      },
+      toggle: function() {
+        this.closed = !this.closed;
+      },
+      setTransitionDuration: function(duration) {
+        var s = this.target.style;
+        s.webkitTransition = s.transition = duration ? (this.dimension + ' ' + duration + 's') : null;
+        if (duration === 0) {
+          this.asyncMethod('transitionEnd');
+        }
+      },
+      transitionEnd: function() {
+        if (!this.closed && !this.size) {
+          this.updateSize('auto', null);
+        }
+      },
+      updateSize: function(size, duration) {
+        this.setTransitionDuration(duration);
+        this.target.style[this.dimension] = size;
+      },
+      update: function() {
+        if (!this.target) {
+          return;
+        }
+        this.horizontalChanged();
+        this.prepare();
+        this[this.closed ? 'hide' : 'show']();
+      },
+      calcSize: function() {
+        return this.target.getBoundingClientRect()[this.dimension] + 'px';
+      },
+      prepare: function() {
+        if (!this.size) {
+          this.updateSize(this.calcSize(), null);
+        }
+      },
+      show: function() {
+        if (!this.size) {
+          var orig = this.calcSize();
+          this.updateSize('auto', null);
+          var s = this.calcSize();
+          this.updateSize(orig, null);
+        }
+        this.asyncMethod(function() {
+          this.updateSize(this.size || s, this.duration);
+        });
+      },
+      hide: function() {
+        this.asyncMethod(function() {
+          this.updateSize(0, this.duration);
+        }, null, 1);
+      }
+    });
+  </script>
+</polymer-element>

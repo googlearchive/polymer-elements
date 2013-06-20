@@ -17,7 +17,7 @@ license that can be found in the LICENSE file.
   <script>
     Polymer('polymer-flex-layout', {
       vertical: false,
-      insertedCallback: function() {
+      inserted: function() {
         this.installControllerStyles();
         this.layoutContainer = this.parentNode.host || this.parentNode;
         this.layoutContainer.classList.add('flexbox');
