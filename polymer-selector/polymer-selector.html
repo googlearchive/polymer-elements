@@ -118,7 +118,8 @@ license that can be found in the LICENSE file.
        */
       selectedModel: null,
       get items() {
-        return this.$.items.getDistributedNodes().array().filter(function(n) {
+        var nodes = this.$.items.getDistributedNodes();
+        return Array.prototype.filter.call(nodes, function(n) {
           return n && n.localName !== 'template';
         });
       },
@@ -132,8 +133,11 @@ license that can be found in the LICENSE file.
         var item = this.items[this.valueToIndex(value)];
         this.selectedItem = item;
         this.$.selection.select(item);
-        if (item) {
-          var t = item.templateInstance;
+        this.updateSelectedModel();
+      },
+      updateSelectedModel: function() {
+        if (this.selectedItem) {
+          var t = this.selectedItem.templateInstance;
           this.selectedModel = t ? t.model : undefined;
         } else {
           this.selectedModel = null;
