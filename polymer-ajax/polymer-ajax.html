@@ -37,9 +37,10 @@ license that can be found in the LICENSE file.
  */
 -->
 <link rel="import" href="polymer-xhr.html">
-<element name="polymer-ajax" attributes="url handleAs auto params response">
+
+<polymer-element name="polymer-ajax" attributes="url handleAs auto params response">
   <script>
-    Polymer.register(this, {
+    Polymer('polymer-ajax', {
       /**
        * The URL target of the request.
        * 
@@ -175,4 +176,4 @@ license that can be found in the LICENSE file.
       }
     });
   </script>
-</element>
+</polymer-element>

@@ -8,17 +8,17 @@
 </head>
 <body>
 
-  <element name="match-example">
+  <polymer-element name="match-example">
     <template>
       <polymer-media-query query="{{query}}" matches="{{matches}}"></polymer-media-query>
       My query of "{{query}}" {{matches ? "matches" : "doesn't match"}}
     </template>
     <script>
-      Polymer.register(this, {
+      Polymer('match-example', {
         query: 'min-width: 600px'
       });
     </script>
-  </element>
+  </polymer-element>
 
   <match-example id="me"></match-example>
   <pre id="output">

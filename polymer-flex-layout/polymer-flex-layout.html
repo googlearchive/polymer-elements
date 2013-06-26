@@ -3,9 +3,9 @@ Copyright 2013 The Polymer Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
-<element name="polymer-flex-layout" attributes="vertical align justify">
-  <link rel="stylesheet" polymer-scope="controller" href="polymer-flex-layout.css" />
+<polymer-element name="polymer-flex-layout" attributes="vertical align justify">
   <template>
+    <link rel="stylesheet" polymer-scope="controller" href="polymer-flex-layout.css" />
     <style>
       @host {   
         * {
@@ -15,12 +15,10 @@ license that can be found in the LICENSE file.
     </style>
   </template>
   <script>
-    var element = this;
-    
-    Polymer.register(this, {
+    Polymer('polymer-flex-layout', {
       vertical: false,
       inserted: function() {
-        Polymer.installControllerStyles(this, element);
+        this.installControllerStyles();
         this.layoutContainer = this.parentNode.host || this.parentNode;
         this.layoutContainer.classList.add('flexbox');
         this.verticalChanged();
@@ -46,4 +44,4 @@ license that can be found in the LICENSE file.
       }
     });
   </script>
-</element>
+</polymer-element>
