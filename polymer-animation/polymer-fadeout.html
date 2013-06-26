@@ -1,7 +1,7 @@
 <link rel="import" href="polymer-animation.html">
-<element name="polymer-fadeout" extends="polymer-animation">
+<polymer-element name="polymer-fadeout" extends="polymer-animation">
   <script>
-    Polymer.register(this, {
+    Polymer('polymer-fadeout', {
       publish: {
         properties: {
           targetSelector: '',
@@ -10,4 +10,4 @@
       }
     });
   </script>
-</element>
+</polymer-element>

@@ -1,7 +1,7 @@
 <link rel="import" href="polymer-animation.html">
-<element name="polymer-blink" extends="polymer-animation">
+<polymer-element name="polymer-blink" extends="polymer-animation">
   <script>
-    Polymer.register(this, {
+    Polymer('polymer-blink', {
 			targetSelector: '',
 			duration: 0.7,
 			iterationCount: 'Infinity',
@@ -11,4 +11,4 @@
 			}
     });
   </script>
-</element>
+</polymer-element>

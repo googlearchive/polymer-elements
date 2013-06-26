@@ -1,5 +1,5 @@
 <link rel="import" href="polymer-animation.html">
-<element name="polymer-fadein" extends="polymer-animation">
+<polymer-element name="polymer-fadein" extends="polymer-animation">
   <template>
     <polymer-animation-prop name="opacity">
       <polymer-animation-keyframe value="0"></polymer-animation-keyframe>
@@ -8,10 +8,10 @@
     <content></content>
   </template>
   <script>
-    Polymer.register(this, {
+    Polymer('polymer-fadein', {
       publish: {
         targetSelector: ''
       }
     });
   </script>
-</element>
+</polymer-element>
