@@ -3,9 +3,9 @@ Copyright 2013 The Polymer Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
-<element name="polymer-google-jsapi">
+<polymer-element name="polymer-google-jsapi">
   <script>
-    Polymer.register(this, {
+    Polymer('polymer-google-jsapi', {
       ready: function() {
         switch (state) {
           case '':
@@ -53,4 +53,4 @@ license that can be found in the LICENSE file.
     ;
     window.__polymer_google_jsapi = loaded;
   </script>
-</element>
+</polymer-element>

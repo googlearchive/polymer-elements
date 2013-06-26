@@ -17,18 +17,18 @@ license that can be found in the LICENSE file.
  * @class polymer-localstorage
  */
 -->
-<element name="polymer-localstorage" attributes="name value useRaw">
+<polymer-element name="polymer-localstorage" attributes="name value useRaw">
   <template>
     <style>
       @host {
         * {
-          display: none !important;
+          display: none;
         }
       }
     </style>
   </template>
   <script>
-    Polymer.register(this, {
+    Polymer('polymer-localstorage', {
       useRaw: false,
       ready: function() {
         this.load();
@@ -50,4 +50,4 @@ license that can be found in the LICENSE file.
       }
     });
   </script>
-</element>
+</polymer-element>

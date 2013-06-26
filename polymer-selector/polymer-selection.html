@@ -8,7 +8,7 @@ license that can be found in the LICENSE file.
  * @module Polymer Elements
  */
 -->
-<element name="polymer-selection" attributes="multi">
+<polymer-element name="polymer-selection" attributes="multi">
   <template>
     <style>
       @host {
@@ -19,7 +19,7 @@ license that can be found in the LICENSE file.
     </style>
   </template>
   <script>
-    Polymer.register(this, {
+    Polymer('polymer-selection', {
       multi: false,
       ready: function() {
         this.clear();
@@ -61,4 +61,4 @@ license that can be found in the LICENSE file.
       }
     });
   </script>
-</element>
+</polymer-element>

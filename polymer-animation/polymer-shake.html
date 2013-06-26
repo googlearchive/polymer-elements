@@ -1,5 +1,5 @@
 <link rel="import" href="polymer-animation-group.html">
-<element name="polymer-shake" extends="polymer-animation-group">
+<polymer-element name="polymer-shake" extends="polymer-animation-group">
   <template>
     <polymer-animation duration="{{period}}">
       <polymer-animation-prop name="transform">
@@ -23,7 +23,7 @@
     <content></content>
   </template>
   <script>
-    Polymer.register(this, {
+    Polymer('polymer-shake', {
 			type: 'seq',
 			targetSelector: '',
 			duration: 0.3,
@@ -56,4 +56,4 @@
       }
     });
   </script>
-</element>
+</polymer-element>

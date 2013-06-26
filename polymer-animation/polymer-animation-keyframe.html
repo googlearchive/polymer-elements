@@ -1,4 +1,4 @@
-<element name="polymer-animation-keyframe" attributes="offset value easing">
+<polymer-element name="polymer-animation-keyframe" attributes="offset value easing">
 	<script>
 		/**
 		 * Defines the value at a keyframe for the containing `polymer-animation-prop`.
@@ -20,7 +20,7 @@
 		 * @property easing
 		 * @type String
 		 */
-		Polymer.register(this, {
+		Polymer('polymer-animation-keyframe', {
 			get properties() {
 				var props = {
 					// TODO bug in webanimations polyfill
@@ -37,5 +37,5 @@
 			}
 		});
 	</script>
-</element>
+</polymer-element>
 
