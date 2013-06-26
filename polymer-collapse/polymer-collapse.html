@@ -99,6 +99,7 @@ license that can be found in the LICENSE file.
         if (!this.closed && !this.size) {
           this.updateSize('auto', null);
         }
+        this.setTransitionDuration(null);
       },
       updateSize: function(size, duration) {
         this.setTransitionDuration(duration);
