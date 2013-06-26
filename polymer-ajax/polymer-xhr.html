@@ -34,7 +34,7 @@ license that can be found in the LICENSE file.
       makeReadyStateHandler: function(xhr, callback) {
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4) {
-            callback && callback.call(null, xhr.responseText, xhr);
+            callback && callback.call(null, xhr.response, xhr);
           }
         };
       },
@@ -66,6 +66,7 @@ license that can be found in the LICENSE file.
        *    @param {Object} inOptions.params Data to be sent to the server.
        *    @param {Object} inOptions.body The content for the request body for POST method.
        *    @param {Object} inOptions.headers HTTP request headers.
+       *    @param {String} inOptions.responseType The response type. Default is 'text'.
        *    @param {Object} inOptions.callback Called when request is completed.
        * @returns {Object} XHR object.
        */
@@ -77,6 +78,9 @@ license that can be found in the LICENSE file.
         var params = this.toQueryString(options.params);
         if (params && method == 'GET') {
           url += (url.indexOf('?') > 0 ? '&' : '?') + params;
+        }
+        if (options.responseType) {
+          xhr.responseType = options.responseType;
         }
         xhr.open(method, url, async);
         this.makeReadyStateHandler(xhr, options.callback);

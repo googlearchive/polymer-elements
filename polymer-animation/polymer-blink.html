@@ -1,0 +1,14 @@
+<link rel="import" href="polymer-animation.html">
+<element name="polymer-blink" extends="polymer-animation">
+  <script>
+    Polymer.register(this, {
+			targetSelector: '',
+			duration: 0.7,
+			iterationCount: 'Infinity',
+			easing: 'cubic-bezier(1.0,0,0,1.0)',
+			properties: {
+				opacity: ["1","0"]
+			}
+    });
+  </script>
+</element>

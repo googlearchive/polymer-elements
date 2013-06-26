@@ -1,0 +1,13 @@
+<link rel="import" href="polymer-animation.html">
+<element name="polymer-fadeout" extends="polymer-animation">
+  <script>
+    Polymer.register(this, {
+      publish: {
+        properties: {
+          targetSelector: '',
+          opacity: ["1", "0"]
+        }
+      }
+    });
+  </script>
+</element>

@@ -1,0 +1,24 @@
+<element name="polymer-media-query" attributes="query matches">
+  <script>
+    Polymer.register(this, {
+      matches: false,
+      query: '',
+      ready: function() {
+        this._mqHandler = this.queryHandler.bind(this);
+        this._mq = null;
+      },
+      queryChanged: function() {
+        if (this._mq) {
+          this._mq.removeListener(this._mqHandler);
+        }
+        this._mq = window.matchMedia('(' + this.query + ')');
+        this._mq.addListener(this._mqHandler);
+        this.queryHandler(this._mq);
+      },
+      queryHandler: function(mq) {
+        this.matches = mq.matches;
+        this.fire('mediachange', this.matches);
+      }
+    });
+  </script>
+</element>
