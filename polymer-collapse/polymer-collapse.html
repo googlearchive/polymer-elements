@@ -13,7 +13,7 @@ license that can be found in the LICENSE file.
  * Example:
  *
  *     <button on-click="toggle">toggle collapse</button>
- *     <div id="demo" style="overflow: hidden">
+ *     <div id="demo" style="overflow: hidden;">
  *       ...
  *     </div>
  *     <polymer-collapse id="collapse" targetId="demo"></polymer-collapse>
@@ -62,9 +62,6 @@ license that can be found in the LICENSE file.
         }
         this.horizontalChanged();
         if (this.target) {
-          if (this.fixedSize) {
-            this.size = getComputedStyle(this.target)[this.dimension];
-          }
           this.addListeners(this.target);
         }
         if (this.closed) {
@@ -117,6 +114,9 @@ license that can be found in the LICENSE file.
         return this.target.getBoundingClientRect()[this.dimension] + 'px';
       },
       prepare: function() {
+        if (this.fixedSize && !this.size) {
+          this.size = getComputedStyle(this.target)[this.dimension];
+        }
         if (!this.size) {
           this.updateSize(this.calcSize(), null);
         }
