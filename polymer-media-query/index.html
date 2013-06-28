@@ -10,7 +10,7 @@
 
   <polymer-element name="match-example">
     <template>
-      <polymer-media-query query="{{query}}" matches="{{matches}}"></polymer-media-query>
+      <polymer-media-query query="{{query}}" queryMatches="{{matches}}"></polymer-media-query>
       My query of "{{query}}" {{matches ? "matches" : "doesn't match"}}
     </template>
     <script>
@@ -29,7 +29,7 @@
     var output = document.querySelector('#output');
     // on-mediachange would give true or false as second param to the handler
     document.addEventListener('mediachange', function(e) {
-      output.textContent += '\nevent: ' + e.type + ' matches: ' + e.detail;
+      output.textContent += '\nevent: ' + e.type + ' query: ' + e.detail.media + ' matches: ' + e.detail.matches;
     });
   </script>
 </body>
