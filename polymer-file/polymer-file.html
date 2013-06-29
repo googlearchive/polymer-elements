@@ -14,13 +14,20 @@ license that can be found in the LICENSE file.
  *
  * polymer-file provides File API operations.
  *
- * Example:
+ * Examples:
  *
- *     <polymer-file id="file" auto readas="dataurl" 
-                     on-polymer-result="{{handResult}}"></polymer-file>
+ *     <polymer-file id="file" readas="dataurl" 
+                     on-polymer-result="handleResult"></polymer-file>
  *     ...
  *     this.$.file.blob = new Blob(['abc', {type: 'text/plain'}]);
  *     this.$.file.read();
+ *
+ *     ---
+ *
+ *     <polymer-file id="file" readas="arraybuffer" auto
+ *                   result="{{result}}"></polymer-file>
+ *     ...
+ *     this.$.file.blob = new Blob(['abc', {type: 'text/plain'}]);
  */
  /**
   * Fired when a file read has complete.
@@ -64,7 +71,7 @@ Polymer('polymer-file', {
    */
   blob: null,
   /**
-   * If true, automatically performs the file read.
+   * If true, automatically performs the file read (if a blob has been set).
    *
    * @attribute auto
    * @type boolean
