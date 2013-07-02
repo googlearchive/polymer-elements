@@ -39,11 +39,56 @@ license that can be found in the LICENSE file.
   </template>
   <script>
     Polymer('polymer-collapse', {
+    	/**
+    	 * The id of the target element.
+    	 *
+    	 * @attribute targetId
+    	 * @type string
+    	 * @default ''
+    	 */
       targetId: '',
+      /**
+       * The target element.
+       *
+       * @attribute target
+       * @type object
+       * @default null
+       */
       target: null,
+      /**
+       * If true, the orientation is horizontal; otherwise is vertical.
+       *
+       * @attribute horizontal
+       * @type boolean
+       * @default false
+       */
       horizontal: false,
+      /**
+       * If true, the target element is hidden/collapsed.
+       *
+       * @attribute closed
+       * @type boolean
+       * @default false
+       */
       closed: false,
+      /**
+       * Collapsing/expanding animation duration in second.
+       *
+       * @attribute duration
+       * @type number
+       * @default 0.5
+       */
       duration: 0.5,
+      /**
+       * If true, the size of the target element is fixed and is set
+       * on the element.  Otherwise it will try to 
+       * use auto to determine the natural size to use
+       * for collapsing/expanding.
+       *
+       * @attribute fixedSize
+       * @type boolean
+       * @default false
+       */
       fixedSize: false,
       size: null,
       removed: function() {
@@ -114,7 +159,7 @@ license that can be found in the LICENSE file.
         return this.target.getBoundingClientRect()[this.dimension] + 'px';
       },
       prepare: function() {
-        if (this.fixedSize && !this.size) {
+        if (this.fixedSize && this.closed) {
           this.size = getComputedStyle(this.target)[this.dimension];
         }
         if (!this.size) {
