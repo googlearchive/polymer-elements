@@ -13,7 +13,7 @@ license that can be found in the LICENSE file.
  * Example:
  *
  *     <button on-click="toggle">toggle collapse</button>
- *     <div id="demo" style="overflow: hidden;">
+ *     <div id="demo">
  *       ...
  *     </div>
  *     <polymer-collapse id="collapse" targetId="demo"></polymer-collapse>
@@ -39,13 +39,13 @@ license that can be found in the LICENSE file.
   </template>
   <script>
     Polymer('polymer-collapse', {
-    	/**
-    	 * The id of the target element.
-    	 *
-    	 * @attribute targetId
-    	 * @type string
-    	 * @default ''
-    	 */
+      /**
+       * The id of the target element.
+       *
+       * @attribute targetId
+       * @type string
+       * @default ''
+       */
       targetId: '',
       /**
        * The target element.
@@ -162,6 +162,7 @@ license that can be found in the LICENSE file.
         if (this.fixedSize && this.closed) {
           this.size = getComputedStyle(this.target)[this.dimension];
         }
+        this.target.style.overflow = 'hidden';
         if (!this.size) {
           this.updateSize(this.calcSize(), null);
         }
