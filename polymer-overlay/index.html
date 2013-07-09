@@ -83,7 +83,7 @@
 			changeOpening = function(e) {
 				var s = e.target.selectedOptions[0];
 				if (s) {
-					dialog.className = dialog.className.replace(/g-[^\s]*/, '')
+					dialog.className = dialog.className.replace(/polymer-[^\s]*/, '')
 					dialog.classList.add(s.textContent);
 				}
 			}
