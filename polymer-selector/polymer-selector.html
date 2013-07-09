@@ -133,9 +133,8 @@ license that can be found in the LICENSE file.
         var item = this.items[this.valueToIndex(value)];
         this.selectedItem = item;
         this.$.selection.select(item);
-        this.updateSelectedModel();
       },
-      updateSelectedModel: function() {
+      selectedItemChanged: function() {
         if (this.selectedItem) {
           var t = this.selectedItem.templateInstance;
           this.selectedModel = t ? t.model : undefined;
