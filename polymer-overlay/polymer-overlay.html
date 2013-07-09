@@ -5,6 +5,63 @@ license that can be found in the LICENSE file.
 -->
 <link rel="import" href="../polymer-key-helper/polymer-key-helper.html">
 
+<!--
+/**
+ * @module Polymer Elements
+ */
+/**
+ * polymer-overlay displays overlayed on top of other content. It starts out
+ * hidden and is displayed by setting it's opened property
+ * to true. A polymer-overlay's opened state can be toggled by calling the toggle
+ * method.
+ * 
+ * It's common to want a polymer-overlay to animate to its opened position. A number
+ * of helper css classes provide some basic open/close animations. For example,
+ * assigning the class polymer-overlay-fade to a polymer-overlay will make it fade into 
+ * and out of view as it opens and closes. Note, if multiple polymer-overlay's are
+ * opened, they should stack on top of each other.
+ * 
+ * Styling: The size and position of a polymer-overlay should be setup via css.
+ * polymer-overlay is natually sized around its content. When a polymer-overlay is opened
+ * it is shown and the 'opened' class is added to it. This is typically where
+ * css transitions and animations are applied. When the polymer-overlay is closed,
+ * the 'opened' class is removed and a 'closing' class is added. Use 'closing'
+ * to customize the closing animation. 
+ * 
+ * Classes for animating polymer-overlay:
+ * 
+ * * polymer-overlay-fade: fade in/out when opened/closed
+ * * polymer-overlay-scale-slideup: open: fade in and shrink; close: slide up
+ * * polymer-overlay-shake: open: fly in and shake; close: shake and fly out.
+ *
+ * It's common to use polymer-overlay to gather user input, for example a login
+ * dialog. To facilitate this, polymer-overlay supports automatic focusing of a 
+ * specific element when it's opened. The element to be focused should be given
+ * an autofocus attribute.
+ * 
+ * An element that should close the polymer-overlay will automatically do so if it
+ * is given the overlay-toggle attribute. Please note that polymer-overlay will 
+ * close whenever the user taps outside it or presses the escape key. The 
+ * behavior can be turned off via the autoCloseDisabled property.
+ * 
+ *     <polymer-overlay class="polymer-overlay-scale-slideup">
+ *	     <h2>Dialog</h2>
+ *       <input placeholder="say something..." autofocus"></input>
+ *       <div>I agree with this wholeheartedly.</div>
+ *       <button overlay-toggle>OK</button>
+ *     </polymer-overlay>
+ * 
+ * 
+ * @class polymer-overlay
+ */
+/**
+ * Fired when the polymer-overlay opened property is set.
+ * 
+ * @event open
+ * @param {Object} inDetail
+ * @param {Object} inDetail.opened the opened state
+ */
+-->
 <polymer-element name="polymer-overlay" attributes="opened autoCloseDisabled">
 	<template>
 		<polymer-key-helper id="keyHelper"></polymer-key-helper>
@@ -69,7 +126,7 @@ license that can be found in the LICENSE file.
 			Polymer('polymer-overlay', {
 				/**
 				 * Set opened to true to show an overlay and to false to hide it.
-				 * A g-overlay may be made intially opened by setting its opened 
+				 * A polymer-overlay may be made intially opened by setting its opened 
 				 * attribute.
 				 * @attribute opened
 				 * @type boolean
@@ -207,7 +264,7 @@ license that can be found in the LICENSE file.
 					}
 				},
 				/**
-				 * Extensions of g-overlay should implement the resizeHandler
+				 * Extensions of polymer-overlay should implement the resizeHandler
 				 * method to adjust the size and position of the overlay when the 
 				 * browser window resizes.
 				 * @method resizeHandler
