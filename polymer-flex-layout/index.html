@@ -28,13 +28,18 @@
       <div class="flexbox" flex>
         <div>Hi I'm some content</div>
         <div class="flexbox column" flex>
-          <div>Header</div>
+          <div class="flexbox align-center">
+            <h3>Title</h3>
+            <button>hello</button>
+          </div>
           <div class="flexbox" flex>
             <div flex>Main content</div>
             <div>Sidebar content</div>
           </div>
           <div>Some more stuffs...</div>
-          <div>Footer</div>
+          <div class="flexbox justify-end">
+            <b>Footer</b>
+          </div>
         </div>
         <div>A last bit, like a panel</div>
       </div>
@@ -59,13 +64,18 @@
       </style>
       <div>Hi I'm some content</div>
       <polymer-flex-layout isContainer vertical flex>
-        <div>Header</div>
+        <polymer-flex-layout isContainer align="center">
+          <h3>Title</h3>
+          <button>hello</button>
+        </polymer-flex-layout>
         <polymer-flex-layout isContainer flex>
           <div flex>Main content</div>
           <div>Sidebar content</div>
         </polymer-flex-layout>
         <div>Some more stuffs...</div>
-        <div>Footer</div>
+        <polymer-flex-layout isContainer justify="end">
+          <b>Footer</b>
+        </polymer-flex-layout>
       </polymer-flex-layout>
       <div>A last bit, like a panel</div>
     </template>
@@ -86,14 +96,21 @@
         <div>Hi I'm some content</div>
         <div flex>
           <polymer-flex-layout vertical></polymer-flex-layout>
-          <div>Header</div>
+          <div>
+            <polymer-flex-layout align="center"></polymer-flex-layout>
+            <h3>Title</h3>
+            <button>hello</button>
+          </div>
           <div flex>
             <polymer-flex-layout></polymer-flex-layout>
             <div flex>Main content</div>
             <div>Sidebar content</div>
           </div>
           <div>Some more stuffs...</div>
-          <div>Footer</div>
+          <div>
+            <polymer-flex-layout justify="end"></polymer-flex-layout>
+            <b>Footer</b>
+          </div>
         </div>
         <div>A last bit, like a panel</div>
       </div>
