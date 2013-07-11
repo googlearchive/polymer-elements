@@ -30,6 +30,16 @@
   flex: 1;
 }
 
+content::-webkit-distributed(.flex), 
+content::-webkit-distributed([flex]),
+content::-webkit-distributed([fit]) {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  -moz-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
 .flexbox.align-start {
   -webkit-box-align: start;
   -ms-flex-align: start;

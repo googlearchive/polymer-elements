@@ -3,25 +3,23 @@ Copyright 2013 The Polymer Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
-<element name="polymer-flex-layout" attributes="vertical align justify">
-  <link rel="stylesheet" polymer-scope="controller" href="polymer-flex-layout.css" />
+<polymer-element name="polymer-flex-layout" attributes="vertical align justify isContainer">
   <template>
-    <style>
-      @host {   
-        * {
-          display: none;
-        }
-      }
-    </style>
+    <link rel="stylesheet" polymer-scope="controller" href="polymer-flex-layout.css">
+    <link rel="stylesheet" href="polymer-flex-layout.css">
+    <content></content>
   </template>
   <script>
-    var element = this;
-    
-    Polymer.register(this, {
+    Polymer('polymer-flex-layout', {
       vertical: false,
+      isContainer: false,
       inserted: function() {
-        Polymer.installControllerStyles(this, element);
-        this.layoutContainer = this.parentNode.host || this.parentNode;
+        this.installControllerStyles();
+        this.layoutContainer = this.isContainer ? 
+            this : (this.parentNode.host || this.parentNode);
+        if (!this.isContainer) {
+          this.style.display = 'none';
+        }
         this.layoutContainer.classList.add('flexbox');
         this.verticalChanged();
         this.alignChanged();
@@ -46,4 +44,4 @@ license that can be found in the LICENSE file.
       }
     });
   </script>
-</element>
+</polymer-element>

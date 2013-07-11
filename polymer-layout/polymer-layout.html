@@ -3,7 +3,7 @@ Copyright 2013 The Polymer Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
-<element name="polymer-layout" attributes="vertical">
+<polymer-element name="polymer-layout" attributes="vertical">
   <template>
     <style>
       @host {   
@@ -14,7 +14,7 @@ license that can be found in the LICENSE file.
     </style>
   </template>
   <script>
-    Polymer.register(this, {
+    Polymer('polymer-layout', {
       vertical: false,
       ready: function() {
         this.setAttribute('nolayout', '');
@@ -122,4 +122,4 @@ license that can be found in the LICENSE file.
       });     
     }
   </script>
-</element>
+</polymer-element>
