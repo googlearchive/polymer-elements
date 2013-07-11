@@ -23,23 +23,24 @@ license that can be found in the LICENSE file.
 /**
  * Fired when a response is received.
  * 
- * @event response
+ * @event polymer-response
  */
 /**
  * Fired when an error is received.
  * 
- * @event error
+ * @event polymer-error
  */
 /**
  * Fired whenever a response or an error is received.
  *
- * @event complete
+ * @event polymer-complete
  */
 -->
 <link rel="import" href="polymer-xhr.html">
-<element name="polymer-ajax" attributes="url handleAs auto params response">
+
+<polymer-element name="polymer-ajax" attributes="url handleAs auto params response">
   <script>
-    Polymer.register(this, {
+    Polymer('polymer-ajax', {
       /**
        * The URL target of the request.
        * 
@@ -175,4 +176,4 @@ license that can be found in the LICENSE file.
       }
     });
   </script>
-</element>
+</polymer-element>

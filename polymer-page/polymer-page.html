@@ -3,9 +3,9 @@ Copyright 2013 The Polymer Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
-<element name="polymer-page" attributes="fullbleed">
+<polymer-element name="polymer-page" attributes="fullbleed">
   <script>
-    Polymer.register(this, {
+    Polymer('polymer-page', {
       fullbleed: true,
       inserted: function() {
         document.head.style.cssText += 'height: 100%; overflow: hidden; margin: 0;';
@@ -14,4 +14,4 @@ license that can be found in the LICENSE file.
       }
     });
   </script>
-</element>
+</polymer-element>
