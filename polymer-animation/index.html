@@ -40,32 +40,53 @@
     <div class="animations">
 			<polymer-animation duration="1">
 				raw
-				<polymer-animation-prop name="opacity" easing="ease-in-out">
-					<polymer-animation-keyframe value="1"></polymer-animation-keyframe>
-					<polymer-animation-keyframe value="0.3"></polymer-animation-keyframe>
-					<polymer-animation-keyframe value="1"></polymer-animation-keyframe>
-				</polymer-animation-prop>
+        <polymer-animation-keyframe>
+          <polymer-animation-prop name="opacity" value="1">
+          </polymer-animation-prop>
+				</polymer-animation-keyframe>
+        <polymer-animation-keyframe>
+          <polymer-animation-prop name="opacity" value="0.3">
+          </polymer-animation-prop>
+				</polymer-animation-keyframe>
+        <polymer-animation-keyframe>
+          <polymer-animation-prop name="opacity" value="1">
+          </polymer-animation-prop>
+				</polymer-animation-keyframe>
 			</polymer-animation>
 			<polymer-animation-group type="seq">
 				raw group
 				<polymer-animation duration="0.3">
-					<polymer-animation-prop name="opacity" easing="ease-in-out">
-						<polymer-animation-keyframe value="1"></polymer-animation-keyframe>
-						<polymer-animation-keyframe value="0.3"></polymer-animation-keyframe>
-						<polymer-animation-keyframe value="1"></polymer-animation-keyframe>
-					</polymer-animation-prop>
+          <polymer-animation-keyframe>
+            <polymer-animation-prop name="opacity" value="1">
+            </polymer-animation-prop>
+          </polymer-animation-keyframe>
+          <polymer-animation-keyframe>
+            <polymer-animation-prop name="opacity" value="0.3">
+            </polymer-animation-prop>
+          </polymer-animation-keyframe>
+          <polymer-animation-keyframe>
+            <polymer-animation-prop name="opacity" value="1">
+            </polymer-animation-prop>
+          </polymer-animation-keyframe>
 				</polymer-animation>
 				<polymer-animation duration="0.3">
-					<polymer-animation-prop name="transform" easing="ease-in-out">
-						<polymer-animation-keyframe value="scale(1)"></polymer-animation-keyframe>
-						<polymer-animation-keyframe value="scale(1.2)"></polymer-animation-keyframe>
-						<polymer-animation-keyframe value="scale(1)"></polymer-animation-keyframe>
-					</polymer-animation-prop>
+          <polymer-animation-keyframe>
+            <polymer-animation-prop name="transform" value="scale(1)">
+            </polymer-animation-prop>
+          </polymer-animation-keyframe>
+          <polymer-animation-keyframe>
+            <polymer-animation-prop name="transform" value="scale(1.2)">
+            </polymer-animation-prop>
+          </polymer-animation-keyframe>
+          <polymer-animation-keyframe>
+            <polymer-animation-prop name="transform" value="scale(1)">
+            </polymer-animation-prop>
+          </polymer-animation-keyframe>
 				</polymer-animation>
 			</polymer-animation-group>
       <polymer-bounce duration="1">bounce</polymer-bounce>
       <polymer-shake>shake</polymer-shake>
-      <polymer-shake duration="Infinity">shake forever</polymer-shake>
+      <!--<polymer-shake duration="Infinity">shake forever</polymer-shake>//-->
       <polymer-flip>flip X</polymer-flip>
       <polymer-flip axis="y">flip Y</polymer-flip>
       <polymer-blink>blink</polymer-blink>

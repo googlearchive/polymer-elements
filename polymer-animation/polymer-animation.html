@@ -34,10 +34,14 @@
        * A animation component to fade out an element:
        *
        *     <polymer-animation id="fadeout">
-       *       <polymer-animation-prop name="opacity">
-       *         <polymer-animation-keyframe value="0" offset="0"></polymer-animation-keyframe>
-       *         <polymer-keyframe value="1" offset="1"></polymer-animation-keyframe>
-       *       <polymer-animation-prop>
+       *       <polymer-animation-keyframe offset="0">
+       *         <polymer-animation-prop name="opacity" value="0">
+       *         </polymer-animation-keyframe>
+       *       </polymer-animation-keyframe>
+       *       <polymer-animation-keyframe offset="1">
+       *         <polymer-animation-prop name="opacity" value="1">
+       *         <polymer-animation-prop>
+       *       </polymer-animation-keyframe>
        *     </polymer-animation>
        * @class polymer-animation
        */
@@ -61,16 +65,12 @@
           targetSelector: null,
           // animation
           /**
-           * Animation properties specified as a dictionary of
-           * <css properties>:<array of values>. For example,
-           * `{opacity: ['0','1']}` specifies animating the opacity
-           * from 0 to 1.
-           * The values must be strings.
-           * (https://github.com/web-animations/web-animations-js/issues/178)
-           * @property properties
+           * Animation keyframes specified as an array of dictionaries of
+           * <css properties>:<array of values> pairs. For example,
+           * @property keyframes
            * @type Object
            */
-          properties: null,
+          keyframes: null,
           //accumulate: null, // not working in polyfill
           /**
            * The composition behavior. "replace", "add" or "merge".
@@ -171,8 +171,8 @@
           return this.animation;
         },
         makeAnimation: function() {
-          //this.target && console.log('makeAnimation target', this.target, 'animation', this.animationProps, 'timing', this.timingProps);
-          return this.target ? new Animation(this.target, this.animationProps, this.timingProps) : null;
+          //this.target && console.log('makeAnimation target', this.target, 'animation', this.animationEffect, 'timing', this.timingProps);
+          return this.target ? new Animation(this.target, this.animationEffect, this.timingProps) : null;
         },
         asyncApply: function() {
           this.cancelApply();
@@ -199,7 +199,7 @@
             this.target = findTarget(this.targetSelector, this);
           }
         },
-        propertiesChanged: function() {
+        keyframesChanged: function() {
           this.asyncApply();
         },
         compositeChanged: function() {
@@ -226,13 +226,6 @@
         autoplayChanged: function() {
           this.asyncApply();
         },
-        doOnChildren: function(inFn) {
-          var children = this.children;
-          if (!children.length) {
-            children = this.webkitShadowRoot ? this.webkitShadowRoot.childNodes : [];
-          }
-          Array.prototype.forEach.call(children, inFn, this);
-        },
         get timingProps() {
           var props = {};
           var timing = {
@@ -241,7 +234,7 @@
             startDelay: {isNumber: true},
             iterationCount: {isNumber: true, allowInfinity: true},
             direction: {},
-            duration: {isNumber: true}
+            duration: {property: 'iterationDuration', isNumber: true}
           };
           for (t in timing) {
             if (this[t] !== null) {
@@ -249,32 +242,24 @@
               props[name] = timing[t].isNumber ? toNumber(this[t], timing[t].allowInfinity) : this[t];
             }
           }
+          console.log('timing', props);
           return props;
         },
-        get animationProps() {
+        get animationEffect() {
           var props = {};
-          if (!this.properties) {
-            this.doOnChildren(function(c) {
-              if (c.tagName && c.tagName.toLowerCase() === 'polymer-animation-prop') {
-                var property = c.name;
-                var values = [];
-                this.doOnChildren.call(c, function(f) {
-                  values.push(f.properties);
-                });
-                props[property] = values;
-              }
+          var frames = [];
+          if (!this.keyframes) {
+            var children = this.querySelectorAll('polymer-animation-keyframe');
+            if (children.length === 0) {
+              children = this.shadowRoot.querySelectorAll('polymer-animation-keyframe');
+            }
+            Array.prototype.forEach.call(children, function(c) {
+              frames.push(c.properties);
             });
           } else {
-            for (k in this.properties) {
-              if (this.properties.hasOwnProperty(k)) {
-                props[k] = this.properties[k];
-              }
-            }
+            frames = this.keyframes;
           }
-          if (this.composite) {
-            props.operation = this.composite;
-          }
-          return props;
+          return new KeyframeAnimationEffect(frames, this.composite);
         },
         monitor: function() {
           // TODO(sorvell): adding brittle support for an end event
