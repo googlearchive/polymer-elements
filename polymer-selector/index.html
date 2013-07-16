@@ -26,20 +26,33 @@
   </style>
 </head>
 <body>
-  <polymer-selector>
+  <polymer-selector id="selector1" selected="0">
+    <div>Item 0</div>
     <div>Item 1</div>
     <div>Item 2</div>
     <div>Item 3</div>
     <div>Item 4</div>
-    <div>Item 5</div>
   </polymer-selector>
   <h2>Multi-select</h2>
-  <polymer-selector multi>
+  <polymer-selector id="selector2" multi>
+    <div>Item 0</div>
     <div>Item 1</div>
     <div>Item 2</div>
     <div>Item 3</div>
     <div>Item 4</div>
-    <div>Item 5</div>
   </polymer-selector>
+  
+  <script>
+    document.addEventListener('WebComponentsReady', function() {
+      document.querySelector('#selector2').selected = [1, 3];
+      
+      /* document.querySelector('#selector1').addEventListener('polymer-select', function(e) {
+        console.log('polymer-select1', e.detail.isSelected, e.detail.item);
+      });
+      document.querySelector('#selector2').addEventListener('polymer-select', function(e) {
+        console.log('polymer-select2', e.detail.isSelected, e.detail.item);
+      }); */
+    });
+  </script>
 </body>
 </html>
