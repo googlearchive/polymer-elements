@@ -45,7 +45,7 @@
         // mesaure the matrix, must be rectangular
         rowCount = matrix.length;
         colCount = rowCount && matrix[0].length || 0;
-        // build a transposed matrix
+        // transpose matrix
         var transpose = [];
         for (var i=0; i<colCount; i++) {
           var c = [];
@@ -136,6 +136,16 @@
       var m = 0;
 
       function railize(count, sizeFn) {
+        // create rails for `count` tracks using `sizeFn(track)`
+        // tracks are bounded, so for n tracks there are (n+1) rails
+        //
+        //   |track|track|track|
+        //  0|->sz0|->sz1|<-sz2|0
+        //
+        //   |track|track|track|
+        //  0|->sz0|     |<-sz2|0
+        //
+        //  0|
         var rails = [];
         var a = 0;
         for (var i=0; i<count; i++) {
@@ -160,20 +170,33 @@
         return rails;
       }
 
-      function _position(box, maj, min, ext, a, b) {
-        box.position = 'absolute';
-        box.boxSizing = box.mozBoxSizing = 'border-box';
-        box[maj] = box[min] = box[ext] = '';
+      function unposition(box) {
+        var style = box.style;
+        //style.left = style.right = style.top = style.bottom = style.width = style.height = '';
+        if (style.left && style.right) {
+          style.left = '';
+        }
+        if (style.top && style.bottom) {
+          style.top = '';
+        }
+        style.width = style.height = '';
+      }
+
+      function _position(style, maj, min, ext, a, b) {
+        style.position = 'absolute';
+        style.boxSizing = style.mozBoxSizing = 'border-box';
+        style[maj] = style[min] = '';
+        style[ext] = 'auto';
         if (a.s < 0 && b.s < 0) {
-          box[ext] = a.p - b.p - m - m + 'px';
-          //box[min] = b.p + m + 'px';
-          box[maj] = 'calc(100% - ' + (a.p - b.p - m - m) + 'px' + ')';
+          var siz = a.p - b.p - m - m;
+          style[ext] = siz + 'px';
+          style[maj] = 'calc(100% - ' + (b.p + siz + m) + 'px' + ')';
         } else if (b.s < 0) {
-          box[maj] = a.p + m + 'px';
-          box[min] = b.p + m + 'px';
+          style[maj] = a.p + m + 'px';
+          style[min] = b.p + m + 'px';
         } else {
-          box[maj] = a.p + m + 'px';
-          box[ext] = b.p - a.p - m - m + 'px';
+          style[maj] = a.p + m + 'px';
+          style[ext] = b.p - a.p - m - m + 'px';
         }
       }
 
@@ -188,6 +211,8 @@
         lineParent = alineParent;
         nodes = anodes;
         matrixillate(matrix);
+
+        nodes.forEach(unposition);
 
         columns = railize(colCount, colWidth);
         rows = railize(rowCount, rowHeight);
@@ -225,9 +250,12 @@
           });
           if (l == undefined) {
             //console.log('unused');
-            node.style.visibility = 'hidden';
+            //node.style.visibility = 'hidden';
+            node.style.position = 'absolute';
+            node.style[Math.random() >= 0.5 ? 'left' : 'top'] = '110%';
           } else {
-            node.style.visibility = '';
+            //node.style.visibility = '';
+            node.style.left = node.style.top = '';
             //console.log(l, r, t, b);
             position(node, l, r, t, b);
           }
