@@ -5,6 +5,7 @@
  */
 module.exports = function(grunt) {
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
     yuidoc: {
       compile: {
         name: '<%= pkg.name %>',
@@ -12,7 +13,7 @@ module.exports = function(grunt) {
         version: '<%= pkg.version %>',
         url: '<%= pkg.homepage %>',
         options: {
-          exclude: 'third_party',
+          exclude: 'docs',
           extension: '.js,.html',
           paths: '.',
           outdir: 'docs',
@@ -21,8 +22,7 @@ module.exports = function(grunt) {
           themedir: 'tools/doc/themes/footstrap'
         }
       }
-    },
-    pkg: grunt.file.readJSON('package.json')
+    }
   });
 
   // plugins
