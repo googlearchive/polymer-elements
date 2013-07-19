@@ -110,6 +110,7 @@ license that can be found in the LICENSE file.
         }
         this.horizontalChanged();
         if (this.target) {
+          this.target.style.overflow = 'hidden';
           this.addListeners(this.target);
         }
         if (this.closed && !this.defaultClosed) {
@@ -158,6 +159,10 @@ license that can be found in the LICENSE file.
           return;
         }
         this.horizontalChanged();
+        if (this.closed && this.defaultClosed) {
+          this.defaultClosed = false;
+          return;
+        }
         this.prepare();
         this[this.closed ? 'hide' : 'show']();
       },
@@ -168,11 +173,9 @@ license that can be found in the LICENSE file.
         if (this.fixedSize && this.closed) {
           this.size = getComputedStyle(this.target)[this.dimension];
         }
-        this.target.style.overflow = 'hidden';
-        if (!this.size && !this.defaultClosed) {
+        if (!this.size) {
           this.updateSize(this.calcSize(), null);
         }
-        this.defaultClosed = false;
       },
       show: function() {
         if (!this.size) {
