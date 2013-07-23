@@ -180,11 +180,12 @@
           style.top = '';
         }
         style.width = style.height = '';
+        style.position = 'absolute';
+        style.display = 'inline-block';
+        style.boxSizing = style.mozBoxSizing = 'border-box';
       }
 
       function _position(style, maj, min, ext, a, b) {
-        style.position = 'absolute';
-        style.boxSizing = style.mozBoxSizing = 'border-box';
         style[maj] = style[min] = '';
         style[ext] = 'auto';
         if (a.s < 0 && b.s < 0) {
@@ -250,18 +251,16 @@
           });
           if (l == undefined) {
             //console.log('unused');
-            //node.style.visibility = 'hidden';
             node.style.position = 'absolute';
             node.style[Math.random() >= 0.5 ? 'left' : 'top'] = '110%';
+            //node.style.opacity = 0.2;
           } else {
-            //node.style.visibility = '';
-            node.style.left = node.style.top = '';
+            //node.style.opacity = '';
             //console.log(l, r, t, b);
             position(node, l, r, t, b);
           }
         });
         //console.groupEnd();
-
         //console.groupEnd();
       }
 
