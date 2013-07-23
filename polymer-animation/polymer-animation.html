@@ -145,10 +145,12 @@
             //this.animation && console.log('play', this.animation);
             if (this.animation) {
               this.cancel();
+							if (!this.animation.onend) {
+								this.animation.onend = this.complete.bind(this);
+							}
               this.player = document.timeline.play(this.animation);
               this.player.paused = false;
               this.player.currentTime = 0;
-              this.monitor();
             }
           });
         },
@@ -259,15 +261,6 @@
             frames = this.keyframes;
           }
           return new KeyframeAnimationEffect(frames, this.composite);
-        },
-        monitor: function() {
-          // TODO(sorvell): adding brittle support for an end event
-          if (this.player && this.player.source &&
-              this.player.source._isPastEndOfActiveInterval()) {
-            this.complete();
-          } else {
-            requestAnimationFrame(this.monitor.bind(this));
-          }
         },
         // intended for user implementation
         complete: function() {

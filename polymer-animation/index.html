@@ -91,16 +91,20 @@
       <polymer-flip axis="y">flip Y</polymer-flip>
       <polymer-blink>blink</polymer-blink>
       <polymer-fadein>fade in</polymer-fadein>
-      <polymer-fadeout>fade out</polymer-fadeout>
+      <polymer-fadeout>fade out (with event)</polymer-fadeout>
     </div>
     <script>
       document.addEventListener('WebComponentsReady', function() {
         document.querySelector('.animations').addEventListener('click',
-            function(e) {
-              var animation = e.target;
-              animation.target = target;
-              animation.play();
-            });
+					function(e) {
+						var animation = e.target;
+						animation.target = target;
+						animation.play();
+					});
+					document.querySelector('polymer-fadeout').addEventListener(
+						'complete', function(e) {
+							alert('complete!');
+						});
       });
     </script>
   </body>
