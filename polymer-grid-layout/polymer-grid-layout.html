@@ -173,12 +173,17 @@
       function unposition(box) {
         var style = box.style;
         //style.left = style.right = style.top = style.bottom = style.width = style.height = '';
+        // TODO(sjmiles): this codes tries to preserve position,
+        // so 'unposition' is really 'naturalize' or something
+        /*
         if (style.left && style.right) {
           style.left = '';
         }
         if (style.top && style.bottom) {
           style.top = '';
         }
+        */
+        style.right = style.bottom = '';
         style.width = style.height = '';
         style.position = 'absolute';
         style.display = 'inline-block';
@@ -252,10 +257,12 @@
           if (l == undefined) {
             //console.log('unused');
             node.style.position = 'absolute';
-            node.style[Math.random() >= 0.5 ? 'left' : 'top'] = '110%';
-            //node.style.opacity = 0.2;
+            node.style[Math.random() >= 0.5 ? 'left' : 'top'] = '-110%';
+            node.style.opacity = 0;
+            node.style.pointerEvents = 'none';
           } else {
-            //node.style.opacity = '';
+            node.style.pointerEvents = '';
+            node.style.opacity = '';
             //console.log(l, r, t, b);
             position(node, l, r, t, b);
           }
