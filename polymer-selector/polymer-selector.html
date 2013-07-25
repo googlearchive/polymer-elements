@@ -21,8 +21,8 @@ license that can be found in the LICENSE file.
  *       <div>Item 3</div>
  *     </polymer-selector>
  *
- * polymer-selector is not styled.  So one needs to use "selected" CSS class
- * to style the selected element.
+ * polymer-selector is not styled.  So one needs to use "polymer-selected" CSS
+ * class to style the selected element.
  * 
  *     <style>
  *       .item.polymer-selected {
@@ -56,8 +56,8 @@ license that can be found in the LICENSE file.
 -->
 <link rel="import" href="polymer-selection.html">
 
-<polymer-element name="polymer-selector" on-tap="activateHandler" touch-action="none"
-    attributes="selected multi valueattr selectedClass selectedProperty selectedModel notap">
+<polymer-element name="polymer-selector"
+    attributes="selected multi valueattr selectedClass selectedProperty selectedModel notap target itemsSelector activateEvent">
   <template>
     <polymer-selection id="selection" multi="{{multi}}" on-polymer-select="selectionSelect"></polymer-selection>
     <content id="items" select="*"></content>
@@ -145,35 +145,70 @@ license that can be found in the LICENSE file.
        * @default null
        */
       selectedModel: null,
+      /**
+       * The target element that contains items.
+       * 
+       * @attribute target
+       * @type Object
+       * @default null
+       */
+      target: null,
+      itemsSelector: '',
+      activateEvent: 'tap',
+      notap: false,
+      ready: function() {
+        this.activateListener = this.activateHandler.bind(this);
+        this.addListener(this);
+      },
       get items() {
-        var nodes = this.$.items.getDistributedNodes();
+        var nodes = this.target ? (this.itemsSelector ? 
+            this.target.querySelectorAll(this.itemsSelector) : 
+                this.target.children) : this.$.items.getDistributedNodes();
         return Array.prototype.filter.call(nodes, function(n) {
           return n && n.localName !== 'template';
         });
+      },
+      targetChanged: function(old) {
+        if (old) {
+          this.removeListener(old);
+        }
+        if (this.target) {
+          this.removeListener(this);
+          this.addListener(this.target);
+        }
+      },
+      addListener: function(node) {
+        node.addEventListener(this.activateEvent, this.activateListener);
+      },
+      removeListener: function(node) {
+        node.removeEventListener(this.activateEvent, this.activateListener);
       },
       get selection() {
         return this.$.selection.getSelection();
       },
       selectedChanged: function() {
+        this.validateSelected();
         if (this.multi) {
-          if (!Array.isArray(this.selected) && 
-              this.selected !== null && this.selected !== undefined) {
-            this.selected = [this.selected];
-            return;
-          }
           this.clearSelection();
           this.selected && this.selected.forEach(function(s) {
             this.valueToSelection(s);
-          }.bind(this));
+          }, this);
         } else {
           this.valueToSelection(this.selected);
+        }
+      },
+      validateSelected: function() {
+        // convert to an arrray for multi-selection
+        if (this.multi && !Array.isArray(this.selected) && 
+            this.selected !== null && this.selected !== undefined) {
+          this.selected = [this.selected];
         }
       },
       clearSelection: function() {
         if (this.multi) {
           this.selection.slice().forEach(function(s) {
             this.$.selection.setItemSelected(s, false);
-          }.bind(this));
+          }, this);
         } else {
           this.$.selection.setItemSelected(this.selection, false);
         }
@@ -227,25 +262,28 @@ license that can be found in the LICENSE file.
           var i = this.findDistributedTarget(e.target, this.items);
           if (i >= 0) {
             var item = this.items[i];
-            var selected = this.valueForNode(item) || i;
+            var s = this.valueForNode(item) || i;
             if (this.multi) {
               if (this.selected) {
-                this.valueToSelection(selected);
-                var si = this.selected.indexOf(selected);
-                if (si >= 0) {
-                  this.selected.splice(si, 1);
-                } else {
-                  this.selected.push(selected);
-                }
+                this.addRemoveSelected(s);
               } else {
-                this.selected = [selected];
+                this.selected = [s];
               }
             } else {
-              this.selected = selected;
+              this.selected = s;
             }
             this.asyncFire('polymer-activate', {item: item});
           }
         }
+      },
+      addRemoveSelected: function(value) {
+        var i = this.selected.indexOf(value);
+        if (i >= 0) {
+          this.selected.splice(i, 1);
+        } else {
+          this.selected.push(value);
+        }
+        this.valueToSelection(value);
       },
       findDistributedTarget: function(target, nodes) {
         // find first ancestor of target (including itself) that
