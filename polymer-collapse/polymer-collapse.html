@@ -186,7 +186,7 @@ license that can be found in the LICENSE file.
         }
         this.asyncMethod(function() {
           this.updateSize(this.size || s, this.duration);
-        });
+        }, null, 1);
       },
       hide: function() {
         this.asyncMethod(function() {
