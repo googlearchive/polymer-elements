@@ -206,9 +206,11 @@ license that can be found in the LICENSE file.
 				openedChanged: function() {
 					this.renderOpened();
 					trackOverlays(this);
-					if (!this.autoCloseDisabled) {
-						this.enableCaptureHandler(this.opened);
-					}
+          this.async(function() {
+            if (!this.autoCloseDisabled) {
+              this.enableCaptureHandler(this.opened);
+            }
+          });
 					this.enableResizeHandler(this.opened);
 					this.fire('opened', this.opened);
 				},
