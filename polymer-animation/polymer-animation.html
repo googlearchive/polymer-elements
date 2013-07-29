@@ -46,8 +46,12 @@
        * @class polymer-animation
        */
        /**
-        * Fired when an animation completes
-        * @event complete
+			  * Fired when the animation starts
+			  * @event animation-start
+				*
+        * Fired when the animation completes
+        * @event animation-end
+				* 
         */
       Polymer('polymer-animation', {
         publish: {
@@ -145,12 +149,8 @@
             //this.animation && console.log('play', this.animation);
             if (this.animation) {
               this.cancel();
-							if (!this.animation.onend) {
-								this.animation.onend = this.complete.bind(this);
-							}
+							this.bindAnimationEvents();
               this.player = document.timeline.play(this.animation);
-              this.player.paused = false;
-              this.player.currentTime = 0;
             }
           });
         },
@@ -262,9 +262,19 @@
           }
           return new KeyframeAnimationEffect(frames, this.composite);
         },
-        // intended for user implementation
-        complete: function() {
-          this.fire('complete');
+				bindAnimationEvents: function() {
+					if (!this.animation.onstart) {
+						this.animation.onstart = this.animationStartHandler.bind(this);
+					}
+					if (!this.animation.onend) {
+						this.animation.onend = this.animationEndHandler.bind(this);
+					}
+				},
+				animationStartHandler: function() {
+					this.fire('animation-start');
+				},
+        animationEndHandler: function() {
+          this.fire('animation-end');
         }
       });
     })();
