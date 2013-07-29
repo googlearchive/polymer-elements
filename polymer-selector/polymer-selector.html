@@ -57,7 +57,7 @@ license that can be found in the LICENSE file.
 <link rel="import" href="polymer-selection.html">
 
 <polymer-element name="polymer-selector"
-    attributes="selected multi valueattr selectedClass selectedProperty selectedModel notap target itemsSelector activateEvent">
+    attributes="selected multi valueattr selectedClass selectedProperty selectedItem selectedModel notap target itemsSelector activateEvent">
   <template>
     <polymer-selection id="selection" multi="{{multi}}" on-polymer-select="selectionSelect"></polymer-selection>
     <content id="items" select="*"></content>
@@ -130,7 +130,7 @@ license that can be found in the LICENSE file.
        */
       selectedProperty: 'active',
       /**
-       * In single selection this returns the currently selected element.
+       * Returns the currently selected element.
        * 
        * @attribute selectedItem
        * @type Object
@@ -138,7 +138,8 @@ license that can be found in the LICENSE file.
        */
       selectedItem: null,
       /**
-       * Returns the model associated with the selectedItem.
+       * In single selection, this returns the model associated with the
+       * selected element.
        * 
        * @attribute selectedModel
        * @type Object
@@ -218,8 +219,8 @@ license that can be found in the LICENSE file.
       valueToSelection: function(value) {
         var item = (value === null || value === undefined) ? 
             null : this.items[this.valueToIndex(value)];
-        this.selectedItem = item;
         this.$.selection.select(item);
+        this.selectedItem = this.selection;
       },
       selectedItemChanged: function() {
         if (this.selectedItem) {
