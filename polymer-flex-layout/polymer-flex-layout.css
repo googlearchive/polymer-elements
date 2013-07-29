@@ -35,9 +35,9 @@ license that can be found in the LICENSE file.
   flex: 1;
 }
 
-content::-webkit-distributed(.flex), 
-content::-webkit-distributed([flex]),
-content::-webkit-distributed([fit]) {
+::-webkit-distributed(.flex), 
+::-webkit-distributed([flex]),
+::-webkit-distributed([fit]) {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   -moz-flex: 1;
