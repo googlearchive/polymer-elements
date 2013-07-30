@@ -183,8 +183,6 @@
           style.top = '';
         }
         */
-        style.right = style.bottom = '';
-        style.width = style.height = '';
         style.position = 'absolute';
         style.display = 'inline-block';
         style.boxSizing = style.mozBoxSizing = 'border-box';
@@ -207,6 +205,8 @@
       }
 
       function position(elt, left, right, top, bottom) {
+        //elt.style.right = elt.style.bottom = '';
+        //elt.style.width = elt.style.height = '';
         _position(elt.style, 'top', 'bottom', 'height', rows[top], rows[bottom]);
         _position(elt.style, 'left', 'right', 'width', columns[left], columns[right]);
       }
@@ -255,12 +255,15 @@
             }
           });
           if (l == undefined) {
-            //console.log('unused');
-            node.style.position = 'absolute';
-            node.style[Math.random() >= 0.5 ? 'left' : 'top'] = '-110%';
-            node.style.opacity = 0;
+            if (!node.hasAttribute('static')) {
+              node.style.position = 'absolute';
+              node.style[Math.random() >= 0.5 ? 'left' : 'top'] = '-110%';
+              //node.style.opacity = 0;
+            }
+            //node.style.zIndex = 0;
             node.style.pointerEvents = 'none';
           } else {
+            //node.style.zIndex = 1;
             node.style.pointerEvents = '';
             node.style.opacity = '';
             //console.log(l, r, t, b);
