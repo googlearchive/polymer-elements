@@ -37,6 +37,39 @@
 		</style>
 	</head>
 	<body>
+		<polymer-element name="x-dialog" attributes="opened autoCloseDisabled">
+			<template>
+				<style>
+					@host {
+						:scope {
+							box-sizing: border-box;
+							-moz-box-sizing: border-box;
+							font-family: Arial, Helvetica, sans-serif;
+							font-size: 13px;
+							-webkit-user-select: none;
+							-moz-user-select: none;
+							overflow: hidden;
+							background: white;
+							padding:30px 42px;
+							outline: 1px solid rgba(0,0,0,0.2);
+							box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+						}
+					}
+				</style>
+				<polymer-overlay id="overlay" opened="{{opened}}" autoCloseDisabled="{{autoCloseDisabled}}"></polymer-overlay>
+				<content></content>
+			</template>
+			<script>
+				Polymer('x-dialog', {
+					ready: function() {
+						this.$.overlay.target = this;
+					},
+					toggle: function() {
+						this.$.overlay.toggle();
+					}
+				});
+			</script>
+		</polymer-element>
 		<button overlay="#dialog">Toggle Dialog</button>
 		( open styling: 
 		<select onchange="changeOpening(event)">
@@ -49,51 +82,37 @@
 		<label>scrim: <input type="checkbox" onchange="scrimChange(event)"></label>
 		)
 		<br>
-		<div id="dialog" class="dialog polymer-overlay-scale-slideup">
-			<polymer-overlay></polymer-overlay>
+		<x-dialog id="dialog" class="dialog polymer-overlay-scale-slideup">
 			<h2>Dialog</h2>
 			<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla sapien sed enim sollicitudin laoreet. Suspendisse suscipit, metus ac volutpat sodales, libero magna semper lacus, molestie fringilla massa orci ut arcu. Nullam sodales urna sit amet odio vehicula mattis.</div><br><br>
 			<div>Ut aliquam vulputate congue. Vestibulum pretium pretium nulla quis sollicitudin. Praesent lacinia congue erat nec mattis. Fusce commodo lacus est. Duis turpis eros, ultrices sed aliquet non, blandit egestas velit. Integer a augue nec lorem tristique hendrerit. Curabitur imperdiet risus id enim bibendum vestibulum. Integer id magna at arcu faucibus fermentum vel a augue. Sed fringilla venenatis dolor, in blandit magna molestie luctus. Vestibulum dignissim posuere ultrices. Aenean urna nisl, tincidunt vitae iaculis ut, pharetra nec eros.</div><br><br>
 			<div>
 				<input placeholder="say something..." autofocus oninput="somethingCheck()"></input><br>
 				I agree with this wholeheartedly.
-				<div id="confirmation" class="dialog">
-					<polymer-overlay></polymer-overlay>
+				<x-dialog id="confirmation" class="dialog">
 					Thank you.
-				</div>
+				</x-dialog>
 			</div><br><br>
 			<button overlay-toggle>OK</button>
-		</div>
+		</x-dialog>
 
 		<br><br>
 
 		<button overlay="#dialog2">Toggle Dialog 2</button>
 
-		<div id="dialog2" class="dialog polymer-overlay-shake" autoCloseDisabled="true">
-			<polymer-overlay></polymer-overlay>
+		<x-dialog id="dialog2" class="dialog polymer-overlay-shake" autoCloseDisabled="true">
 			<div>
 				<h2>Dialog 2</h2>
 					I'm dizzy.
 			</div>
 			<br><br>
 			<button overlay-toggle>OK</button>
-		</div>
+		</x-dialog>
 		<script>
-			setupOverlays = function() {
-				var overlays = document.querySelectorAll('polymer-overlay');
-				Array.prototype.forEach.call(overlays, function(o) {
-					o.target = o.parentNode;
-				});
-			}
-
-			document.addEventListener('WebComponentsReady', function() {
-				setupOverlays();
-			});
-
 			$ = document.querySelector.bind(document);
 
 			somethingCheck = function() {
-				$('#confirmation').querySelector('polymer-overlay').opened = (event.target.value == 'something');
+				$('#confirmation').opened = (event.target.value == 'something');
 			}
 			
 			changeOpening = function(e) {
@@ -115,10 +134,7 @@
 			var overlayButtons = document.querySelectorAll('button[overlay]');
 			Array.prototype.forEach.call(overlayButtons, function(b) {
 				b.addEventListener('tap', function(e) {
-					var overlay = document.querySelector(e.target.getAttribute('overlay'));
-					if (overlay) {
-						overlay.querySelector('polymer-overlay').toggle();
-					}
+					document.querySelector(e.target.getAttribute('overlay')).toggle();
 				})
 			});
 		</script>
