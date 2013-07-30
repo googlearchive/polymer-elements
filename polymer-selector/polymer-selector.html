@@ -219,8 +219,8 @@ license that can be found in the LICENSE file.
       valueToSelection: function(value) {
         var item = (value === null || value === undefined) ? 
             null : this.items[this.valueToIndex(value)];
+        this.selectedItem = item;
         this.$.selection.select(item);
-        this.selectedItem = this.selection;
       },
       selectedItemChanged: function() {
         if (this.selectedItem) {
