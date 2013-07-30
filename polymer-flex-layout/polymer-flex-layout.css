@@ -3,7 +3,7 @@ Copyright 2013 The Polymer Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 */
-.flexbox, [h-flex], [v-flex] {
+.flexbox, [flexbox], [h-flexbox], [v-flexbox] {
   display: -webkit-box !important;
   display: -ms-flexbox !important;
   display: -moz-flex !important;
@@ -11,7 +11,7 @@ license that can be found in the LICENSE file.
   display: flex !important;
 }
 
-.flexbox.row, [h-flex] {
+.flexbox.row, [flexbox], [h-flexbox] {
   -webkit-box-orient: horizontal;
   -ms-flex-direction: row;
   -moz-flex-direction: row;
@@ -19,7 +19,7 @@ license that can be found in the LICENSE file.
   flex-direction: row;
 }
 
-.flexbox.column, [v-flex] {
+.flexbox.column, [v-flexbox] {
   -webkit-box-orient: vertical;
   -ms-flex-direction: column;
   -moz-flex-direction: column;
@@ -102,7 +102,7 @@ license that can be found in the LICENSE file.
 }
 
 @host {
-  .flexbox, [h-flex], [v-flex] {
+  .flexbox, [flexbox], [h-flexbox], [v-flexbox] {
     display: -webkit-box !important;
     display: -ms-flexbox !important;
     display: -moz-flex !important;
@@ -110,7 +110,7 @@ license that can be found in the LICENSE file.
     display: flex !important;
   }
   
-  .flexbox.row, [h-flex] {
+  .flexbox.row, [flexbox], [h-flexbox] {
     -webkit-box-orient: horizontal;
     -ms-flex-direction: row;
     -moz-flex-direction: row;
@@ -118,7 +118,7 @@ license that can be found in the LICENSE file.
     flex-direction: row;
   }
   
-  .flexbox.column, [v-flex] {
+  .flexbox.column, [v-flexbox] {
     -webkit-box-orient: vertical;
     -ms-flex-direction: column;
     -moz-flex-direction: column;
