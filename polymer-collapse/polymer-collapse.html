@@ -113,7 +113,7 @@ license that can be found in the LICENSE file.
           this.target.style.overflow = 'hidden';
           this.addListeners(this.target);
         }
-        if (this.closed && !this.defaultClosed) {
+        if (this.closed || this.defaultClosed) {
           this.update();
         }
       },
@@ -159,10 +159,6 @@ license that can be found in the LICENSE file.
           return;
         }
         this.horizontalChanged();
-        if (this.closed && this.defaultClosed) {
-          this.defaultClosed = false;
-          return;
-        }
         this.prepare();
         this[this.closed ? 'hide' : 'show']();
       },
