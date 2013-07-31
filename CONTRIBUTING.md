@@ -37,6 +37,17 @@ Here's an easy guide that should get you up and running:
 
 That's it for the one time setup. Now you're ready to make a change.
 
+## Running the tests
+
+To run the tests make sure you have a webserver running with its docroot pointing to the polymer-all directory.  Then navigate to /polymer-elements/test/runner.html
+
+For Example:
+
+      cd polymer-all
+      ruby -rwebrick -e'WEBrick::HTTPServer.new(:Port => 4000, :DocumentRoot => Dir.pwd).start'
+
+Then in your browser open: http://localhost:4000/polymer-elements/test/runner.html
+
 ## Submitting a pull request
 
 We iterate fast! To avoid potential merge conflicts, it's a good idea to pull from the main project before making a change and submitting a pull request. The easiest way to do this is setup a remote called `upstream` and do a pull before working on a change:
