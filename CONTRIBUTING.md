@@ -21,19 +21,19 @@ Other projects require a similar agreement: jQuery, Firefox, Apache, Node, and m
 
 Here's an easy guide that should get you up and running:
 
-1. Fork the project on github and pull down your copy.
-   > replace the {{ username }} with your username and {{ repository }} with the repository name
+1. Fork the project on github
+2. Pull down the polymer-all project.
 
-        git clone git@github.com:{{ username }}/{{ repository }}.git --recursive
+        git clone git@github.com:Polymer/polymer-all --recursive
 
-    Note the `--recursive`. This is necessary for submodules to initialize properly. If you don't do a recursive clone, you'll have to init them manually:
+3. Go to the polymer-elements directory and switch it to point to your origin.
 
-        git submodule init
-        git submodule update
-
-2. Development happens on the `master` branch. Get yourself on it!
-
+        git remote remove origin
+        git remote add origin git@github.com:{{ username }}/{{ repository }}
+        git fetch origin
         git checkout master
+
+4. Pull down node dependencies. In your polymer-elements directory run 'npm install' this will pull down the tools used for executing the test. 
 
 That's it for the one time setup. Now you're ready to make a change.
 
