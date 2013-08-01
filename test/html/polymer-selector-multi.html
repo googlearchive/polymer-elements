@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>polymer-selector-basic</title>
+    <title>polymer-selector-multi</title>
     <script src="../../../polymer/polymer.js"></script>
     <script src="../../../polymer/tools/test/htmltest.js"></script>
     <script src="../../node_modules/chai/chai.js"></script>
@@ -10,15 +10,11 @@
       .polymer-selected {
         background: #ccc;
       }
-      
-      .my-selected {
-        background: red;
-      }
     </style>
   </head>
   <body>
 
-    <polymer-selector id="selector1">
+    <polymer-selector id="selector" multi>
       <div>Item 1</div>
       <div>Item 2</div>
       <div>Item 3</div>
@@ -26,31 +22,31 @@
       <div>Item 5</div>
     </polymer-selector>
     
-    <br><br>
-    
-    <polymer-selector id="selector2" selected="item3" selectedClass="my-selected" valueattr="id">
-      <div id="item1">Item 1</div>
-      <div id="item2">Item 2</div>
-      <div id="item3">Item 3</div>
-      <div id="item4">Item 4</div>
-      <div id="item5">Item 5</div>
-    </polymer-selector>
-    
     <script>
       var assert = chai.assert;
       document.addEventListener('WebComponentsReady', function() {
-        // selector1
-        var s = document.querySelector('#selector1');
+        //
+        var s = document.querySelector('#selector');
         assert.equal(s.selected, null);
         assert.equal(s.selectedClass, 'polymer-selected');
-        assert.isFalse(s.multi);
+        assert.isTrue(s.multi);
         assert.equal(s.valueattr, 'name');
         assert.equal(s.items.length, 5);
-        // selector2
-        s = document.querySelector('#selector2');
-        assert.equal(s.selected, "item3");
-        assert.equal(s.selectedClass, 'my-selected');
-        done();
+        //
+        var eventCounter = 0;
+        s.addEventListener('polymer-select', function(e) {
+          if (e.detail.isSelected) {
+            eventCounter++;
+          }
+        });
+        s.selected = [0, 2];
+        setTimeout(function() {
+          assert.equal(eventCounter, 2);
+          assert.isTrue(s.children[0].classList.contains('polymer-selected'));
+          assert.isTrue(s.children[2].classList.contains('polymer-selected'));
+          done();
+        }.bind(this), 0);
+        
       });
     </script>
   </body>

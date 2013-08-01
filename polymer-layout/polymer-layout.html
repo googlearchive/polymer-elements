@@ -63,7 +63,7 @@ license that can be found in the LICENSE file.
               w: c.offsetWidth,
               h: c.offsetHeight
             };
-            if (!c.hasAttribute('fit')) {
+            if (!c.hasAttribute('fit') && !c.hasAttribute('flex')) {
               ww += c.offsetWidth;
               hh += c.offsetHeight;
               list.push(info);

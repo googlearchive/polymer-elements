@@ -10,14 +10,12 @@ license that can be found in the LICENSE file.
  */
 
 /**
- * @class polymer-file
- *
  * polymer-file provides File API operations.
  *
  * Examples:
  *
  *     <polymer-file id="file" readas="dataurl" 
-                     on-polymer-result="handleResult"></polymer-file>
+ *                   on-polymer-result="handleResult"></polymer-file>
  *     ...
  *     this.$.file.blob = new Blob(['abc', {type: 'text/plain'}]);
  *     this.$.file.read();
@@ -28,21 +26,24 @@ license that can be found in the LICENSE file.
  *                   result="{{result}}"></polymer-file>
  *     ...
  *     this.$.file.blob = new Blob(['abc', {type: 'text/plain'}]);
+ *
+ * @class polymer-file
  */
- /**
-  * Fired when a file read has complete.
-  * 
-  * @event polymer-result
-  * @param {Object} detail
-  * @param {Object} detail.result The result of the read.
-  */
-  /**
-  * Fired if there is an error in the file read.
-  * 
-  * @event polymer-error
-  * @param {Object} detail
-  * @param {Object} detail.error Information on the error.
-  */
+/**
+ * Fired when a file read has complete.
+ * 
+ * @event polymer-result
+ * @param {Object} detail
+ * @param {Object} detail.result The result of the read.
+ */
+/**
+ * Fired if there is an error in the file read.
+ * 
+ * @event polymer-error
+ * @param {Object} detail
+ * @param {Object} detail.error Information on the error.
+ * 
+ */
 -->
 <polymer-element name="polymer-file" attributes="blob result auto readas">
 <template>

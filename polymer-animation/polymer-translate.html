@@ -1,21 +1,13 @@
 <link rel="import" href="polymer-animation.html">
-<polymer-element name="polymer-translate" extends="polymer-animation">
+<polymer-element name="polymer-translate" extends="polymer-animation" attributes="fromX fromY toX toY">
   <template>
-  <!--
-    <g-property name="transform">
-      <g-keyframe value="translate({{fromX}},{{fromY}})"></g-keyframe>
-      <g-keyframe value="translate({{toX}},{{toY}})"></g-keyframe>
-    </g-property>
-  //-->
   </template>
   <script>
     Polymer('polymer-translate', {
-      publish: {
-        fromX: '0',
-        fromY: '0',
-        toX: '0',
-        toY: '0'
-      },
+      fromX: '0',
+      fromY: '0',
+      toX: '0',
+      toY: '0',
       fromXChanged: function() {
         this.generate();
       },
@@ -29,12 +21,10 @@
         this.generate();
       },
       generate: function() {
-        this.properties = {
-          transform: [
-            'translate(' + this.fromX + ',' + this.fromY + ')',
-            'translate(' + this.toX + ',' + this.toY + ')'
-          ]
-        };
+        this.keyframes = [
+          {transform: 'translate(' + this.fromX + ',' + this.fromY + ')'},
+          {transform: 'translate(' + this.toX + ',' + this.toY + ')'}
+        ];
       }
     });
   </script>

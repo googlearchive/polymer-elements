@@ -1,4 +1,9 @@
-.flexbox {
+/*
+Copyright 2013 The Polymer Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+*/
+.flexbox, [flexbox], [h-flexbox], [v-flexbox] {
   display: -webkit-box !important;
   display: -ms-flexbox !important;
   display: -moz-flex !important;
@@ -6,7 +11,7 @@
   display: flex !important;
 }
 
-.flexbox.row {
+.flexbox.row, [flexbox], [h-flexbox] {
   -webkit-box-orient: horizontal;
   -ms-flex-direction: row;
   -moz-flex-direction: row;
@@ -14,7 +19,7 @@
   flex-direction: row;
 }
 
-.flexbox.column {
+.flexbox.column, [v-flexbox] {
   -webkit-box-orient: vertical;
   -ms-flex-direction: column;
   -moz-flex-direction: column;
@@ -30,9 +35,9 @@
   flex: 1;
 }
 
-content::-webkit-distributed(.flex), 
-content::-webkit-distributed([flex]),
-content::-webkit-distributed([fit]) {
+::-webkit-distributed(.flex), 
+::-webkit-distributed([flex]),
+::-webkit-distributed([fit]) {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   -moz-flex: 1;
@@ -97,7 +102,7 @@ content::-webkit-distributed([fit]) {
 }
 
 @host {
-  .flexbox {
+  .flexbox, [flexbox], [h-flexbox], [v-flexbox] {
     display: -webkit-box !important;
     display: -ms-flexbox !important;
     display: -moz-flex !important;
@@ -105,7 +110,7 @@ content::-webkit-distributed([fit]) {
     display: flex !important;
   }
   
-  .flexbox.row {
+  .flexbox.row, [flexbox], [h-flexbox] {
     -webkit-box-orient: horizontal;
     -ms-flex-direction: row;
     -moz-flex-direction: row;
@@ -113,7 +118,7 @@ content::-webkit-distributed([fit]) {
     flex-direction: row;
   }
   
-  .flexbox.column {
+  .flexbox.column, [v-flexbox] {
     -webkit-box-orient: vertical;
     -ms-flex-direction: column;
     -moz-flex-direction: column;

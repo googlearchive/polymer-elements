@@ -7,4 +7,5 @@
 htmlSuite('polymer-selector', function() {
   htmlTest('html/polymer-selector-basic.html');
   htmlTest('html/polymer-selector-activate-event.html');
+  htmlTest('html/polymer-selector-multi.html');
 });
