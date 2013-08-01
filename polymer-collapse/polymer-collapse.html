@@ -8,7 +8,9 @@ license that can be found in the LICENSE file.
  * @module Polymer Elements
  */
 /**
- * polymer-collapse is used to add collapsible behavior to another element.
+ * polymer-collapse is used to add collapsible behavior to the
+ * target element.  It adjusts the height or width of the target element
+ * to make the element collapse and expand.
  *
  * Example:
  *
@@ -27,7 +29,7 @@ license that can be found in the LICENSE file.
  * @class polymer-collapse
  */
 -->
-<polymer-element name="polymer-collapse" attributes="targetId target horizontal closed duration fixedSize">
+<polymer-element name="polymer-collapse" attributes="targetId target horizontal closed duration fixedSize defaultClosed">
   <template>
     <style>
       @host {   
@@ -76,9 +78,9 @@ license that can be found in the LICENSE file.
        *
        * @attribute duration
        * @type number
-       * @default 0.5
+       * @default 0.33
        */
-      duration: 0.5,
+      duration: 0.33,
       /**
        * If true, the size of the target element is fixed and is set
        * on the element.  Otherwise it will try to 
@@ -91,6 +93,7 @@ license that can be found in the LICENSE file.
        */
       fixedSize: false,
       size: null,
+      defaultClosed: false,
       removed: function() {
         this.removeListeners(this.target);
       },
@@ -107,19 +110,22 @@ license that can be found in the LICENSE file.
         }
         this.horizontalChanged();
         if (this.target) {
+          this.target.style.overflow = 'hidden';
           this.addListeners(this.target);
         }
-        if (this.closed) {
+        if (this.closed || this.defaultClosed) {
           this.update();
         }
       },
       addListeners: function(node) {
-        node.addEventListener('webkitTransitionEnd', this.transitionEnd.bind(this));
-        node.addEventListener('transitionend', this.transitionEnd.bind(this));
+        this.transitionEndListener = this.transitionEndListener || 
+            this.transitionEnd.bind(this);
+        node.addEventListener('webkitTransitionEnd', this.transitionEndListener);
+        node.addEventListener('transitionend', this.transitionEndListener);
       },
       removeListeners: function(node) {
-        node.removeEventListener('webkitTransitionEnd', this.transitionEnd.bind(this));
-        node.removeEventListener('transitionend', this.transitionEnd.bind(this));
+        node.removeEventListener('webkitTransitionEnd', this.transitionEndListener);
+        node.removeEventListener('transitionend', this.transitionEndListener);
       },
       horizontalChanged: function() {
         this.dimension = this.horizontal ? 'width' : 'height';
@@ -132,7 +138,8 @@ license that can be found in the LICENSE file.
       },
       setTransitionDuration: function(duration) {
         var s = this.target.style;
-        s.webkitTransition = s.transition = duration ? (this.dimension + ' ' + duration + 's') : null;
+        s.webkitTransition = s.transition = duration ? 
+            (this.dimension + ' ' + duration + 's') : null;
         if (duration === 0) {
           this.asyncMethod('transitionEnd');
         }
@@ -162,7 +169,6 @@ license that can be found in the LICENSE file.
         if (this.fixedSize && this.closed) {
           this.size = getComputedStyle(this.target)[this.dimension];
         }
-        this.target.style.overflow = 'hidden';
         if (!this.size) {
           this.updateSize(this.calcSize(), null);
         }
@@ -176,7 +182,7 @@ license that can be found in the LICENSE file.
         }
         this.asyncMethod(function() {
           this.updateSize(this.size || s, this.duration);
-        });
+        }, null, 1);
       },
       hide: function() {
         this.asyncMethod(function() {

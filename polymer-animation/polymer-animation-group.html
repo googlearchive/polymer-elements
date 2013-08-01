@@ -12,22 +12,6 @@
       /**
        * Component for a group of animations.
        *
-       * A fade in and move animation in sequence:
-       *
-       *     <polymer-animation-group type="seq">
-       *       <polymer-animation>
-       *         <polymer-animation-prop name="opacity">
-       *           <polymer-animation-keyframe value="0.5" offset="0"></polymer-animation-keyframe>
-       *           <polymer-animation-keyframe value="1" offset="1"></polymer-animation-keyframe>
-       *         <polymer-animation-prop>
-       *       </polymer-animation>
-       *       <polymer-animation>
-       *         <polymer-animation-prop name="transform">
-       *           <polymer-animation-keyframe value="translateX(0)" offset="0"></polymer-animation-keyframe>
-       *           <polymer-animation-keyframe value="translateX(100px)" offset="1"></polymer-animation-keyframe>
-       *         <polymer-animation-prop>
-       *       </polymer-animation>
-       *     </polymer-animation-group>
        * @class polymer-animation-group
        */
       Polymer('polymer-animation-group', {
@@ -54,6 +38,13 @@
         },
         makeAnimation: function() {
           return new ANIMATION_GROUPS[this.type](this.childAnimations, this.timingProps);
+        },
+        doOnChildren: function(inFn) {
+          var children = this.children;
+          if (!children.length) {
+            children = this.webkitShadowRoot ? this.webkitShadowRoot.childNodes : [];
+          }
+          Array.prototype.forEach.call(children, inFn, this);
         },
         completeApply: function() {
           this.doOnChildren(function(c) {

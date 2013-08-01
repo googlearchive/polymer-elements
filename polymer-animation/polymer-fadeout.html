@@ -3,10 +3,11 @@
   <script>
     Polymer('polymer-fadeout', {
       publish: {
-        properties: {
-          targetSelector: '',
-          opacity: ["1", "0"]
-        }
+        targetSelector: '',
+        keyframes: [
+          {opacity: 1},
+          {opacity: 0}
+        ]
       }
     });
   </script>

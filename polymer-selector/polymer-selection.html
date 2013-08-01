@@ -43,9 +43,7 @@ license that can be found in the LICENSE file.
               this.selection.splice(i, 1);
             }
           }
-          // TODO(sjmiles): consider replacing with summary
-          // notifications (asynchronous job)
-          this.asyncFire("polymer-select", {isSelected: isSelected, item: item});
+          this.fire("polymer-select", {isSelected: isSelected, item: item});
         }
       },
       select: function(item) {

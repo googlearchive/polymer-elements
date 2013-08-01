@@ -14,17 +14,15 @@
       },
       generate: function() {
         var parsed = this.magnitude.match(/([\-0-9]+)(.*)/);
-        this.properties = {
-          transform: [
-            {offset: 0, value: 'translateY(0)'},
-            {offset: 0.2, value: 'translateY(0)'},
-            {offset: 0.4, value: 'translateY(' + this.magnitude + ')'},
-            {offset: 0.5, value: 'translateY(0)'},
-            {offset: 0.6, value:'translateY(' + Number(parsed[1]) / 2 + parsed[2] + ')'},
-            {offset: 0.8, value: 'translateY(0)'},
-            {offset: 1, value: 'translateY(0)'}
-          ]
-        };
+        this.keyframes = [
+          {offset: 0, transform: 'translateY(0)'},
+          {offset: 0.2, transform: 'translateY(0)'},
+          {offset: 0.4, transform: 'translateY(' + this.magnitude + ')'},
+          {offset: 0.5, transform: 'translateY(0)'},
+          {offset: 0.6, transform:'translateY(' + Number(parsed[1]) / 2 + parsed[2] + ')'},
+          {offset: 0.8, transform: 'translateY(0)'},
+          {offset: 1, transform: 'translateY(0)'}
+        ];
       }
     });
   </script>

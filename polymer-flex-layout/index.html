@@ -4,6 +4,7 @@
   <title>polymer-flex-layout</title>
   <script src="../../polymer/polymer.js"></script>
   <link rel="import" href="polymer-flex-layout.html">
+  <link rel="import" href="polymer-flex-panel.html">
   <style>
     body {
       font-size: 20px;
@@ -53,30 +54,30 @@
     </script>
   </polymer-element>
 
-  <polymer-element name="flex-container" extends="polymer-flex-layout" isContainer>
+  <polymer-element name="flex-container" extends="polymer-flex-panel">
     <template>
       <style>
-        div, polymer-flex-layout {
+        div, polymer-flex-panel {
           box-sizing: border-box;
           -moz-box-sizing: border-box;
           border: 2px solid #ccc;
         }
       </style>
       <div>Hi I'm some content</div>
-      <polymer-flex-layout isContainer vertical flex>
-        <polymer-flex-layout isContainer align="center">
+      <polymer-flex-panel vertical flex>
+        <polymer-flex-panel align="center">
           <h3>Title</h3>
           <button>hello</button>
-        </polymer-flex-layout>
-        <polymer-flex-layout isContainer flex>
+        </polymer-flex-panel>
+        <polymer-flex-panel flex>
           <div flex>Main content</div>
           <div>Sidebar content</div>
-        </polymer-flex-layout>
+        </polymer-flex-panel>
         <div>Some more stuffs...</div>
-        <polymer-flex-layout isContainer justify="end">
+        <polymer-flex-panel justify="end">
           <b>Footer</b>
-        </polymer-flex-layout>
-      </polymer-flex-layout>
+        </polymer-flex-panel>
+      </polymer-flex-panel>
       <div>A last bit, like a panel</div>
     </template>
   </polymer-element>
@@ -117,13 +118,13 @@
     </template>
   </polymer-element>
 
-  <h3>Using CSS class from polymer-flex-layout.css</h3>
+  <h3>polymer-flex-layout.css</h3>
   <flex-css></flex-css>
   <br>
-  <h3>polymer-flex-layout as a flexbox container</h3>
+  <h3>polymer-flex-panel element</h3>
   <flex-container></flex-container>
   <br>
-  <h3>Using polymer-flex-layout to add flexbox behavior to the parent node</h3>
+  <h3>polymer-flex-layout element</h3>
   <flex-nonvisual></flex-nonvisual>
 </body>
 </html>
