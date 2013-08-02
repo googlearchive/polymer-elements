@@ -256,10 +256,10 @@ license that can be found in the LICENSE file.
 				continueRenderOpened: function() {
 					this.target.classList.toggle('opened', this.opened);
 					this.target.classList.toggle('closing', !this.opened);
-					//this.animating = this.asyncMethod('completeOpening', null, this.timeout);
+					this.animating = this.asyncMethod('completeOpening', null, this.timeout);
 				},
 				completeOpening: function() {
-					//clearTimeout(this.animating);
+					clearTimeout(this.animating);
 					this.animating = null;
 					this.target.classList.remove('closing');
 					this.target.classList.toggle('revealed', this.opened);
