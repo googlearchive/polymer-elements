@@ -71,8 +71,8 @@ license that can be found in the LICENSE file.
 -->
 <polymer-element name="polymer-overlay" attributes="target opened autoCloseDisabled">
 	<template>
+		<link rel="stylesheet" polymer-scope="controller" href="polymer-overlay.css">
 		<link rel="stylesheet" href="polymer-overlay.css">
-		<link rel="stylesheet" polymer-scope="global" href="polymer-overlay-global.css">
 		<polymer-key-helper id="keyHelper"></polymer-key-helper>
 	</template>
 	<script>
@@ -162,6 +162,9 @@ license that can be found in the LICENSE file.
 						this.tabIndex = -1;
 					}
 					this.setAttribute('touch-action', 'none');
+				},
+				inserted: function() {
+					this.installControllerStyles();
 				},
 				/** 
 				 * Toggle the opened state of the overlay.
