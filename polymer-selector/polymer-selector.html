@@ -160,15 +160,14 @@ license that can be found in the LICENSE file.
       ready: function() {
         this.activateListener = this.activateHandler.bind(this);
         this.observer = new MutationObserver(this.updateSelected.bind(this));
-        //this.addListener(this);
         if (!this.target) {
           this.target = this;
         }
       },
       get items() {
-        var nodes = this.target ? (this.itemsSelector ? 
+        var nodes = this.target !== this ? (this.itemsSelector ? 
             this.target.querySelectorAll(this.itemsSelector) : 
-                this.target.children) : this.$ && this.$.items.getDistributedNodes();
+                this.target.children) : this.$.items.getDistributedNodes();
         return Array.prototype.filter.call(nodes || [], function(n) {
           return n && n.localName !== 'template';
         });
@@ -179,7 +178,6 @@ license that can be found in the LICENSE file.
           this.observer.disconnect();
         }
         if (this.target) {
-          //this.removeListener(this);
           this.addListener(this.target);
           this.observer.observe(this.target, {childList: true});
         }
