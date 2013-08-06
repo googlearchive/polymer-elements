@@ -29,66 +29,47 @@ license that can be found in the LICENSE file.
     </style>
   </template>
   <script>
-    (function() {
-      var CHROME_STORAGE = typeof window.chrome.storage !== 'undefined';
-      Polymer('polymer-localstorage', {
-        /**
-         * The key to the data stored in localStorage.
-         *
-         * @attribute name
-         * @type string
-         * @default null
-         */
-        /**
-         * The data associated with the specified name.
-         *
-         * @attribute value
-         * @type object
-         * @default null
-         */
-        /**
-         * If true, the value is stored and retrieved without JSON processing.
-         *
-         * @attribute useRaw
-         * @type boolean
-         * @default false
-         */
-        useRaw: false,
-        ready: function() {
-          this.load();
-          if (CHROME_STORAGE) {
-            this._boundLoaded = this._loaded.bind(this);
-          }
-        },
-        valueChanged: function() {
-          this.save();
-        },
-        _loaded: function(s) {
-          if (s && !this.useRaw) {
-            this.value = JSON.parse(s);
-          } else {
-            this.value = s;
-          }
-        },
-        load: function() {
-          if (CHROME_STORAGE) {
-            window.chrome.storage.local.get(this.name, this._boundLoaded);
-          } else {
-            var s = window.localStorage.getItem(this.name);
-            this._loaded(s);
-          }
-        },
-        save: function() {
-          var val = this.useRaw ? this.value : JSON.stringify(this.value);
-          if (CHROME_STORAGE) {
-            var obj = {};
-            obj[name] = val;
-            window.chrome.storage.local.set(obj);
-          } else {
-            window.localStorage.setItem(this.name, val);
-          }
+    Polymer('polymer-localstorage', {
+      /**
+       * The key to the data stored in localStorage.
+       *
+       * @attribute name
+       * @type string
+       * @default null
+       */
+      /**
+       * The data associated with the specified name.
+       *
+       * @attribute value
+       * @type object
+       * @default null
+       */
+      /**
+       * If true, the value is stored and retrieved without JSON processing.
+       *
+       * @attribute useRaw
+       * @type boolean
+       * @default false
+       */
+      useRaw: false,
+      ready: function() {
+        this.load();
+      },
+      valueChanged: function() {
+        this.save();
+      },
+      load: function() {
+        var s = window.localStorage.getItem(this.name);
+        if (s && !this.useRaw) {
+          this.value = JSON.parse(s);
+        } else {
+          this.value = s;
         }
-      });
+      },
+      save: function() {
+        window.localStorage.setItem(this.name, 
+          this.useRaw ? this.value : JSON.stringify(this.value));
+      }
     });
   </script>
 </polymer-element>
