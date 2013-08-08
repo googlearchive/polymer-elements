@@ -136,8 +136,9 @@
       var m = 0;
 
       function railize(count, sizeFn) {
-        // create rails for `count` tracks using `sizeFn(track)`
-        // tracks are bounded, so for n tracks there are (n+1) rails
+        //
+        // create rails for `count` tracks using sizing function `sizeFn(track)`
+        // for n tracks there are (n+1) rails
         //
         //   |track|track|track|
         //  0|->sz0|->sz1|<-sz2|0
@@ -145,7 +146,14 @@
         //   |track|track|track|
         //  0|->sz0|     |<-sz2|0
         //
-        //  0|
+        // there can be one elastic track per set
+        //
+        //   |track|track|track|track|
+        //  0|-->s0|-->s1|<--s1|<--s2|0
+        //
+        // sz1 spans two (>1) tracks which makes
+        // it elastic (it's underconstrained)
+        //
         var rails = [];
         var a = 0;
         for (var i=0; i<count; i++) {
@@ -170,21 +178,11 @@
         return rails;
       }
 
+      // TODO(sjmiles): this codes tries to preserve actual position,
+      // so 'unposition' is really 'naturalize' or something
       function unposition(box) {
         var style = box.style;
-        //style.left = style.right = style.top = style.bottom = style.width = style.height = '';
-        // TODO(sjmiles): this codes tries to preserve position,
-        // so 'unposition' is really 'naturalize' or something
-        /*
-        if (style.left && style.right) {
-          style.left = '';
-        }
-        if (style.top && style.bottom) {
-          style.top = '';
-        }
-        */
-        style.right = style.bottom = '';
-        style.width = style.height = '';
+        style.right = style.bottom = style.width = style.height = '';
         style.position = 'absolute';
         style.display = 'inline-block';
         style.boxSizing = style.mozBoxSizing = 'border-box';

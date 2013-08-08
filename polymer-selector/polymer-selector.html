@@ -159,23 +159,27 @@ license that can be found in the LICENSE file.
       notap: false,
       ready: function() {
         this.activateListener = this.activateHandler.bind(this);
-        this.addListener(this);
+        this.observer = new MutationObserver(this.updateSelected.bind(this));
+        if (!this.target) {
+          this.target = this;
+        }
       },
       get items() {
-        var nodes = this.target ? (this.itemsSelector ? 
+        var nodes = this.target !== this ? (this.itemsSelector ? 
             this.target.querySelectorAll(this.itemsSelector) : 
                 this.target.children) : this.$.items.getDistributedNodes();
-        return Array.prototype.filter.call(nodes, function(n) {
+        return Array.prototype.filter.call(nodes || [], function(n) {
           return n && n.localName !== 'template';
         });
       },
       targetChanged: function(old) {
         if (old) {
           this.removeListener(old);
+          this.observer.disconnect();
         }
         if (this.target) {
-          this.removeListener(this);
           this.addListener(this.target);
+          this.observer.observe(this.target, {childList: true});
         }
       },
       addListener: function(node) {
@@ -188,6 +192,9 @@ license that can be found in the LICENSE file.
         return this.$.selection.getSelection();
       },
       selectedChanged: function() {
+        this.updateSelected();
+      },
+      updateSelected: function() {
         this.validateSelected();
         if (this.multi) {
           this.clearSelection();

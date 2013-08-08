@@ -19,7 +19,7 @@ module.exports = function(grunt) {
           outdir: 'docs',
           linkNatives: 'true',
           tabtospace: 2,
-          themedir: 'tools/doc/themes/footstrap'
+          themedir: 'tools/doc/themes/polymerase'
         }
       }
     }
