@@ -29,16 +29,17 @@ license that can be found in the LICENSE file.
             };
           });
           var nom = this.name;
-          return map.filter(function(kv){ return kv.name === nom })[0];
+          return map.filter(function(kv){ return kv.name === nom; })[0];
         },
         load: function() {
           var kv = this.parseCookie();
           this.value = kv && kv.value;
         },
-        // TODO(dfreedman): collapse these when 'multiple props -> single change function' exists in Polymer
         valueChanged: function() {
+          this.expire = FOREVER;
           this.save();
         },
+        // TODO(dfreedman): collapse these when 'multiple props -> single change function' exists in Polymer
         expiresChanged: function() {
           this.save();
         },
@@ -65,7 +66,7 @@ license that can be found in the LICENSE file.
           for (var i = 0, k; i < cookieProps.length; i++) {
             k = cookieProps[i];
             if (this[k]) {
-              prepared += ';' + escape(k) + '=' escape(this[k]);
+              prepared += (';' + k + '=' + this[k]);
             }
           }
           return prepared;
