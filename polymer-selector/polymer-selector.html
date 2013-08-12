@@ -226,8 +226,10 @@ license that can be found in the LICENSE file.
       valueToSelection: function(value) {
         var item = (value === null || value === undefined) ? 
             null : this.items[this.valueToIndex(value)];
-        this.selectedItem = item;
         this.$.selection.select(item);
+      },
+      updateSelectedItem: function() {
+        this.selectedItem = this.selection;
       },
       selectedItemChanged: function() {
         if (this.selectedItem) {
@@ -252,6 +254,7 @@ license that can be found in the LICENSE file.
       },
       // events fired from <polymer-selection> object
       selectionSelect: function(e, detail) {
+        this.updateSelectedItem();
         if (detail.item) {
           this.applySelection(detail.item, detail.isSelected)
         }
