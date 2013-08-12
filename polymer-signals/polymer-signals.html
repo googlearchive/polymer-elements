@@ -23,7 +23,7 @@ license that can be found in the LICENSE file.
       function notify(name, data) {
         // convert generic-signal event to named-signal event
         var signal = new CustomEvent('polymer-signal-' + name, {
-          bubbles: false,
+          bubbles: true,
           detail: data
         });
         // disptach named-signal to all 'signals' instances,
