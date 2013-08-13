@@ -20,10 +20,13 @@ license that can be found in the LICENSE file.
         if (!this.isContainer) {
           this.style.display = 'none';
         }
-        this.layoutContainer.classList.add('flexbox');
-        this.verticalChanged();
-        this.alignChanged();
-        this.justifyChanged();
+        this.asyncMethod(function() {
+          this.layoutContainer && this.layoutContainer.classList.add('flexbox');
+          this.verticalChanged();
+          this.alignChanged();
+          this.justifyChanged();
+        });
+        
       },
       switchContainerClass: function(prefix, old, name) {
         if (this.layoutContainer && name) {
