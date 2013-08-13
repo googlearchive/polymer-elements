@@ -62,7 +62,7 @@
         // set selected
         s.selected = 'item5';
         Platform.flush();
-        setTimeout(function() {
+        Platform.endOfMicrotask(function() {
           // check polymer-select event
           assert.equal(selectEventCounter, 1);
           // check selected class
@@ -73,11 +73,11 @@
           selectEventCounter = 0;
           s.selected = 'item5';
           Platform.flush();
-          setTimeout(function() {
+          Platform.endOfMicrotask(function() {
             assert.equal(selectEventCounter, 0);
             done();
-          }.bind(this), 0);
-        }.bind(this), 0);
+          });
+        });
       });
     </script>
   </body>
