@@ -6,7 +6,7 @@ license that can be found in the LICENSE file.
 <polymer-element name="polymer-google-jsapi">
   <script>
     Polymer('polymer-google-jsapi', {
-      ready: function() {
+      created: function() {
         switch (state) {
           case '':
             load();

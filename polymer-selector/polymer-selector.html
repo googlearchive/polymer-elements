@@ -159,7 +159,7 @@ license that can be found in the LICENSE file.
       itemsSelector: '',
       activateEvent: 'tap',
       notap: false,
-      ready: function() {
+      created: function() {
         this.activateListener = this.activateHandler.bind(this);
         this.observer = new MutationObserver(this.updateSelected.bind(this));
         if (!this.target) {

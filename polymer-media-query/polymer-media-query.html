@@ -22,7 +22,7 @@ license that can be found in the LICENSE file.
     Polymer('polymer-media-query', {
       queryMatches: false,
       query: '',
-      ready: function() {
+      created: function() {
         this._mqHandler = this.queryHandler.bind(this);
         this._mq = null;
       },

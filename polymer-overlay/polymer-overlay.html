@@ -157,13 +157,13 @@ license that can be found in the LICENSE file.
 				autoCloseDisabled: false,
 				timeout: 1000,
 				captureEventType: 'tap',
-				ready: function() {
+				created: function() {
 					if (this.tabIndex === undefined) {
 						this.tabIndex = -1;
 					}
 					this.setAttribute('touch-action', 'none');
 				},
-				inserted: function() {
+				enteredDocument: function() {
 					this.installControllerStyles();
 				},
 				/** 
