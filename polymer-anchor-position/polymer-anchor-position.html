@@ -1,0 +1,112 @@
+<!--
+/**
+ * @module Polymer Elements
+ */
+/**
+ * polymer-anchor-position can be used to align two nodes. The node to
+ * use as the reference position is the anchor node, and the node to
+ * be positioned is the target node.
+ *
+ * Both the anchor and target nodes should have an anchor-position
+ * attribute. The target node is positioned such that its anchor-position
+ * aligns with the anchor node's anchor-position.
+ *
+ * Note: The target node is positioned with position: fixed, and will not
+ * scroll with the page.
+ *
+ * Example:
+ *
+ *    <div id="anchor" anchor-position="bottom left"></div>
+ *    <div id="target" anchor-position="top left"></div>
+ *    <polymer-anchor-position id="anchor-helper"></polymer-anchor-position>
+ *    <script>
+ *        var helper = document.querySelector('#anchor-helper');
+ *        helper.anchor = document.querySelector('#anchor');
+ *        helper.target = document.querySelector('#target');
+ *        helper.apply();
+ *    </script>
+ *
+ * @class polymer-anchor-position
+ */
+ -->
+<polymer-element name="polymer-anchor-position" attributes="target anchor">
+	<script>
+		var DEFAULT_ANCHOR_POSITION = 'center center';
+
+		function getAnchorPosition(node) {
+			return node.getAttribute('anchor-position') || DEFAULT_ANCHOR_POSITION;
+		};
+
+		(function() {
+			Polymer('polymer-anchor-position', {
+				/**
+				 * The node to be positioned.
+				 * @attribute target
+				 * @type Node
+				 */
+				target: null,
+				/**
+				 * The node to align the target to.
+				 * @attribute anchor
+				 * @type node
+				 */
+				anchor: null,
+				canPosition: function() {
+					return this.target && this.anchor;
+				},
+				apply: function() {
+					if (!this.canPosition()) {
+						return;
+					}
+					var pos = this.getAnchorPosition();
+					this.target.style.position = 'fixed';
+					this.target.style.top = pos.top + 'px';
+					this.target.style.left = pos.left + 'px';
+				},
+				getAnchorPosition: function() {
+					var pos;
+					var rect = this.anchor.getBoundingClientRect();
+					var anchorPos = getAnchorPosition(this.anchor);
+					if (anchorPos) {
+						pos = {};
+						if (anchorPos.indexOf('top') != -1) {
+							pos.top = rect.top;
+						} else if (anchorPos.indexOf('bottom') != -1) {
+							pos.top = rect.bottom;
+						} else {
+							pos.top = rect.top + rect.height / 2;
+						}
+						if (anchorPos.indexOf('left') != -1) {
+							pos.left = rect.left;
+						} else if (anchorPos.indexOf('right') != -1) {
+							pos.left = rect.right;
+						} else {
+							pos.left = rect.left + rect.width / 2;
+						}
+					} else {
+						pos = {
+							left: rect.left,
+							top: rect.top
+						}
+					}
+					// adjust by this element's target anchor pos
+					if (this.target) {
+						var targetRect = this.target.getBoundingClientRect();
+						var targetAnchorPos = getAnchorPosition(this.target);
+						if (targetAnchorPos.indexOf('bottom') != -1) {
+							pos.top -= targetRect.height;
+						} else if (targetAnchorPos.indexOf('top') === -1) {
+							pos.top -= targetRect.height / 2;
+						}
+						if (targetAnchorPos.indexOf('right') != -1) {
+							pos.left -= targetRect.width;
+						} else if (targetAnchorPos.indexOf('left') === -1) {
+							pos.left -= targetRect.width / 2;
+						}
+					}
+					return pos;
+				}
+			});
+		})();
+	</script>
+</polymer-element>

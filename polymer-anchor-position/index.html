@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+	<head>
+		<title>polymer-anchor-position</title>
+		<link rel="import" href="../../polymer-ui-elements/polymer-ui-icon-button/polymer-ui-icon-button.html">
+		<link rel="import" href="../../polymer-ui-elements/polymer-ui-toolbar/polymer-ui-toolbar.html">
+		<link rel="import" href="polymer-anchor-position.html">
+		<script src="../../polymer/polymer.js"></script>
+		<link rel="stylesheet" href="../../polymer-ui-elements/basic.css">
+		<style>
+			html, body {
+				margin: 0;
+				padding: 0;
+			}
+			html, body, #container {
+				height: 100%;
+			}
+			#target {
+				padding: 5px;
+				border: 1px solid black;
+				display: none;
+			}
+			#target.active {
+				display: block;
+			}
+		</style>
+	</head>
+	<body class="polymer-ui-body-text">
+		<div id="container">
+			<polymer-flex-layout vertical="true"></polymer-flex-layout>
+			<polymer-ui-toolbar theme="polymer-ui-light-theme" onclick="toggle(event)">
+				<polymer-ui-icon-button icon="menu" anchor-position="bottom left" target-anchor-position="top left"></polymer-ui-icon-button>
+				<div flex></div>
+				<polymer-ui-icon-button icon="refresh" anchor-position="bottom center" target-anchor-position="top center"></polymer-ui-icon-button>
+				<div flex></div>
+				<polymer-ui-icon-button icon="add" anchor-position="bottom right" target-anchor-position="top right"></polymer-ui-icon-button>
+			</polymer-ui-toolbar>
+			<div flex></div>
+			<polymer-ui-toolbar theme="polymer-ui-light-theme" onclick="toggle(event)">
+				<polymer-ui-icon-button icon="drawer" anchor-position="top left" target-anchor-position="bottom left"></polymer-ui-icon-button>
+				<polymer-ui-icon-button icon="dots" anchor-position="top center" target-anchor-position="bottom center"></polymer-ui-icon-button>
+				<div flex></div>
+				<polymer-ui-icon-button icon="search" anchor-position="top right" target-anchor-position="bottom right"></polymer-ui-icon-button>
+			</polymer-ui-toolbar>
+		</div>
+		<div id="target"></div>
+		<polymer-anchor-position id="anchorable"></polymer-anchor-position>
+		<script>
+			function toggle(e) {
+				var anchorable = document.querySelector('#anchorable');
+				var target = document.querySelector('#target');
+				var anchor = e.target;
+				if (target.classList.contains('active')) {
+					target.classList.remove('active');
+				} else {
+					var targetAnchorPos = anchor.getAttribute('target-anchor-position');
+					target.setAttribute('anchor-position', targetAnchorPos);
+					target.innerHTML = 'anchor-position: ' + anchor.getAttribute('anchor-position') + '<br>' + 'target anchor-position: ' + targetAnchorPos;
+					anchorable.target = target;
+					anchorable.anchor = anchor;
+					target.classList.add('active');
+					anchorable.apply();
+				}
+			}
+		</script>
+	</body>
+</html>
