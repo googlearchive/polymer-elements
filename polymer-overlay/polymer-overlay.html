@@ -81,6 +81,8 @@ license that can be found in the LICENSE file.
 			var overlays = [];
 			var trackOverlays = function(inOverlay) {
 				if (inOverlay.opened) {
+					//var overlayZ = window.getComputedStyle(inOverlay.target).zIndex;
+					//var z0 = Math.max(currentOverlayZ(), overlayZ);
 					var z0 = currentOverlayZ();
 					overlays.push(inOverlay);
 					var z1 = currentOverlayZ();
