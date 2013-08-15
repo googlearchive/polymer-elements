@@ -29,7 +29,7 @@ license that can be found in the LICENSE file.
  * @class polymer-collapse
  */
 -->
-<polymer-element name="polymer-collapse" attributes="targetId target horizontal closed duration fixedSize defaultClosed">
+<polymer-element name="polymer-collapse" attributes="targetId target horizontal closed duration fixedSize">
   <template>
     <style>
       @host {   
@@ -93,7 +93,6 @@ license that can be found in the LICENSE file.
        */
       fixedSize: false,
       size: null,
-      defaultClosed: false,
       removed: function() {
         this.removeListeners(this.target);
       },
@@ -113,9 +112,7 @@ license that can be found in the LICENSE file.
           this.target.style.overflow = 'hidden';
           this.addListeners(this.target);
         }
-        if (this.closed || this.defaultClosed) {
-          this.update();
-        }
+        this.update();
       },
       addListeners: function(node) {
         this.transitionEndListener = this.transitionEndListener || 

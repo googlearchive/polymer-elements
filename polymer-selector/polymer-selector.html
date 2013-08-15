@@ -8,9 +8,9 @@ license that can be found in the LICENSE file.
  * @module Polymer Elements
  */
 /**
- * polymer-selector is used to display a list of elements that can be selected.
+ * polymer-selector is used to manage a list of elements that can be selected.
  * The attribute "selected" indicates which item element is being selected.
- * Tapping on the item element would fire "polymer-activate" event. And use
+ * Tapping on the item element would fire "polymer-activate" event. Use
  * "polymer-select" event to listen for selection changes.
  *
  * Example:
@@ -43,7 +43,7 @@ license that can be found in the LICENSE file.
  * 
  * @event polymer-select
  * @param {Object} detail
- *   @param {boolean} isSelected
+ *   @param {boolean} detail.isSelected true for selection and false for deselection
  *   @param {Object} detail.item the item element
  */
 /**
@@ -92,7 +92,7 @@ license that can be found in the LICENSE file.
        *     this.$.selector.selected = ['foo', 'zot'];
        *
        * @attribute selected
-       * @type string or array
+       * @type Object
        * @default null
        */
       selected: null,
@@ -130,7 +130,8 @@ license that can be found in the LICENSE file.
        */
       selectedProperty: 'active',
       /**
-       * Returns the currently selected element.
+       * Returns the currently selected element. In multi-selection this returns
+       * an array of selected elements.
        * 
        * @attribute selectedItem
        * @type Object
@@ -147,7 +148,8 @@ license that can be found in the LICENSE file.
        */
       selectedModel: null,
       /**
-       * The target element that contains items.
+       * The target element that contains items.  If this is not set 
+       * polymer-selector is the container.
        * 
        * @attribute target
        * @type Object
@@ -157,7 +159,7 @@ license that can be found in the LICENSE file.
       itemsSelector: '',
       activateEvent: 'tap',
       notap: false,
-      ready: function() {
+      created: function() {
         this.activateListener = this.activateHandler.bind(this);
         this.observer = new MutationObserver(this.updateSelected.bind(this));
         if (!this.target) {
@@ -206,7 +208,7 @@ license that can be found in the LICENSE file.
         }
       },
       validateSelected: function() {
-        // convert to an arrray for multi-selection
+        // convert to an array for multi-selection
         if (this.multi && !Array.isArray(this.selected) && 
             this.selected !== null && this.selected !== undefined) {
           this.selected = [this.selected];
@@ -226,8 +228,10 @@ license that can be found in the LICENSE file.
       valueToSelection: function(value) {
         var item = (value === null || value === undefined) ? 
             null : this.items[this.valueToIndex(value)];
-        this.selectedItem = item;
         this.$.selection.select(item);
+      },
+      updateSelectedItem: function() {
+        this.selectedItem = this.selection;
       },
       selectedItemChanged: function() {
         if (this.selectedItem) {
@@ -252,6 +256,7 @@ license that can be found in the LICENSE file.
       },
       // events fired from <polymer-selection> object
       selectionSelect: function(e, detail) {
+        this.updateSelectedItem();
         if (detail.item) {
           this.applySelection(detail.item, detail.isSelected)
         }

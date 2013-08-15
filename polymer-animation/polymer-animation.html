@@ -13,7 +13,7 @@
         if (p) {
           target = p.querySelector(inSelector);
         }
-        if (!target && p.host) {
+        if (!target && p && p.host) {
           target = findTarget(inSelector, p.host);
         }
         return target;
@@ -133,7 +133,7 @@
           autoplay: false
         },
         animation: false,
-        ready: function() {
+        created: function() {
           this.asyncApply();
         },
         /**

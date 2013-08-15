@@ -1,4 +1,4 @@
-﻿<!--
+<!--
 Copyright 2013 The Polymer Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
@@ -7,7 +7,7 @@ license that can be found in the LICENSE file.
   <script>
     (function(){
       Polymer('polymer-signals', {
-        inserted: function() {
+        enteredDocument: function() {
           signals.push(this);
         },
         removed: function() {
@@ -23,7 +23,7 @@ license that can be found in the LICENSE file.
       function notify(name, data) {
         // convert generic-signal event to named-signal event
         var signal = new CustomEvent('polymer-signal-' + name, {
-          bubbles: false,
+          bubbles: true,
           detail: data
         });
         // disptach named-signal to all 'signals' instances,

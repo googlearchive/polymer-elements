@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html>
 <head>
   <title>polymer-grid-layout example</title>
@@ -63,7 +63,7 @@
           [5, 3]
         ]],
         outputLayout: 0,
-        ready: function() {
+        created: function() {
           this.nodes = [this.$.toolbar, this.$.sidebar, this.$.workspace, this.$.output, this.$.outputToolbar];
           this.outputLayoutChanged();
           setInterval(this.toggleLayout.bind(this), 2500);

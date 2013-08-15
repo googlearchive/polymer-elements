@@ -16,10 +16,10 @@ license that can be found in the LICENSE file.
   <script>
     Polymer('polymer-layout', {
       vertical: false,
-      ready: function() {
+      created: function() {
         this.setAttribute('nolayout', '');
       },
-      inserted: function() {
+      enteredDocument: function() {
         this.asyncMethod(function() {
           this.prepare();
           this.layout();

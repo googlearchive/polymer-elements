@@ -32,23 +32,39 @@
         assert.isTrue(s.multi);
         assert.equal(s.valueattr, 'name');
         assert.equal(s.items.length, 5);
-        //
-        var eventCounter = 0;
+        // setup listener for polymer-select event
+        var selectEventCounter = 0;
         s.addEventListener('polymer-select', function(e) {
           if (e.detail.isSelected) {
-            eventCounter++;
+            selectEventCounter++;
+          } else {
+            selectEventCounter--;
           }
+          // check selectedItem in polymer-select event
+          assert.equal(this.selectedItem.length, selectEventCounter);
         });
-        setTimeout(function() {
+        Platform.endOfMicrotask(function() {
+          // set selected
           s.selected = [0, 2];
           Platform.flush();
-          setTimeout(function() {
-            assert.equal(eventCounter, 2);
+          Platform.endOfMicrotask(function() {
+            // check polymer-select event
+            assert.equal(selectEventCounter, 2);
+            // check selected class
             assert.isTrue(s.children[0].classList.contains('polymer-selected'));
             assert.isTrue(s.children[2].classList.contains('polymer-selected'));
+            // check selectedItem
+            assert.equal(s.selectedItem.length, 2);
+            assert.equal(s.selectedItem[0], s.children[0]);
+            assert.equal(s.selectedItem[1], s.children[2]);
+            // tap on already selected element should unselect it
+            s.children[0].dispatchEvent(new CustomEvent('tap', {bubbles: true}));
+            // check selected
+            assert.equal(s.selected.length, 1);
+            assert.isFalse(s.children[0].classList.contains('polymer-selected'));
             done();
-          }.bind(this), 0);
-        }.bind(this), 0);
+          });
+        });
       });
     </script>
   </body>

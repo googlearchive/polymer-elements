@@ -20,10 +20,10 @@ license that can be found in the LICENSE file.
       vertical: false,
       targetId: '',
       target: null,
-      ready: function() {
+      created: function() {
         this.setAttribute('nolayout', '');
       },
-      inserted: function() {
+      enteredDocument: function() {
         this.target = this.parentNode;
       },
       targetIdChanged: function() {

@@ -13,17 +13,20 @@ license that can be found in the LICENSE file.
     Polymer('polymer-flex-layout', {
       vertical: false,
       isContainer: false,
-      inserted: function() {
+      enteredDocument: function() {
         this.installControllerStyles();
         this.layoutContainer = this.isContainer ? 
             this : (this.parentNode.host || this.parentNode);
         if (!this.isContainer) {
           this.style.display = 'none';
         }
-        this.layoutContainer.classList.add('flexbox');
-        this.verticalChanged();
-        this.alignChanged();
-        this.justifyChanged();
+        this.asyncMethod(function() {
+          this.layoutContainer && this.layoutContainer.classList.add('flexbox');
+          this.verticalChanged();
+          this.alignChanged();
+          this.justifyChanged();
+        });
+        
       },
       switchContainerClass: function(prefix, old, name) {
         if (this.layoutContainer && name) {

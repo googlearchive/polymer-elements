@@ -50,7 +50,34 @@
         s = document.querySelector('#selector2');
         assert.equal(s.selected, "item3");
         assert.equal(s.selectedClass, 'my-selected');
-        done();
+        // setup listener for polymer-select event
+        var selectEventCounter = 0;
+        s.addEventListener('polymer-select', function(e) {
+          if (e.detail.isSelected) {
+            selectEventCounter++;
+            // selectedItem and detail.item should be the same
+            assert.equal(e.detail.item, s.selectedItem);
+          }
+        });
+        // set selected
+        s.selected = 'item5';
+        Platform.flush();
+        Platform.endOfMicrotask(function() {
+          // check polymer-select event
+          assert.equal(selectEventCounter, 1);
+          // check selected class
+          assert.isTrue(s.children[4].classList.contains('my-selected'));
+          // check selectedItem
+          assert.equal(s.selectedItem, s.children[4]);
+          // selecting the same value shouldn't fire polymer-select
+          selectEventCounter = 0;
+          s.selected = 'item5';
+          Platform.flush();
+          Platform.endOfMicrotask(function() {
+            assert.equal(selectEventCounter, 0);
+            done();
+          });
+        });
       });
     </script>
   </body>

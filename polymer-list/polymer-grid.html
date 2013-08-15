@@ -5,7 +5,7 @@
   </template>
   <script>
     Polymer('grid-item', {
-      ready: function() {
+      created: function() {
         /*
         var h = Math.floor(Math.random()*360);
         var light = Boolean(Math.random() > 0.5);
@@ -112,7 +112,7 @@
       limit: 20,
       items: null,
       scrub: 0,
-      ready: function() {
+      created: function() {
         if (!this.items) {
           this.items = [];
           for (var i = 0; i < 5000; i++) {
@@ -130,7 +130,7 @@
           }
         }
       },
-      inserted: function() {
+      enteredDocument: function() {
         this._move();
       },
       stop: function() {
