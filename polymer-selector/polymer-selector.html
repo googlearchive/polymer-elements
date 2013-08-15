@@ -166,6 +166,14 @@ license that can be found in the LICENSE file.
           this.target = this;
         }
       },
+	   enteredDocument: function () {
+        var items = this.items;
+        for (var i = 0, len = items.length; i < len; i++) {
+            var item = items[i];
+            if (!(item.style.display === "none")) {
+                item.setAttribute("tabIndex", "0");
+            }
+        }},
       get items() {
         var nodes = this.target !== this ? (this.itemsSelector ? 
             this.target.querySelectorAll(this.itemsSelector) : 
