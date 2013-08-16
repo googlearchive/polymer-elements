@@ -16,22 +16,33 @@
     
     <script>
       var assert = chai.assert;
+      var delay = 200;
       document.addEventListener('WebComponentsReady', function() {
         var c = document.querySelector('#collapse');
-        var origH = getBoxHeight();
-        assert.notEqual(origH, 0);
-        c.closed = true;
+        assert.equal(c.closed, false);
+        Platform.flush();
         setTimeout(function() {
-          assert.equal(getBoxHeight(), 0);
-          c.closed = false;
+          var origH = getComputedBoxHeight();
+          assert.notEqual(origH, 0);
+          c.closed = true;
+          Platform.flush();
           setTimeout(function() {
-            assert.equal(getBoxHeight(), origH);
-            done();
-          }, 200);
-        }, 200);
+            // after closed, height is 0
+            assert.equal(getComputedBoxHeight(), 0);
+            c.closed = false;
+            Platform.flush();
+            setTimeout(function() {
+              // verify computed height
+              assert.equal(getComputedBoxHeight(), origH);
+              // after opened, height is set to 'auto'
+              assert.equal(document.querySelector('#box').style.height, 'auto');
+              done();
+            }, delay);
+          }, delay);
+        }, delay);
       });
       
-      function getBoxHeight() {
+      function getComputedBoxHeight() {
         var b = document.querySelector('#box');
         return parseInt(getComputedStyle(b).height);
       }
