@@ -29,7 +29,7 @@ license that can be found in the LICENSE file.
  * @class polymer-collapse
  */
 -->
-<polymer-element name="polymer-collapse" attributes="targetId target horizontal closed duration fixedSize">
+<polymer-element name="polymer-collapse" attributes="targetId target horizontal closed duration fixedSize size">
   <template>
     <style>
       @host {   
@@ -93,7 +93,7 @@ license that can be found in the LICENSE file.
        */
       fixedSize: false,
       size: null,
-      removed: function() {
+      leftDocument: function() {
         this.removeListeners(this.target);
       },
       targetIdChanged: function() {
@@ -147,9 +147,15 @@ license that can be found in the LICENSE file.
         }
         this.setTransitionDuration(null);
       },
-      updateSize: function(size, duration) {
+      updateSize: function(size, duration, forceEnd) {
         this.setTransitionDuration(duration);
-        this.target.style[this.dimension] = size;
+        var s = this.target.style;
+        var nochange = s[this.dimension] === size;
+        s[this.dimension] = size;
+        // transitonEnd will not be called if the size has not changed
+        if (forceEnd && nochange) {
+          this.transitionEnd();
+        }
       },
       update: function() {
         if (!this.target) {
@@ -178,7 +184,7 @@ license that can be found in the LICENSE file.
           this.updateSize(orig, null);
         }
         this.asyncMethod(function() {
-          this.updateSize(this.size || s, this.duration);
+          this.updateSize(this.size || s, this.duration, true);
         }, null, 1);
       },
       hide: function() {
