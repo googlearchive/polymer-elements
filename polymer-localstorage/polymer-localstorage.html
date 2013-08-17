@@ -37,6 +37,7 @@ license that can be found in the LICENSE file.
        * @type string
        * @default null
        */
+     name: '',
       /**
        * The data associated with the specified name.
        *
@@ -44,6 +45,7 @@ license that can be found in the LICENSE file.
        * @type object
        * @default null
        */
+     value: null,
       /**
        * If true, the value is stored and retrieved without JSON processing.
        *
@@ -52,23 +54,31 @@ license that can be found in the LICENSE file.
        * @default false
        */
       useRaw: false,
-      created: function() {
-        this.load();
+      enteredDocument: function() {
+        // wait for bindings are all setup
+        this.asyncMethod('load');
       },
       valueChanged: function() {
-        this.save();
+        if (this.loaded) {
+          this.save();
+        }
       },
       load: function() {
         var s = window.localStorage.getItem(this.name);
-        if (s && !this.useRaw) {
-          this.value = JSON.parse(s);
+        if (s !== null && !this.useRaw) {
+          try {
+            this.value = JSON.parse(s);
+          } catch (x) {
+            this.value = s;
+          }
         } else {
           this.value = s;
         }
+        this.loaded = true;
       },
       save: function() {
         window.localStorage.setItem(this.name, 
-          this.useRaw ? this.value : JSON.stringify(this.value));
+            this.useRaw ? this.value : JSON.stringify(this.value));
       }
     });
   </script>
