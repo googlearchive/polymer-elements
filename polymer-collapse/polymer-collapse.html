@@ -117,6 +117,7 @@ license that can be found in the LICENSE file.
         if (this.target) {
           this.target.style.overflow = 'hidden';
           this.addListeners(this.target);
+          // set polymer-collapse-closed class initially to hide the target
           this.toggleClosedClass(true);
         }
         // don't need to update if the size is already set and it's opened
@@ -187,6 +188,13 @@ license that can be found in the LICENSE file.
       },
       show: function() {
         this.toggleClosedClass(false);
+        // for initial update, skip the expanding animation to optimize
+        // performance e.g. skip calcSize
+        if (!this.afterInitialUpdate) {
+          this.afterInitialUpdate = true;
+          this.transitionEnd();
+          return;
+        }
         if (!this.fixedSize) {
           this.updateSize('auto', null);
           var s = this.calcSize();
@@ -197,6 +205,7 @@ license that can be found in the LICENSE file.
         }, null, 1);
       },
       hide: function() {
+        this.afterInitialUpdate = true;
         // don't need to do anything if it's already hidden
         if (this.hasClosedClass && !this.fixedSize) {
           return;
