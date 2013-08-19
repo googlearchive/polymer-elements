@@ -22,18 +22,20 @@
         assert.equal(c.closed, false);
         Platform.flush();
         setTimeout(function() {
-          var origH = getComputedBoxHeight();
+          var origH = getBoxComputedHeight();
           assert.notEqual(origH, 0);
           c.closed = true;
           Platform.flush();
           setTimeout(function() {
             // after closed, height is 0
-            assert.equal(getComputedBoxHeight(), 0);
+            assert.equal(getBoxComputedHeight(), 0);
+            // should be set to display: none
+            assert.equal(getBoxComputedStyle().display, 'none');
             c.closed = false;
             Platform.flush();
             setTimeout(function() {
               // verify computed height
-              assert.equal(getComputedBoxHeight(), origH);
+              assert.equal(getBoxComputedHeight(), origH);
               // after opened, height is set to 'auto'
               assert.equal(document.querySelector('#box').style.height, 'auto');
               done();
@@ -42,9 +44,13 @@
         }, delay);
       });
       
-      function getComputedBoxHeight() {
+      function getBoxComputedStyle() {
         var b = document.querySelector('#box');
-        return parseInt(getComputedStyle(b).height);
+        return getComputedStyle(b);
+      }
+      
+      function getBoxComputedHeight() {
+        return parseInt(getBoxComputedStyle().height);
       }
     </script>
   </body>

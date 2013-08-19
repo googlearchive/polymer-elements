@@ -31,6 +31,8 @@ license that can be found in the LICENSE file.
 -->
 <polymer-element name="polymer-collapse" attributes="targetId target horizontal closed duration fixedSize size">
   <template>
+    <link rel="stylesheet" polymer-scope="controller" href="polymer-collapse.css">
+    <link rel="stylesheet" href="polymer-collapse.css">
     <style>
       @host {   
         * {
@@ -93,6 +95,10 @@ license that can be found in the LICENSE file.
        */
       fixedSize: false,
       size: null,
+      enteredDocument: function() {
+        this.installControllerStyles();
+        this.inDocument = true;
+      },
       leftDocument: function() {
         this.removeListeners(this.target);
       },
@@ -111,8 +117,12 @@ license that can be found in the LICENSE file.
         if (this.target) {
           this.target.style.overflow = 'hidden';
           this.addListeners(this.target);
+          this.toggleClosedClass(true);
         }
-        this.update();
+        // don't need to update if the size is already set and it's opened
+        if (!this.fixedSize || !this.closed) {
+          this.asyncUpdate();
+        }
       },
       addListeners: function(node) {
         this.transitionEndListener = this.transitionEndListener || 
@@ -128,7 +138,7 @@ license that can be found in the LICENSE file.
         this.dimension = this.horizontal ? 'width' : 'height';
       },
       closedChanged: function() {
-        this.update();
+        this.asyncUpdate();
       },
       toggle: function() {
         this.closed = !this.closed;
@@ -142,10 +152,15 @@ license that can be found in the LICENSE file.
         }
       },
       transitionEnd: function() {
-        if (!this.closed && !this.size) {
+        if (!this.closed && !this.fixedSize) {
           this.updateSize('auto', null);
         }
         this.setTransitionDuration(null);
+        this.toggleClosedClass(this.closed);
+      },
+      toggleClosedClass: function(add) {
+        this.hasClosedClass = add;
+        this.target.classList.toggle('polymer-collapse-closed', add);
       },
       updateSize: function(size, duration, forceEnd) {
         this.setTransitionDuration(duration);
@@ -157,37 +172,41 @@ license that can be found in the LICENSE file.
           this.transitionEnd();
         }
       },
+      asyncUpdate: function() {
+        this.updateJob = this.job(this.updateJob, this.update, 0);
+      },
       update: function() {
-        if (!this.target) {
+        if (!this.target || !this.inDocument) {
           return;
         }
         this.horizontalChanged();
-        this.prepare();
         this[this.closed ? 'hide' : 'show']();
       },
       calcSize: function() {
         return this.target.getBoundingClientRect()[this.dimension] + 'px';
       },
-      prepare: function() {
-        if (this.fixedSize && this.closed) {
-          this.size = getComputedStyle(this.target)[this.dimension];
-        }
-        if (!this.size) {
-          this.updateSize(this.calcSize(), null);
-        }
-      },
       show: function() {
-        if (!this.size) {
-          var orig = this.calcSize();
+        this.toggleClosedClass(false);
+        if (!this.fixedSize) {
           this.updateSize('auto', null);
           var s = this.calcSize();
-          this.updateSize(orig, null);
+          this.updateSize(0, null);
         }
         this.asyncMethod(function() {
           this.updateSize(this.size || s, this.duration, true);
         }, null, 1);
       },
       hide: function() {
+        // don't need to do anything if it's already hidden
+        if (this.hasClosedClass && !this.fixedSize) {
+          return;
+        }
+        if (this.fixedSize) {
+          // save the size before hiding it
+          this.size = getComputedStyle(this.target)[this.dimension];
+        } else {
+          this.updateSize(this.calcSize(), null);
+        }
         this.asyncMethod(function() {
           this.updateSize(0, this.duration);
         }, null, 1);
