@@ -46,12 +46,12 @@
        * @class polymer-animation
        */
        /**
-			  * Fired when the animation starts
-			  * @event animation-start
-				*
+        * Fired when the animation starts
+        * @event animation-start
+        *
         * Fired when the animation completes
         * @event animation-end
-				* 
+        * 
         */
       Polymer('polymer-animation', {
         publish: {
@@ -70,7 +70,7 @@
           // animation
           /**
            * Animation keyframes specified as an array of dictionaries of
-           * <css properties>:<array of values> pairs. For example,
+           * &lt;css properties&gt;:&lt;array of values&gt; pairs. For example,
            * @property keyframes
            * @type Object
            */
@@ -149,7 +149,7 @@
             //this.animation && console.log('play', this.animation);
             if (this.animation) {
               this.cancel();
-							this.bindAnimationEvents();
+              this.bindAnimationEvents();
               this.player = document.timeline.play(this.animation);
             }
           });
@@ -262,17 +262,17 @@
           }
           return new KeyframeAnimationEffect(frames, this.composite);
         },
-				bindAnimationEvents: function() {
-					if (!this.animation.onstart) {
-						this.animation.onstart = this.animationStartHandler.bind(this);
-					}
-					if (!this.animation.onend) {
-						this.animation.onend = this.animationEndHandler.bind(this);
-					}
-				},
-				animationStartHandler: function() {
-					this.fire('animation-start');
-				},
+        bindAnimationEvents: function() {
+          if (!this.animation.onstart) {
+            this.animation.onstart = this.animationStartHandler.bind(this);
+          }
+          if (!this.animation.onend) {
+            this.animation.onend = this.animationEndHandler.bind(this);
+          }
+        },
+        animationStartHandler: function() {
+          this.fire('animation-start');
+        },
         animationEndHandler: function() {
           this.fire('animation-end');
         }
