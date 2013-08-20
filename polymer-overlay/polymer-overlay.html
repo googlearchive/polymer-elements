@@ -64,7 +64,7 @@ license that can be found in the LICENSE file.
 /**
  * Fired when the polymer-overlay opened property is set.
  * 
- * @event open
+ * @event polymer-overlay-open
  * @param {Object} inDetail
  * @param {Object} inDetail.opened the opened state
  */
@@ -217,7 +217,7 @@ license that can be found in the LICENSE file.
             }
           });
 					this.enableResizeHandler(this.opened);
-					this.fire('opened', this.opened);
+					this.fire('polymer-overlay-open', this.opened);
 				},
 				enableHandler: function(inEnable, inMethodName, inNode, inEventName, inCapture) {
 					var m = 'bound' + inMethodName;
