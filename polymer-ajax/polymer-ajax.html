@@ -89,10 +89,10 @@ license that can be found in the LICENSE file.
        * @type Object
        * @default null
        */
+      response: null,
       created: function() {
         this.xhr = document.createElement('polymer-xhr');
       },
-      response: '',
       receive: function(response, xhr) {
         if (this.isSuccess(xhr)) {
           this.processResponse(xhr);
