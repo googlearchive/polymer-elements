@@ -90,6 +90,14 @@ license that can be found in the LICENSE file.
        * @default null
        */
       response: null,
+      /**
+       * The HTTP method to use such as 'GET', 'POST', 'PUT', 'DELETE'.
+       * Default is 'GET'.
+       *
+       * @attribute method
+       * @type string
+       * @default ''
+       */
       method: '',
       created: function() {
         this.xhr = document.createElement('polymer-xhr');
