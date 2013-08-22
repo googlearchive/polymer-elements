@@ -38,7 +38,7 @@ license that can be found in the LICENSE file.
 -->
 <link rel="import" href="polymer-xhr.html">
 
-<polymer-element name="polymer-ajax" attributes="url handleAs auto params response">
+<polymer-element name="polymer-ajax" attributes="url handleAs auto params response method">
   <script>
     Polymer('polymer-ajax', {
       /**
@@ -90,6 +90,7 @@ license that can be found in the LICENSE file.
        * @default null
        */
       response: null,
+      method: '',
       created: function() {
         this.xhr = document.createElement('polymer-xhr');
       },
@@ -165,13 +166,14 @@ license that can be found in the LICENSE file.
        * @method go
        */
       go: function() {
-        var args = {};
+        var args = this.xhrArgs || {};
         args.params = this.params || null;
         if (args.params && typeof(args.params) == 'string') {
           args.params = JSON.parse(args.params);
         }
         args.callback = this.receive.bind(this);
         args.url = this.url;
+        args.method = this.method;
         return args.url && this.xhr.request(args);
       }
     });
