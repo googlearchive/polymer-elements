@@ -115,11 +115,11 @@
            */
           iterationCount: 1,
           /**
-           * Start delay in milliseconds.
-           * @property startDelay
+           * Delay in milliseconds.
+           * @property delay
            * @type Number
            */
-          startDelay: 0,
+          delay: 0,
           /**
            * "normal", "reverse", "alternate" or "alternate-reverse".
            * @property direction
@@ -219,7 +219,7 @@
         iterationCountChanged: function() {
           this.asyncApply();
         },
-        startDelayChanged: function() {
+        delayChanged: function() {
           this.asyncApply();
         },
         directionChanged: function() {
@@ -233,7 +233,7 @@
           var timing = {
             fillMode: {},
             easing: {property: 'timingFunction'},
-            startDelay: {isNumber: true},
+            delay: {isNumber: true},
             iterationCount: {isNumber: true, allowInfinity: true},
             direction: {},
             duration: {property: 'duration', isNumber: true}
