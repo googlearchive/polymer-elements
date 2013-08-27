@@ -1,4 +1,4 @@
-<polymer-element name="polymer-scrub" attributes="animation target">
+<polymer-element name="polymer-scrub" attributes="animation target snapPoints startSnap">
 	<script>
 		/**
 		 * TODO:
@@ -45,6 +45,9 @@
 		    if (this.animation) {
 		      // create a player and pause the animation
 		      document.timeline.play(this.animation).paused = true;
+		      if (this.startSnap) {
+		      	this.currentTime = this.startSnap * this.duration;
+		      }
 		    } else {
 		      console.warn('No animation set for scrub');
 		    }
@@ -159,7 +162,6 @@
 		      invoke(this, "onStartScrub", this);
 		      var length = this.node[this.scrubType == 'y' ? 
 		          'offsetHeight' : 'offsetWidth'];
-          console.log('length', length);
 		      if (!this.scrubbingStopped) {
 		        this.scrubAnimation();
 		        this.scrubbing = {
@@ -323,6 +325,10 @@
 		  };
 
 		  Polymer('polymer-scrub', {
+		  	target: null,
+		  	animation: null,
+		  	snapPoints: null,
+		  	startSnap: 0,
 		  	targetChanged: function() {
 		  		this.makeScrub();
 		  	},
@@ -333,7 +339,9 @@
 		  		if (this.target && this.animation) {
 			  		this.scrub = new Scrub({
 			  			node: this.target,
-			  			animation: this.animation
+			  			animation: this.animation,
+			  			snapPoints: this.snapPoints,
+			  			startSnap: this.startSnap
 			  		});
 			  	} else {
 			  		this.scrub = null;
