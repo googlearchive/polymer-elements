@@ -7,7 +7,7 @@
 	<script src="../../polymer/polymer.js"></script>
 </head>
 <body>
-	<polymer-element name="scrub-demo" attributes="scale scrubType">
+	<polymer-element name="scrub-demo" attributes="scale scrubType snapPoints">
 		<template>
 			<style>
 				.container {
@@ -33,6 +33,7 @@
 			</style>
 			<label>scale: <input id="scale" value="{{scale}}"></label>
 			<label>scrubType: <input id="scrubType" value="{{scrubType}}"></label>
+			<label>snapThreshold: <input id="snapThreshold" value="{{snapThreshold}}"></label>
 			<br><br>
 			<div id="c" class="container container2">
 				<div id="c2" class="circle">&perp;</div>
@@ -59,10 +60,12 @@
 					<polymer-animation-prop name="opacity" value="1"></polymer-animation-prop>
 				</polymer-animation-keyframe>
 			</polymer-animation>
-			<polymer-scrub target="{{$.c}}" animation="{{$.anim.animation}}" scale="{{scale}}" scrubType="{{scrubType}}"></polymer-scrub>
+			<polymer-scrub target="{{$.c}}" animation="{{$.anim.animation}}" scale="{{scale}}" scrubType="{{scrubType}}" snapPoints="{{snapPoints}}" snapThreshold="{{snapThreshold}}"></polymer-scrub>
 		</template>
 		<script>
-			Polymer('scrub-demo');
+			Polymer('scrub-demo', {
+				snapPoints: [0, 0.5, 1]
+			});
 		</script>
 	</polymer-element>
 	<scrub-demo></scrub-demo>
