@@ -1,7 +1,7 @@
 <link rel="import" href="web-animations.html">
 <link rel="import" href="polymer-animation-keyframe.html">
 <link rel="import" href="polymer-animation-prop.html">
-<polymer-element name="polymer-animation">
+<polymer-element name="polymer-animation" attributes="target keyframes sample composite duration fillMode easing iterationStart iterationCount delay direction autoplay">
   <script>
     (function() {
       function findTarget(inSelector, inNode) {
@@ -75,6 +75,12 @@
            * @type Object
            */
           keyframes: null,
+          /**
+           * A custom animation function. Either provide this or keyframes.
+           * @property sample
+           * @type Function
+           */
+          sample: null,
           //accumulate: null, // not working in polyfill
           /**
            * The composition behavior. "replace", "add" or "merge".
@@ -204,6 +210,9 @@
         keyframesChanged: function() {
           this.asyncApply();
         },
+        sampleChanged: function() {
+          this.asyncApply();
+        },
         compositeChanged: function() {
           this.asyncApply();
         },
@@ -249,7 +258,10 @@
         get animationEffect() {
           var props = {};
           var frames = [];
-          if (!this.keyframes) {
+          var effect;
+          if (this.keyframes) {
+            frames = this.keyframes;
+          } else if (!this.sample) {
             var children = this.querySelectorAll('polymer-animation-keyframe');
             if (children.length === 0) {
               children = this.shadowRoot.querySelectorAll('polymer-animation-keyframe');
@@ -257,10 +269,13 @@
             Array.prototype.forEach.call(children, function(c) {
               frames.push(c.properties);
             });
-          } else {
-            frames = this.keyframes;
           }
-          return new KeyframeAnimationEffect(frames, this.composite);
+          if (this.sample) {
+            effect = {sample: this.sample};
+          } else {
+            effect = new KeyframeAnimationEffect(frames, this.composite);
+          }
+          return effect;
         },
         bindAnimationEvents: function() {
           if (!this.animation.onstart) {

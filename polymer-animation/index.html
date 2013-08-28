@@ -84,6 +84,7 @@
           </polymer-animation-keyframe>
 				</polymer-animation>
 			</polymer-animation-group>
+      <polymer-animation id="sample-animation" duration="0.5">sample</polymer-animation>
       <polymer-bounce duration="1">bounce</polymer-bounce>
       <polymer-shake>shake</polymer-shake>
       <!--<polymer-shake duration="Infinity">shake forever</polymer-shake>//-->
@@ -94,10 +95,21 @@
       <polymer-fadeout>fade out (with event)</polymer-fadeout>
     </div>
     <script>
+      var sampleAnimationFn = function(timeFraction, currentIteration, animationTarget, underlyingValue) {
+        if (timeFraction < 1) {
+          animationTarget.textContent = timeFraction;
+        } else {
+          animationTarget.textContent = 'animated!';
+        }
+      };
+
       document.addEventListener('WebComponentsReady', function() {
         document.querySelector('.animations').addEventListener('click',
 					function(e) {
-						var animation = e.target;
+            var animation = e.target;
+            if (animation.id === 'sample-animation') {
+              animation.sample = sampleAnimationFn;
+            }
 						animation.target = target;
 						animation.play();
 					});
