@@ -238,9 +238,9 @@
 						if (this.snapThreshold) {
 							var threshold = this.snapThreshold * (snaps.end - snaps.start);
 							if (reversing) {
-								snap = (snaps.end - currentFraction < this.snapThreshold) ? snaps.end : snaps.start;
+								snap = (snaps.end - currentFraction < threshold) ? snaps.end : snaps.start;
 							} else {
-								snap = (currentFraction - snaps.start < this.snapThreshold) ? snaps.start : snaps.end;
+								snap = (currentFraction - snaps.start < threshold) ? snaps.start : snaps.end;
 							}
 						}
 						this.playTo(snap * this.duration);
