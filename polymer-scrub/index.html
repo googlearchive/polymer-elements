@@ -7,7 +7,7 @@
 	<script src="../../polymer/polymer.js"></script>
 </head>
 <body>
-	<polymer-element name="scrub-demo">
+	<polymer-element name="scrub-demo" attributes="scale scrubType">
 		<template>
 			<style>
 				.container {
@@ -31,6 +31,9 @@
 					border: 1px solid gray;
 				}
 			</style>
+			<label>scale: <input id="scale" value="{{scale}}"></label>
+			<label>scrubType: <input id="scrubType" value="{{scrubType}}"></label>
+			<br><br>
 			<div id="c" class="container container2">
 				<div id="c2" class="circle">&perp;</div>
 			</div>
@@ -56,7 +59,7 @@
 					<polymer-animation-prop name="opacity" value="1"></polymer-animation-prop>
 				</polymer-animation-keyframe>
 			</polymer-animation>
-			<polymer-scrub target="{{$.c}}" animation="{{$.anim.animation}}"></polymer-scrub>
+			<polymer-scrub target="{{$.c}}" animation="{{$.anim.animation}}" scale="{{scale}}" scrubType="{{scrubType}}"></polymer-scrub>
 		</template>
 		<script>
 			Polymer('scrub-demo');
