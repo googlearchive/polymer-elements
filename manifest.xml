@@ -7,7 +7,6 @@
   <polymer-element-meta name="polymer-flex-layout"></polymer-element-meta>
   <polymer-element-meta name="polymer-google-jsapi"></polymer-element-meta>
   <polymer-element-meta name="polymer-grid-layout"></polymer-element-meta>
-  <polymer-element-meta name="polymer-flex-layout"></polymer-element-meta>
   <polymer-element-meta name="polymer-jsonp"></polymer-element-meta>
   <polymer-element-meta name="polymer-key-helper"></polymer-element-meta>
   <polymer-element-meta name="polymer-layout"></polymer-element-meta>
