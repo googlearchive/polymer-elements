@@ -22,36 +22,37 @@ license that can be found in the LICENSE file.
  * The attribute "multi" indicates if multiple items can be selected at once.
  * 
  * Example:
- *   <polymer-element name="selection-example">
- *     <template>
- *       <style>
- *         ::-webkit-distributed(> .selected) {
- *           font-weight: bold;
- *           font-style: italic;
- *         }
- *       </style>
- *       <ul on-tap="itemTapAction">
- *         <content></content>
- *       </ul>
- *       <polymer-selection id="selection" multi on-polymer-select="selectAction"></polymer-selection>
- *     </template>
- *     <sc ript>
- *       Polymer('selection-example', {
- *         itemTapAction: function(e) {
- *           this.$.selection.select(e.target);
- *         },
- *         selectAction: function(e, detail) {
- *           detail.item.classList.toggle('selected', detail.isSelected);
- *         }
- *       });
- *     </sc ript>
- *   </polymer-element>
  *
- *   <selection-example>
- *     <li>Red</li>
- *     <li>Green</li>
- *     <li>Blue</li>
- *   </selection-example>
+ *     <polymer-element name="selection-example">
+ *        <template>
+ *          <style>
+ *            ::-webkit-distributed(> .selected) {
+ *              font-weight: bold;
+ *              font-style: italic;
+ *            }
+ *          </style>
+ *          <ul on-tap="itemTapAction">
+ *            <content></content>
+ *          </ul>
+ *          <polymer-selection id="selection" multi on-polymer-select="selectAction"></polymer-selection>
+ *        </template>
+ *        <script>
+ *          Polymer('selection-example', {
+ *            itemTapAction: function(e) {
+ *              this.$.selection.select(e.target);
+ *            },
+ *            selectAction: function(e, detail) {
+ *              detail.item.classList.toggle('selected', detail.isSelected);
+ *            }
+ *          });
+ *        </script>
+ *     </polymer-element>
+ *
+ *     <selection-example>
+ *       <li>Red</li>
+ *       <li>Green</li>
+ *       <li>Blue</li>
+ *     </selection-example>
  *
  * @class polymer-selection
  */
