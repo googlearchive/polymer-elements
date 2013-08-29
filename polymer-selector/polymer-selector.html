@@ -10,6 +10,7 @@ license that can be found in the LICENSE file.
 /**
  * polymer-selector is used to manage a list of elements that can be selected.
  * The attribute "selected" indicates which item element is being selected.
+ * The attribute "multi" indicates if multiple items can be selected at once.
  * Tapping on the item element would fire "polymer-activate" event. Use
  * "polymer-select" event to listen for selection changes.
  *
@@ -39,7 +40,9 @@ license that can be found in the LICENSE file.
  * @class polymer-selector
  */
 /**
- * Fired when selection changes.
+ * Fired when an item's selection state is changed. This event is fired both
+ * when an item is selected or deselected. The `isSelected` detail property
+ * contains the selection state.
  * 
  * @event polymer-select
  * @param {Object} detail
@@ -156,7 +159,33 @@ license that can be found in the LICENSE file.
        * @default null
        */
       target: null,
+      /**
+       * This can be used to query nodes from the target node to be used for 
+       * selection items.  Note this only works if the 'target' property is set.
+       *
+       * Example:
+       *
+       *     <polymer-selector target="{{$.myForm}}" itemsSelector="input[type=radio]"></polymer-selector>
+       *     <form id="myForm">
+       *       <label><input type="radio" name="color" value="red"> Red</label> <br>
+       *       <label><input type="radio" name="color" value="green"> Green</label> <br>
+       *       <label><input type="radio" name="color" value="blue"> Blue</label> <br>
+       *       <p>color = {{color}}</p>
+       *     </form>
+       * 
+       * @attribute itemSelector
+       * @type string
+       * @default ''
+       */
       itemsSelector: '',
+      /**
+       * The event that would be fired from the item element to indicate
+       * it is being selected.
+       *
+       * @attribute activateEvent
+       * @type string
+       * @default 'tap'
+       */
       activateEvent: 'tap',
       notap: false,
       created: function() {

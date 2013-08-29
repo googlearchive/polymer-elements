@@ -16,17 +16,39 @@ license that can be found in the LICENSE file.
  *
  *     <div>
  *       <polymer-flex-layout></polymer-flex-layout>
- *       <div>Left sidebar</div>
- *       <div flex>Main content</div>
- *       <div>Right sidebar</div>
+ *       <div>Left</div>
+ *       <div flex>Main</div>
+ *       <div>Right</div>
  *     </div>
  *
+ *     ---------------------------------
+ *     |-------------------------------|
+ *     ||Left|       Main       |Right||
+ *     |-------------------------------|
+ *     ---------------------------------
+ *
  *     <div>
- *       <polymer-flex-layout></polymer-flex-layout vertical>
+ *       <polymer-flex-layout vertical></polymer-flex-layout>
  *       <div>Header</div>
  *       <div flex>Body</div>
  *       <div>Footer</div>
  *     </div>
+ *
+ *     ----------
+ *     ||------||
+ *     ||Header||
+ *     ||------||
+ *     ||Body  ||
+ *     ||      ||
+ *     ||      ||
+ *     ||      ||
+ *     ||      ||
+ *     ||      ||
+ *     ||      ||
+ *     ||------||
+ *     ||Footer||
+ *     ||------||
+ *     ----------
  *
  * @class polymer-flex-layout
  */

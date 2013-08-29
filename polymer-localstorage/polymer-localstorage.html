@@ -21,6 +21,11 @@ license that can be found in the LICENSE file.
  *
  * @class polymer-localstorage
  */
+/**
+ * Fired after it is loaded from localStorage.
+ * 
+ * @event polymer-localstorage-load
+ */
 -->
 <polymer-element name="polymer-localstorage" attributes="name value useRaw">
   <template>
@@ -81,6 +86,11 @@ license that can be found in the LICENSE file.
         this.loaded = true;
         this.asyncFire('polymer-localstorage-load');
       },
+      /** 
+       * Saves the value to localStorage.
+       *
+       * @method save
+       */
       save: function() {
         window.localStorage.setItem(this.name, 
             this.useRaw ? this.value : JSON.stringify(this.value));
