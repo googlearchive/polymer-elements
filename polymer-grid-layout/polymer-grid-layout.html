@@ -137,7 +137,9 @@
 
       function railize(count, sizeFn) {
         //
-        // create rails for `count` tracks using sizing function `sizeFn(track)`
+        // create rails for `count` tracks using 
+        // sizing function `sizeFn(trackNo)`
+        //
         // for n tracks there are (n+1) rails
         //
         //   |track|track|track|
@@ -151,14 +153,14 @@
         //   |track|track|track|track|
         //  0|-->s0|-->s1|<--s1|<--s2|0
         //
-        // sz1 spans two (>1) tracks which makes
+        // sz1 spans multiple  tracks which makes
         // it elastic (it's underconstrained)
         //
         var rails = [];
         var a = 0;
-        for (var i=0; i<count; i++) {
+        for (var i=0, x; i<count; i++) {
           rails[i] = {p: a, s: 1};
-          var x = sizeFn(i) + m + m;
+          x = sizeFn(i) + m + m;
           if (x == -1) {
             break;
           }
@@ -168,7 +170,7 @@
           rails[i] = {p: 0, s: -1};
         }
         var b = 0;
-        for (var ii=count; ii>i; ii--) {
+        for (var ii=count, x; ii>i; ii--) {
           rails[ii] = {p: b, s: -1};
           x = sizeFn(ii - 1) + m + m;
           if (x !== -1) {
@@ -178,7 +180,7 @@
         return rails;
       }
 
-      // TODO(sjmiles): this codes tries to preserve actual position,
+      // TODO(sjmiles): this code tries to preserve actual position,
       // so 'unposition' is really 'naturalize' or something
       function unposition(box) {
         var style = box.style;
@@ -255,12 +257,29 @@
           if (l == undefined) {
             //console.log('unused');
             node.style.position = 'absolute';
-            node.style[Math.random() >= 0.5 ? 'left' : 'top'] = '-110%';
-            node.style.opacity = 0;
+            var offscreen = node.getAttribute('offscreen');
+            switch (offscreen) {
+              case 'basement':
+                node.style.zIndex = 0;
+                break;
+              case 'left':
+              case 'top':
+                node.style[offscreen] = node.offsetWidth * -2 + 'px';
+                break;
+              case 'right':
+                node.style.left = node.offsetParent.offsetWidth + node.offsetWidth + 'px';
+                break;
+              case 'bottom':
+                node.style.top = node.parentNode.offsetHeight + node.offsetHeight + 'px';
+                break;
+              default:
+                node.style[Math.random() >= 0.5 ? 'left' : 'top'] = '-110%';
+            }
+            //node.style.opacity = 0;
             node.style.pointerEvents = 'none';
           } else {
             node.style.pointerEvents = '';
-            node.style.opacity = '';
+            //node.style.opacity = '';
             //console.log(l, r, t, b);
             position(node, l, r, t, b);
           }
