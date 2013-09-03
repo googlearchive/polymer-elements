@@ -19,6 +19,7 @@
         },
         relayout: function() {
           layout(this.layout, this.nodes);
+          this.asyncFire('polymer-grid-layout');
         }
       });
 
