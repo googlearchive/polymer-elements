@@ -9,6 +9,9 @@
     "polymer",
     "web-components"
   ],
+  "dependencies": {
+    "polymer": "0.0.20130905"
+  },
   "description": "A common set of polymer elements",
   "license": "BSD",
   "ignore": [
