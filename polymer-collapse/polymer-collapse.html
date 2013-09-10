@@ -122,7 +122,7 @@ license that can be found in the LICENSE file.
         }
         // don't need to update if the size is already set and it's opened
         if (!this.fixedSize || !this.closed) {
-          this.asyncUpdate();
+          this.update();
         }
       },
       addListeners: function(node) {
@@ -139,7 +139,7 @@ license that can be found in the LICENSE file.
         this.dimension = this.horizontal ? 'width' : 'height';
       },
       closedChanged: function() {
-        this.asyncUpdate();
+        this.update();
       },
       /** 
        * Toggle the closed state of the collapsible.
@@ -154,7 +154,7 @@ license that can be found in the LICENSE file.
         s.webkitTransition = s.transition = duration ? 
             (this.dimension + ' ' + duration + 's') : null;
         if (duration === 0) {
-          this.asyncMethod('transitionEnd');
+          this.async('transitionEnd');
         }
       },
       transitionEnd: function() {
@@ -177,9 +177,6 @@ license that can be found in the LICENSE file.
         if (forceEnd && nochange) {
           this.transitionEnd();
         }
-      },
-      asyncUpdate: function() {
-        this.updateJob = this.job(this.updateJob, this.update, 0);
       },
       update: function() {
         if (!this.target || !this.inDocument) {
@@ -205,7 +202,7 @@ license that can be found in the LICENSE file.
           var s = this.calcSize();
           this.updateSize(0, null);
         }
-        this.asyncMethod(function() {
+        this.async(function() {
           this.updateSize(this.size || s, this.duration, true);
         }, null, 1);
       },
@@ -221,7 +218,7 @@ license that can be found in the LICENSE file.
         } else {
           this.updateSize(this.calcSize(), null);
         }
-        this.asyncMethod(function() {
+        this.async(function() {
           this.updateSize(0, this.duration);
         }, null, 1);
       }

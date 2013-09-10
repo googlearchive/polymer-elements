@@ -65,7 +65,7 @@ license that can be found in the LICENSE file.
       useRaw: false,
       enteredDocument: function() {
         // wait for bindings are all setup
-        this.asyncMethod('load');
+        this.async('load');
       },
       valueChanged: function() {
         if (this.loaded) {

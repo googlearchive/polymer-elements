@@ -100,7 +100,7 @@ license that can be found in the LICENSE file.
         if (!this.isContainer) {
           this.style.display = 'none';
         }
-        this.asyncMethod(function() {
+        this.async(function() {
           this.layoutContainer && this.layoutContainer.classList.add('flexbox');
           this.verticalChanged();
           this.alignChanged();
