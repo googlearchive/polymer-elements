@@ -169,6 +169,9 @@ license that can be found in the LICENSE file.
         this.target.classList.toggle('polymer-collapse-closed', add);
       },
       updateSize: function(size, duration, forceEnd) {
+        if (duration) {
+          this.calcSize();
+        }
         this.setTransitionDuration(duration);
         var s = this.target.style;
         var nochange = s[this.dimension] === size;
@@ -188,6 +191,9 @@ license that can be found in the LICENSE file.
       calcSize: function() {
         return this.target.getBoundingClientRect()[this.dimension] + 'px';
       },
+      getComputedSize: function() {
+        return getComputedStyle(this.target)[this.dimension];
+      },
       show: function() {
         this.toggleClosedClass(false);
         // for initial update, skip the expanding animation to optimize
@@ -204,7 +210,7 @@ license that can be found in the LICENSE file.
         }
         this.async(function() {
           this.updateSize(this.size || s, this.duration, true);
-        }, null, 1);
+        });
       },
       hide: function() {
         this.afterInitialUpdate = true;
@@ -214,13 +220,13 @@ license that can be found in the LICENSE file.
         }
         if (this.fixedSize) {
           // save the size before hiding it
-          this.size = getComputedStyle(this.target)[this.dimension];
+          this.size = this.getComputedSize();
         } else {
           this.updateSize(this.calcSize(), null);
         }
         this.async(function() {
           this.updateSize(0, this.duration);
-        }, null, 1);
+        });
       }
     });
   </script>
