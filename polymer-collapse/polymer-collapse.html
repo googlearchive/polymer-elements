@@ -98,6 +98,9 @@ license that can be found in the LICENSE file.
       enteredDocument: function() {
         this.installControllerStyles();
         this.inDocument = true;
+        this.async(function() {
+          this.afterInitialUpdate = true;
+        });
       },
       leftDocument: function() {
         this.removeListeners(this.target);
@@ -199,7 +202,6 @@ license that can be found in the LICENSE file.
         // for initial update, skip the expanding animation to optimize
         // performance e.g. skip calcSize
         if (!this.afterInitialUpdate) {
-          this.afterInitialUpdate = true;
           this.transitionEnd();
           return;
         }
@@ -213,7 +215,6 @@ license that can be found in the LICENSE file.
         });
       },
       hide: function() {
-        this.afterInitialUpdate = true;
         // don't need to do anything if it's already hidden
         if (this.hasClosedClass && !this.fixedSize) {
           return;
