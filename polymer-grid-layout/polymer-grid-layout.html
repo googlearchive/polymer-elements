@@ -13,7 +13,19 @@
           this.invalidate();
         },
         invalidate: function() {
-          if (this.layout && this.nodes) {
+          if (this.layout) {
+            if (!this.nodes) {
+              this.nodes = this.parentNode.children.array().filter(
+                function(node) {
+                  switch(node.localName) {
+                    case 'polymer-grid-layout':
+                    case 'style':
+                      return false;
+                  }
+                  return true;
+                });
+              console.log(this.nodes);
+            }
             this.layoutJob = this.job(this.layoutJob, this.relayout);
           }
         },
@@ -29,10 +41,12 @@
 
       function line(axis, p, d) {
         var l = document.createElement('line');
-        var extent = (axis === 'left' ? 'width' : (axis === 'top' ? 'height' : axis));
+        var extent = (axis === 'left' ? 'width' : 
+          (axis === 'top' ? 'height' : axis));
         l.setAttribute('extent', extent);
         if (d < 0) {
-          axis = (axis === 'left' ? 'right' : (axis === 'top' ? 'bottom' : axis));
+          axis = (axis === 'left' ? 'right' : 
+            (axis === 'top' ? 'bottom' : axis));
         }
         p = Math.abs(p);
         l.style[axis] = p + 'px';
@@ -208,8 +222,10 @@
       }
 
       function position(elt, left, right, top, bottom) {
-        _position(elt.style, 'top', 'bottom', 'height', rows[top], rows[bottom]);
-        _position(elt.style, 'left', 'right', 'width', columns[left], columns[right]);
+        _position(elt.style, 'top', 'bottom', 'height', rows[top], 
+            rows[bottom]);
+        _position(elt.style, 'left', 'right', 'width', columns[left], 
+            columns[right]);
       }
 
       function layout(matrix, anodes, alineParent) {
@@ -268,10 +284,12 @@
                 node.style[offscreen] = node.offsetWidth * -2 + 'px';
                 break;
               case 'right':
-                node.style.left = node.offsetParent.offsetWidth + node.offsetWidth + 'px';
+                node.style.left = node.offsetParent.offsetWidth 
+                    + node.offsetWidth + 'px';
                 break;
               case 'bottom':
-                node.style.top = node.parentNode.offsetHeight + node.offsetHeight + 'px';
+                node.style.top = node.parentNode.offsetHeight 
+                    + node.offsetHeight + 'px';
                 break;
               default:
                 node.style[Math.random() >= 0.5 ? 'left' : 'top'] = '-110%';
