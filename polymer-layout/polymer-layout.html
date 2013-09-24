@@ -154,7 +154,7 @@ license that can be found in the LICENSE file.
         //parent.style.overflow = 'hidden';
         // changes will cause another recalc at next validation step
         var vertical;
-        this.parentNode.childNodes.forEach(function(c, i) {
+        this.parentNode.childNodes.array().forEach(function(c, i) {
           if (c.nodeType === Node.ELEMENT_NODE && !c.hasAttribute('nolayout')) {
             stylize(c, {
               position: 'absolute',
@@ -183,7 +183,7 @@ license that can be found in the LICENSE file.
         var ww = 0, hh = 0, pre = [], fit, post = [];
         var list = pre;
         // gather element information (at most one recalc)
-        this.parentNode.childNodes.forEach(function(c, i) {
+        this.parentNode.childNodes.array().forEach(function(c, i) {
           if (c.nodeType===Node.ELEMENT_NODE && !c.hasAttribute('nolayout')) {
             var info = {
               element: c,
