@@ -27,7 +27,7 @@ license that can be found in the LICENSE file.
  * @event polymer-localstorage-load
  */
 -->
-<polymer-element name="polymer-localstorage" attributes="name value useRaw">
+<polymer-element name="polymer-localstorage" attributes="name value useRaw autoSaveDisabled">
   <template>
     <style>
       @host {
@@ -66,17 +66,17 @@ license that can be found in the LICENSE file.
       /**
        * If true, auto save is disabled.
        *
-       * @attribute audoSaveDisabled
+       * @attribute autoSaveDisabled
        * @type boolean
        * @default false
        */
-      audoSaveDisabled: false,
+      autoSaveDisabled: false,
       enteredDocument: function() {
         // wait for bindings are all setup
         this.async('load');
       },
       valueChanged: function() {
-        if (this.loaded) {
+        if (this.loaded && !this.autoSaveDisabled) {
           this.save();
         }
       },
