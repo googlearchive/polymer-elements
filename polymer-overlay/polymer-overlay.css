@@ -10,6 +10,34 @@ becomes the containing block; see:
 http://dev.w3.org/csswg/css3-transforms/#transform-rendering
 We address this by using script based positioning =(
 */
+@host {
+	.polymer-overlay {
+		position: fixed;
+		z-index: 10;
+		outline: none;
+		display: none;
+		opacity: 0.99;
+		-webkit-transition: opacity 0.001s;
+		transition: opacity 0.001s;
+	}
+
+	.revealed {
+		display: block;
+		visibility: hidden;
+	}
+
+	.revealed.opened {
+		opacity: 1;
+		display: block;
+		visibility: visible;
+	}
+
+	.revealed.closing {
+		display: block;
+		visibility: visible;
+	}
+}
+
 .polymer-overlay {
 	position: fixed;
 	z-index: 10;
