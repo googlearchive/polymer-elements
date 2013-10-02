@@ -38,6 +38,7 @@
     
     <script>
       var assert = chai.assert;
+      var async = requestAnimationFrame;
       document.addEventListener('WebComponentsReady', function() {
         // selector1
         var s = document.querySelector('#selector1');
@@ -62,7 +63,7 @@
         // set selected
         s.selected = 'item5';
         Platform.flush();
-        Platform.endOfMicrotask(function() {
+        async(function() {
           // check polymer-select event
           assert.equal(selectEventCounter, 1);
           // check selected class
@@ -73,7 +74,7 @@
           selectEventCounter = 0;
           s.selected = 'item5';
           Platform.flush();
-          Platform.endOfMicrotask(function() {
+          async(function() {
             assert.equal(selectEventCounter, 0);
             done();
           });

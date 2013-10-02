@@ -24,6 +24,7 @@
     
     <script>
       var assert = chai.assert;
+      var async = requestAnimationFrame;
       document.addEventListener('WebComponentsReady', function() {
         //
         var s = document.querySelector('#selector');
@@ -43,11 +44,11 @@
           // check selectedItem in polymer-select event
           assert.equal(this.selectedItem.length, selectEventCounter);
         });
-        Platform.endOfMicrotask(function() {
+        async(function() {
           // set selected
           s.selected = [0, 2];
           Platform.flush();
-          Platform.endOfMicrotask(function() {
+          async(function() {
             // check polymer-select event
             assert.equal(selectEventCounter, 2);
             // check selected class
