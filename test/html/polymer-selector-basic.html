@@ -60,10 +60,7 @@
             assert.equal(e.detail.item, s.selectedItem);
           }
         });
-        // set selected
-        s.selected = 'item5';
-        Platform.flush();
-        async(function() {
+        new PathObserver(s, 'selected', function() {
           // check polymer-select event
           assert.equal(selectEventCounter, 1);
           // check selected class
@@ -74,11 +71,16 @@
           selectEventCounter = 0;
           s.selected = 'item5';
           Platform.flush();
-          async(function() {
+          // TODO(ffu): would be better to wait for something to happen
+          // instead of not to happen
+          setTimeout(function() {
             assert.equal(selectEventCounter, 0);
             done();
-          });
+          }, 50);
         });
+        // set selected
+        s.selected = 'item5';
+        Platform.flush();
       });
     </script>
   </body>

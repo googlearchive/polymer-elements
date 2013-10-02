@@ -25,17 +25,16 @@
     <script>
       var assert = chai.assert;
       document.addEventListener('WebComponentsReady', function() {
-        var s = document.querySelector('#selector');
-        s.addEventListener("polymer-activate", function(event) {
-          assert.equal(event.detail.item, s.children[1]);
-          assert.equal(s.selected, 1);
-          done();
-        });
-        Platform.flush();
-        requestAnimationFrame(function() {
-          assert.equal(s.selected, 0);
-          s.children[1].dispatchEvent(new CustomEvent('tap', {bubbles: true}));
-        });
+          var s = document.querySelector('#selector');
+          s.addEventListener("polymer-activate", function(event) {
+            assert.equal(event.detail.item, s.children[1]);
+            assert.equal(s.selected, 1);
+            done();
+          });
+          assert.equal(s.selected, '0');
+          requestAnimationFrame(function() {
+            s.children[1].dispatchEvent(new CustomEvent('tap', {bubbles: true}));
+          });
       });
     </script>
   </body>
