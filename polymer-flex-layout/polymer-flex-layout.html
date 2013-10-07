@@ -93,7 +93,7 @@ license that can be found in the LICENSE file.
     Polymer('polymer-flex-layout', {
       vertical: false,
       isContainer: false,
-      enteredDocument: function() {
+      enteredView: function() {
         this.installControllerStyles();
         this.layoutContainer = this.isContainer ? 
             this : (this.parentNode.host || this.parentNode);

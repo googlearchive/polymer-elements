@@ -95,14 +95,14 @@ license that can be found in the LICENSE file.
        */
       fixedSize: false,
       size: null,
-      enteredDocument: function() {
+      enteredView: function() {
         this.installControllerStyles();
         this.inDocument = true;
         this.async(function() {
           this.afterInitialUpdate = true;
         });
       },
-      leftDocument: function() {
+      leftView: function() {
         this.removeListeners(this.target);
       },
       targetIdChanged: function() {
