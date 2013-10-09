@@ -1,4 +1,4 @@
-<polymer-element name="polymer-grid-layout" attributes="nodes layout">
+<polymer-element name="polymer-grid-layout" attributes="nodes layout auto">
   <template>
   </template>
   <script>
@@ -6,30 +6,35 @@
       Polymer('polymer-grid-layout', {
         nodes: null,
         layout: null,
+        auto: false,
         nodesChanged: function() {
           this.invalidate();
         },
         layoutChanged: function() {
           this.invalidate();
         },
+        autoNodes: function() {
+          this.nodes = this.parentNode.children.array().filter(
+            function(node) {
+              switch(node.localName) {
+                case 'polymer-grid-layout':
+                case 'style':
+                  return false;
+              }
+              return true;
+            }
+          );
+        },
         invalidate: function() {
           if (this.layout) {
-            if (!this.nodes) {
-              this.nodes = this.parentNode.children.array().filter(
-                function(node) {
-                  switch(node.localName) {
-                    case 'polymer-grid-layout':
-                    case 'style':
-                      return false;
-                  }
-                  return true;
-                });
-              console.log(this.nodes);
-            }
+            // job debounces layout, only letting it occur every N ms
             this.layoutJob = this.job(this.layoutJob, this.relayout);
           }
         },
         relayout: function() {
+          if (!this.nodes || this.auto) {
+            this.autoNodes();
+          }
           layout(this.layout, this.nodes);
           this.asyncFire('polymer-grid-layout');
         }
