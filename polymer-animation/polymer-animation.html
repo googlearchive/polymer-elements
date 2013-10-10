@@ -240,12 +240,12 @@
         get timingProps() {
           var props = {};
           var timing = {
-            fillMode: {},
+            fillMode: {property: 'fill'},
             easing: {},
             delay: {isNumber: true},
             iterationCount: {isNumber: true, allowInfinity: true},
             direction: {},
-            duration: {property: 'duration', isNumber: true}
+            duration: {isNumber: true}
           };
           for (t in timing) {
             if (this[t] !== null) {
