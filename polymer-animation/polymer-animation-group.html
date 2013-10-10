@@ -76,6 +76,15 @@
             c.apply && inFn(c);
           }, this);
         },
+        get childAnimationElements() {
+          var list = [];
+          this.doOnChildren(function(c) {
+            if (c.makeAnimation) {
+              list.push(c);
+            }
+          });
+          return list;
+        },
         get childAnimations() {
           var list = [];
           this.doOnChildren(function(c) {
