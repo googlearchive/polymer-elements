@@ -216,7 +216,9 @@
         if (a.s < 0 && b.s < 0) {
           var siz = a.p - b.p - m - m;
           style[ext] = siz + 'px';
-          style[maj] = 'calc(100% - ' + (b.p + siz + m) + 'px' + ')';
+          var c = 'calc(100% - ' + (b.p + siz + m) + 'px' + ')';
+          style[maj] = '-webkit-' + c;
+          style[maj] = c;
         } else if (b.s < 0) {
           style[maj] = a.p + m + 'px';
           style[min] = b.p + m + 'px';
