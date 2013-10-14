@@ -37,9 +37,12 @@
           this.asyncApply();
         },
         targetChanged: function() {
-          this.doOnChildren(function(c) {
-            c.target = this.target;
-          }.bind(this));
+          // Only propagate target to children animations if it's defined.
+          if (this.target) {
+            this.doOnChildren(function(c) {
+              c.target = this.target;
+            }.bind(this));
+          }
         },
         doOnChildren: function(inFn) {
           var children = this.children;
