@@ -147,18 +147,11 @@
          * @method play
          */
         play: function() {
-          // need to flush to make sure all side effects are applied
-          // before playing the animation.
-          Platform.flush();
-          this.asyncMethod(function() {
-            this.completeApply();
-            //this.animation && console.log('play', this.animation);
-            if (this.animation) {
-              this.cancel();
-              this.bindAnimationEvents();
-              this.player = document.timeline.play(this.animation);
-            }
-          });
+          this.apply();
+          if (this.animation && !this.autoplay) {
+            this.bindAnimationEvents();
+            this.player = document.timeline.play(this.animation);
+          }
         },
         /**
          * Stops the animation.

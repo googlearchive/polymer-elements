@@ -1,5 +1,5 @@
 <link rel="import" href="polymer-animation.html">
-<polymer-element name="polymer-animation-group" extends="polymer-animation" on-animationchange="onAnimationChange" attributes="type">
+<polymer-element name="polymer-animation-group" extends="polymer-animation" attributes="type">
   <script>
     (function() {
       var ANIMATION_GROUPS = {
@@ -33,28 +33,6 @@
           // TODO: need to do this for now.
           this.super();
         },
-        makeAnimation: function() {
-          return new ANIMATION_GROUPS[this.type](this.childAnimations, this.timingProps);
-        },
-        doOnChildren: function(inFn) {
-          var children = this.children;
-          if (!children.length) {
-            children = this.webkitShadowRoot ? this.webkitShadowRoot.childNodes : [];
-          }
-          Array.prototype.forEach.call(children, inFn, this);
-        },
-        completeApply: function() {
-          this.doOnChildren(function(c) {
-            c.completeApply();
-          });
-          Platform.flush();
-          this.super();
-        },
-        onAnimationChange: function(inEvent, inSender) {
-          if (inSender !== this) {
-            this.asyncApply();
-          }
-        },
         typeChanged: function() {
           this.asyncApply();
         },
@@ -72,6 +50,24 @@
             // TODO <template> in the way
             c.apply && inFn(c);
           }, this);
+        },
+        makeAnimation: function() {
+          return new ANIMATION_GROUPS[this.type](this.childAnimations, this.timingProps);
+        },
+        apply: function() {
+          // Propagate target to child animations first.
+          this.targetChanged();
+          this.doOnChildren(function(c) {
+            c.apply();
+          });
+          this.super();
+        },
+        completeApply: function() {
+          this.doOnChildren(function(c) {
+            c.completeApply();
+          });
+          Platform.flush();
+          this.super();
         },
         get childAnimationElements() {
           var list = [];
