@@ -1,5 +1,5 @@
 <link rel="import" href="polymer-animation.html">
-<polymer-element name="polymer-animation-group" extends="polymer-animation" on-animationchange="onAnimationChange">
+<polymer-element name="polymer-animation-group" extends="polymer-animation" on-animationchange="onAnimationChange" attributes="type">
   <script>
     (function() {
       var ANIMATION_GROUPS = {
@@ -21,17 +21,14 @@
          * @type HTMLElement|Node
          * @optional
          */
-        publish: {
-          targetSelector: '',
-          target: null,
-          duration: null,
-          /**
-           * Group type. 'par' for parallel and 'seq' for sequence.
-           * @property type
-           * @type String
-           */
-          type: 'par'
-        },
+        targetSelector: '',
+        /**
+         * Group type. 'par' for parallel and 'seq' for sequence.
+         * @property type
+         * @type String
+         */
+        type: 'par',
+        duration: null,
         created: function() {
           // TODO: need to do this for now.
           this.super();

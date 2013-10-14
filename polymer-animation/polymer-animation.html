@@ -1,7 +1,7 @@
 <link rel="import" href="web-animations.html">
 <link rel="import" href="polymer-animation-keyframe.html">
 <link rel="import" href="polymer-animation-prop.html">
-<polymer-element name="polymer-animation" attributes="target keyframes sample composite duration fillMode easing iterationStart iterationCount delay direction autoplay">
+<polymer-element name="polymer-animation" attributes="target keyframes sample composite duration fillMode easing iterationStart iterationCount delay direction autoplay targetSelector">
   <script>
     (function() {
       function findTarget(inSelector, inNode) {
@@ -54,90 +54,90 @@
         * 
         */
       Polymer('polymer-animation', {
-        publish: {
-          /**
-           * The node being animated.
-           * @property target
-           * @type HTMLElement|Node
-           */
-          target: null,
-          /**
-           * Selector for the node being animated.
-           * @property targetSelector
-           * @type String
-           */
-          targetSelector: null,
-          // animation
-          /**
-           * Animation keyframes specified as an array of dictionaries of
-           * &lt;css properties&gt;:&lt;array of values&gt; pairs. For example,
-           * @property keyframes
-           * @type Object
-           */
-          keyframes: null,
-          /**
-           * A custom animation function. Either provide this or keyframes.
-           * @property sample
-           * @type Function
-           */
-          sample: null,
-          //accumulate: null, // not working in polyfill
-          /**
-           * The composition behavior. "replace", "add" or "merge".
-           * @property composite
-           * @type String
-           */
-          composite: 'replace',
-          // timing
-          /**
-           * Animation duration in milliseconds or 'infinity'.
-           * @property duration
-           * @type Number|'Infinity'
-           */
-          duration: 0.5,
-          /**
-           * "none", "forwards", "backwards" or "both".
-           * @property fillMode
-           * @type String
-           */
-          fillMode: 'forwards',
-          /**
-           * A transition timing function.
-           * @property easing
-           * @type String
-           */
-          easing: 'linear',
-          /**
-           * Number of iterations into the timed item in which to begin
-           * the animation. e.g. 0.5 will cause the animation to begin
-           * halfway through the first iteration.
-           * @property iterationStart
-           * @type Number
-           */
-          iterationStart: 0,
-          /**
-           * @property iterationCount
-           * @type Number|'Infinity'
-           */
-          iterationCount: 1,
-          /**
-           * Delay in milliseconds.
-           * @property delay
-           * @type Number
-           */
-          delay: 0,
-          /**
-           * "normal", "reverse", "alternate" or "alternate-reverse".
-           * @property direction
-           * @type String
-           */
-          direction: 'normal',
-          /**
-           * @property autoplay
-           * @type Boolean
-           */
-          autoplay: false
-        },
+        /**
+         * The node being animated.
+         * @property target
+         * @type HTMLElement|Node
+         */
+        target: null,
+        /**
+         * Selector for the node being animated.
+         * @property targetSelector
+         * @type String
+         */
+        targetSelector: '',
+        // animation
+        /**
+         * Animation keyframes specified as an array of dictionaries of
+         * &lt;css properties&gt;:&lt;array of values&gt; pairs. For example,
+         * @property keyframes
+         * @type Object
+         */
+        keyframes: null,
+        /**
+         * A custom animation function. Either provide this or keyframes.
+         * @property sample
+         * @type Function
+         */
+        sample: null,
+        //accumulate: null, // not working in polyfill
+        /**
+         * The composition behavior. "replace", "add" or "merge".
+         * @property composite
+         * @type String
+         */
+        composite: 'replace',
+        // timing
+        /**
+         * Animation duration in milliseconds or 'infinity'.
+         * @property duration
+         * @type Number|'Infinity'
+         */
+        duration: 0.5,
+        /**
+         * "none", "forwards", "backwards" or "both".
+         * @property fillMode
+         * @type String
+         */
+        fillMode: 'forwards',
+        /**
+         * A transition timing function, presets include 'linear', 'ease', 
+         'ease-in', 'ease-out', 'ease-in-out', 'step-start', 'step-middle',
+         'step-end'
+         * @property easing
+         * @type String
+         */
+        easing: 'linear',
+        /**
+         * Number of iterations into the timed item in which to begin
+         * the animation. e.g. 0.5 will cause the animation to begin
+         * halfway through the first iteration.
+         * @property iterationStart
+         * @type Number
+         */
+        iterationStart: 0,
+        /**
+         * @property iterationCount
+         * @type Number|'Infinity'
+         */
+        iterationCount: 1,
+        /**
+         * Delay in milliseconds.
+         * @property delay
+         * @type Number
+         */
+        delay: 0,
+        /**
+         * "normal", "reverse", "alternate" or "alternate-reverse".
+         * @property direction
+         * @type String
+         */
+        direction: 'normal',
+        /**
+         * @property autoplay
+         * @type Boolean
+         */
+        autoplay: false,
         animation: false,
         created: function() {
           this.asyncApply();
