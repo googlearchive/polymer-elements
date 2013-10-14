@@ -19,16 +19,25 @@
          * If specified the target will be assigned to all child animations.
          * @property target
          * @type HTMLElement|Node
-         * @optional
+         * @default null
          */
         targetSelector: '',
+        /**
+         * If specified and not "auto" the duration will apply to the group
+         * and propagate to any child animations that is not a group and does
+         * not specify a duration.
+         * @property duration
+         * @type number
+         * @default "auto"
+         */
+        duration: "auto",
         /**
          * Group type. 'par' for parallel and 'seq' for sequence.
          * @property type
          * @type String
+         * @default 'par'
          */
         type: 'par',
-        duration: null,
         created: function() {
           // TODO: need to do this for now.
           this.super();
@@ -41,6 +50,17 @@
           if (this.target) {
             this.doOnChildren(function(c) {
               c.target = this.target;
+            }.bind(this));
+          }
+        },
+        durationChanged: function() {
+          if (this.duration && this.duration !== 'auto') {
+            this.doOnChildren(function(c) {
+              // Propagate to children that is not a group and has no
+              // duration specified.
+              if (!c.type && (!c.duration || c.duration === 'auto')) {
+                c.duration = this.duration;
+              }
             }.bind(this));
           }
         },
@@ -58,7 +78,8 @@
           return new ANIMATION_GROUPS[this.type](this.childAnimations, this.timingProps);
         },
         apply: function() {
-          // Propagate target to child animations first.
+          // Propagate target and duration to child animations first.
+          this.durationChanged();
           this.targetChanged();
           this.doOnChildren(function(c) {
             c.apply();

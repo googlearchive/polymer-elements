@@ -84,28 +84,34 @@
         /**
          * The composition behavior. "replace", "add" or "merge".
          * @property composite
-         * @type String
+         * @type "replace"|"add"|"merge"
+         * @default "replace"
          */
         composite: 'replace',
         // timing
         /**
-         * Animation duration in milliseconds or 'infinity'.
+         * Animation duration in milliseconds, 'infinity' or 'auto'. 'auto'
+         * means use the animation's intrinsic duration.
          * @property duration
-         * @type Number|'Infinity'
+         * @type Number|"Infinity"|"auto"
+         * @default "auto"
          */
-        duration: 0.5,
+        duration: 'auto',
         /**
-         * "none", "forwards", "backwards" or "both".
+         * "none", "forwards", "backwards", "both" or "auto". When set to
+         * "auto", the fillMode is "none" for a polymer-animation and "both"
+         * for a polymer-animation-group.
          * @property fillMode
-         * @type String
+         * @type "none"|"forwards"|"backwards"|"both"|"auto"
+         * @default "auto"
          */
-        fillMode: 'forwards',
+        fillMode: 'auto',
         /**
-         * A transition timing function, presets include 'linear', 'ease', 
-         'ease-in', 'ease-out', 'ease-in-out', 'step-start', 'step-middle',
-         'step-end'
+         * A transition timing function.
          * @property easing
-         * @type String
+         * @type "linear"|"ease"|"ease-in"|"ease-out"|"ease-in-out"|
+         *     "step-start"|"step-middle"|"step-end"
+         * @default "linear"
          */
         easing: 'linear',
         /**
@@ -114,28 +120,32 @@
          * halfway through the first iteration.
          * @property iterationStart
          * @type Number
+         * @default 0
          */
         iterationStart: 0,
         /**
          * @property iterationCount
          * @type Number|'Infinity'
+         * @default 1
          */
         iterationCount: 1,
         /**
          * Delay in milliseconds.
          * @property delay
          * @type Number
+         * @default 0
          */
         delay: 0,
         /**
-         * "normal", "reverse", "alternate" or "alternate-reverse".
          * @property direction
-         * @type String
+         * @type "normal"|"reverse"|"alternate"|"alternate-reverse"
+         * @default "normal"
          */
         direction: 'normal',
         /**
          * @property autoplay
          * @type Boolean
+         * @default false
          */
         autoplay: false,
         animation: false,
@@ -172,7 +182,7 @@
           return this.animation;
         },
         makeAnimation: function() {
-          //this.target && console.log('makeAnimation target', this.target, 'animation', this.animationEffect, 'timing', this.timingProps);
+          // this.target && console.log('makeAnimation target', this.target, 'animation', this.animationEffect, 'timing', this.timingProps);
           return this.target ? new Animation(this.target, this.animationEffect, this.timingProps) : null;
         },
         asyncApply: function() {
@@ -243,7 +253,8 @@
           for (t in timing) {
             if (this[t] !== null) {
               var name = timing[t].property || t;
-              props[name] = timing[t].isNumber ? toNumber(this[t], timing[t].allowInfinity) : this[t];
+              props[name] = timing[t].isNumber && this[t] !== 'auto' ?
+                  toNumber(this[t], timing[t].allowInfinity) : this[t];
             }
           }
           return props;
