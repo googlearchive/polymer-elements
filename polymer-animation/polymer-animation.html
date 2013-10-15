@@ -47,10 +47,10 @@
        */
        /**
         * Fired when the animation starts
-        * @event animation-start
+        * @event polymer-animation-start
         *
         * Fired when the animation completes
-        * @event animation-end
+        * @event polymer-animation-end
         * 
         */
       Polymer('polymer-animation', {
@@ -290,10 +290,10 @@
           }
         },
         animationStartHandler: function() {
-          this.fire('animation-start');
+          this.fire('polymer-animation-start');
         },
         animationEndHandler: function() {
-          this.fire('animation-end');
+          this.fire('polymer-animation-end');
         }
       });
     })();
