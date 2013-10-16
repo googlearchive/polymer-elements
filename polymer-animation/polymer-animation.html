@@ -149,7 +149,20 @@
          */
         autoplay: false,
         animation: false,
-        created: function() {
+        observe: {
+          target: 'asyncApply',
+          keyframes: 'asyncApply',
+          sample: 'asyncApply',
+          composite: 'asyncApply',
+          duration: 'asyncApply',
+          fillMode: 'asyncApply',
+          easing: 'asyncApply',
+          iterationCount: 'asyncApply',
+          delay: 'asyncApply',
+          direction: 'asyncApply',
+          autoplay: 'asyncApply'
+        },
+        ready: function() {
           this.asyncApply();
         },
         /**
@@ -176,6 +189,7 @@
           this.cancelApply();
           this.animation = null;
           this.animation = this.makeAnimation();
+          console.log('apply', this.animation);
           if (this.autoplay && this.animation) {
             this.play();
           }
@@ -202,43 +216,10 @@
           // in ShadowDOM the sender becomes the shadow host.
           this.fire('animationchange', this);
         },
-        targetChanged: function() {
-          this.asyncApply();
-        },
         targetSelectorChanged: function() {
           if (this.targetSelector) {
             this.target = findTarget(this.targetSelector, this);
           }
-        },
-        keyframesChanged: function() {
-          this.asyncApply();
-        },
-        sampleChanged: function() {
-          this.asyncApply();
-        },
-        compositeChanged: function() {
-          this.asyncApply();
-        },
-        durationChanged: function() {
-          this.asyncApply();
-        },
-        fillModeChanged: function() {
-          this.asyncApply();
-        },
-        easingChanged: function() {
-          this.asyncApply();
-        },
-        iterationCountChanged: function() {
-          this.asyncApply();
-        },
-        delayChanged: function() {
-          this.asyncApply();
-        },
-        directionChanged: function() {
-          this.asyncApply();
-        },
-        autoplayChanged: function() {
-          this.asyncApply();
         },
         get timingProps() {
           var props = {};
