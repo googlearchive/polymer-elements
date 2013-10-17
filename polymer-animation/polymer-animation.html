@@ -150,20 +150,20 @@
         autoplay: false,
         animation: false,
         observe: {
-          target: 'asyncApply',
-          keyframes: 'asyncApply',
-          sample: 'asyncApply',
-          composite: 'asyncApply',
-          duration: 'asyncApply',
-          fillMode: 'asyncApply',
-          easing: 'asyncApply',
-          iterationCount: 'asyncApply',
-          delay: 'asyncApply',
-          direction: 'asyncApply',
-          autoplay: 'asyncApply'
+          target: 'apply',
+          keyframes: 'apply',
+          sample: 'apply',
+          composite: 'apply',
+          duration: 'apply',
+          fillMode: 'apply',
+          easing: 'apply',
+          iterationCount: 'apply',
+          delay: 'apply',
+          direction: 'apply',
+          autoplay: 'apply'
         },
         ready: function() {
-          this.asyncApply();
+          this.apply();
         },
         /**
          * Plays the animation.
@@ -186,10 +186,8 @@
           }
         },
         apply: function() {
-          this.cancelApply();
           this.animation = null;
           this.animation = this.makeAnimation();
-          console.log('apply', this.animation);
           if (this.autoplay && this.animation) {
             this.play();
           }
@@ -198,17 +196,6 @@
         makeAnimation: function() {
           // this.target && console.log('makeAnimation target', this.target, 'animation', this.animationEffect, 'timing', this.timingProps);
           return this.target ? new Animation(this.target, this.animationEffect, this.timingProps) : null;
-        },
-        asyncApply: function() {
-          this.cancelApply();
-          this.applyJob = this.job(this.applyJob, this.apply);
-        },
-        cancelApply: function() {
-          this.applyJob && this.applyJob.stop();
-          this.applyJob = null;
-        },
-        completeApply: function() {
-          this.applyJob && this.applyJob.complete();
         },
         animationChanged: function() {
           // TODO: attributes are not case sensitive.

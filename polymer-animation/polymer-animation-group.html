@@ -43,7 +43,7 @@
           this.super();
         },
         typeChanged: function() {
-          this.asyncApply();
+          this.apply();
         },
         targetChanged: function() {
           // Only propagate target to children animations if it's defined.
@@ -84,13 +84,6 @@
           this.doOnChildren(function(c) {
             c.apply();
           });
-          this.super();
-        },
-        completeApply: function() {
-          this.doOnChildren(function(c) {
-            c.completeApply();
-          });
-          Platform.flush();
           this.super();
         },
         get childAnimationElements() {
