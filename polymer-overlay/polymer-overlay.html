@@ -251,7 +251,6 @@ license that can be found in the LICENSE file.
 				positionTarget: function() {
 					var computedStyle = getComputedStyle(this.target);
 					if (this.opened && computedStyle.top === 'auto' && computedStyle.bottom === 'auto') {
-						this.target.style.width = (window.innerWidth - 20) + 'px';
 						this.target.style.top = ((window.innerHeight - this.target.getBoundingClientRect().height) / 2) + 'px';
 					}
 				},
