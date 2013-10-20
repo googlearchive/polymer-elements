@@ -17,7 +17,7 @@ license that can be found in the LICENSE file.
  *     <polymer-file id="file" readas="dataurl" 
  *                   on-polymer-result="handleResult"></polymer-file>
  *     ...
- *     this.$.file.blob = new Blob(['abc', {type: 'text/plain'}]);
+ *     this.$.file.blob = new Blob(['abc'], {type: 'text/plain'});
  *     this.$.file.read();
  *
  *     ---
@@ -25,7 +25,7 @@ license that can be found in the LICENSE file.
  *     <polymer-file id="file" readas="arraybuffer" auto
  *                   result="{{result}}"></polymer-file>
  *     ...
- *     this.$.file.blob = new Blob(['abc', {type: 'text/plain'}]);
+ *     this.$.file.blob = new Blob(['abc'], {type: 'text/plain'});
  *
  * @class polymer-file
  */
