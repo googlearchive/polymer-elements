@@ -249,10 +249,19 @@ license that can be found in the LICENSE file.
 					}
 				},
 				positionTarget: function() {
-					var computedStyle = getComputedStyle(this.target);
-					if (this.opened && computedStyle.top === 'auto' && computedStyle.bottom === 'auto') {
-						this.target.style.top = ((window.innerHeight - this.target.getBoundingClientRect().height) / 2) + 'px';
+					if (this.opened) {
+						// vertically and horizontally center if not positioned
+						var computedStyle = getComputedStyle(this.target);
+						if (computedStyle.top === 'auto' && computedStyle.bottom === 'auto') {
+							this.target.style.top = ((window.innerHeight - this.target.getBoundingClientRect().height) / 2) + 'px';
+						}
+						if (computedStyle.left === 'auto' && computedStyle.right === 'auto') {
+							this.target.style.left = ((window.innerWidth - this.target.getBoundingClientRect().width) / 2) + 'px';
+						}
 					}
+				},
+				resetTargetPosition: function() {
+					this.target.style.top = this.target.style.left = null;
 				},
 				renderOpened: function() {
 					this.target.classList.remove('closing');
@@ -272,6 +281,9 @@ license that can be found in the LICENSE file.
 					this.animating = null;
 					this.target.classList.remove('closing');
 					this.target.classList.toggle('revealed', this.opened);
+					if (!this.opened) {
+						this.resetTargetPosition();
+					}
 					this.applyFocus();
 				},
 				openedAnimationEnd: function(e) {
