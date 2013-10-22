@@ -197,20 +197,14 @@ license that can be found in the LICENSE file.
 							this.target.tabIndex = -1;
 						}
 						this.target.classList.add('polymer-overlay');
-						// this.addListeners(this.target);
+						this.addListeners(this.target);
 					}
 					if (old) {
 						old.classList.remove('polymer-overlay');
-						// this.removeListeners(this.target);
+						this.removeListeners(this.target);
 					}
 				},
 				listeners: {
-					'webkitAnimationStart': 'openedAnimationStart',
-					'animationStart': 'openedAnimationStart',
-					'webkitAnimationEnd': 'openedAnimationEnd',
-					'animationEnd': 'openedAnimationEnd',
-					'webkitTransitionEnd': 'openedTransitionEnd',
-					'transitionEnd': 'openedTransitionEnd',
 					'tap': 'tapHandler',
 					'keydown': 'keydownHandler'
 				},
@@ -281,19 +275,26 @@ license that can be found in the LICENSE file.
 				},
 				get transition() {
 					return (this.transitions && !Array.isArray(this.transitions)
-							|| this.opened && this.transitions[0]
-							|| !this.opened && this.transitions[1]);
+							|| this.opened && this.transitions && this.transitions[0]
+							|| !this.opened && this.transitions && this.transitions[1]);
 				},
 				applyTransition: function() {
 					var animation = typeof this.transition === 'string' ?
 							document.createElement(this.transition) : this.transition;
-					animation.duration = 0.5;
+					// FIXME: Apply a default duration.
+					console.log('animation', animation.duration, animation.type);
+					if ((!animation.duration || animation.duration === 'auto') && !animation.type) {
+						animation.duration = 0.3;
+					}
 					animation.target = this.target;
-					animation.addEventListener('polymer-animation-end', this.completeOpening.bind(this));
-					animation.play();
+					// Make the overlay visible while the animation is running.
+					var transition = new ParGroup([
+						animation.makeAnimation(),
+						new Animation(this.target, [{'visibility': 'visible', 'display':'block'}])
+					], {fill: 'none'});
+					document.timeline.play(transition);
 				},
 				renderOpened: function() {
-					this.target.classList.remove('closing');
 					this.target.classList.add('revealed');
 					// continue styling after delay so display state can change
 					// without aborting transitions
@@ -303,20 +304,18 @@ license that can be found in the LICENSE file.
 					this.positionTarget();
 					if (this.transition) {
 						this.applyTransition();
-						// FIXME should be handled in polymer-animation-start event
-						// but not working in polyfill
+						// FIXME: Apply the class after the animation starts playing to
+						// prevent a flicker at the end of the animation. Should be handled
+						// in polymer-animation-start event but not working in polyfill
 						this.async(function() {
 							this.target.classList.toggle('opened', this.opened);
-							this.target.classList.toggle('closing', !this.opened);
 						}, null, 100);
 					} else {
 						this.target.classList.toggle('opened', this.opened);
-						this.target.classList.toggle('closing', !this.opened);
 						this.async('completeOpening');
 					}
 				},
 				completeOpening: function() {
-					this.target.classList.remove('closing');
 					this.target.classList.toggle('revealed', this.opened);
 					if (!this.opened) {
 						this.resetTargetPosition();
