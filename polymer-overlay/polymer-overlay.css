@@ -10,7 +10,8 @@ becomes the containing block; see:
 http://dev.w3.org/csswg/css3-transforms/#transform-rendering
 We address this by using script based positioning =(
 */
-@host {
+/* @polyfill @host */
+:host {
 	.polymer-overlay {
 		position: fixed;
 		z-index: 10;
