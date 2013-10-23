@@ -348,29 +348,15 @@
 				snapPoints: null,
 				startSnap: 0,
 				snapThreshold: 0,
-				targetChanged: function() {
-					this.makeScrub();
-				},
-				animationChanged: function() {
-					this.makeScrub();
-				},
-				scaleChanged: function() {
-					this.makeScrub();
-				},
-				scrubTypeChanged: function() {
-					this.makeScrub();
-				},
-				nudgeTimeChanged: function() {
-					this.makeScrub();
-				},
-				snapPointsChanged: function() {
-					this.makeScrub();
-				},
-				snapThresholdChanged: function() {
-					this.makeScrub();
-				},
-				startSnapChanged: function() {
-					this.makeScrub();
+				observe: {
+					target: 'makeScrub',
+					animation: 'makeScrub',
+					scale: 'makeScrub',
+					scrubType: 'makeScrub',
+					nudgeTime: 'makeScrub',
+					snapPoints: 'makeScrub',
+					startSnap: 'makeScrub',
+					snapThreshold: 'makeScrub'
 				},
 				makeScrub: function() {
 					if (this.scrub) {
