@@ -3,7 +3,7 @@
     Polymer('polymer-mock-data', {
       count: 3000,
       items: null,
-      created: function() {
+      ready: function() {
         this.generateRecords();
       },
       countChanged: function() {

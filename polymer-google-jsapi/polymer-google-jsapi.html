@@ -31,7 +31,7 @@ license that can be found in the LICENSE file.
       window.__polymer_google_jsapi = loaded;
       
       Polymer('polymer-google-jsapi', {
-        created: function() {
+        ready: function() {
           switch (state) {
             case '':
               load();

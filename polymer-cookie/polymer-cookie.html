@@ -16,7 +16,7 @@ license that can be found in the LICENSE file.
       var cookieProps = ['expires', 'secure', 'max-age', 'domain', 'path'];
       Polymer('polymer-cookie', {
         expires: FOREVER,
-        created: function() {
+        ready: function() {
           this.load();
         },
         parseCookie: function() {

@@ -15,7 +15,7 @@ license that can be found in the LICENSE file.
  *     <polymer-ajax auto url="http://gdata.youtube.com/feeds/api/videos/" 
  *         params='{"alt":"json", "q":"chrome"}'
  *         handleAs="json"
- *         on-polymer-response="handleResponse">
+ *         on-polymer-response="{{handleResponse}}">
  *     </polymer-ajax>
  *
  * @class polymer-ajax
@@ -99,7 +99,7 @@ license that can be found in the LICENSE file.
        * @default ''
        */
       method: '',
-      created: function() {
+      ready: function() {
         this.xhr = document.createElement('polymer-xhr');
       },
       receive: function(response, xhr) {
