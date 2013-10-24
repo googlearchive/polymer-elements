@@ -31,10 +31,10 @@ license that can be found in the LICENSE file.
  *              font-style: italic;
  *            }
  *          </style>
- *          <ul on-tap="itemTapAction">
+ *          <ul on-tap="{{itemTapAction}}">
  *            <content></content>
  *          </ul>
- *          <polymer-selection id="selection" multi on-polymer-select="selectAction"></polymer-selection>
+ *          <polymer-selection id="selection" multi on-polymer-select="{{selectAction}}"></polymer-selection>
  *        </template>
  *        <script>
  *          Polymer('selection-example', {
@@ -87,7 +87,7 @@ license that can be found in the LICENSE file.
        * @default false
        */
       multi: false,
-      created: function() {
+      ready: function() {
         this.clear();
       },
       clear: function() {

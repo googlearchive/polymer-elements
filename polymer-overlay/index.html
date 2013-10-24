@@ -61,7 +61,7 @@
 			</template>
 			<script>
 				Polymer('x-dialog', {
-					created: function() {
+					ready: function() {
 						this.$.overlay.target = this;
 					},
 					toggle: function() {

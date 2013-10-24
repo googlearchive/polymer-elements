@@ -6,7 +6,7 @@ license that can be found in the LICENSE file.
 <polymer-element name="polymer-view-source-link" target="_blank" extends="a">
   <script>
     Polymer('polymer-view-source-link', {
-      created: function() {
+      ready: function() {
         var href = this.getAttribute('href') || window.location;
         this.setAttribute('href', 'view-source:' + href); 
       }
