@@ -117,6 +117,7 @@ license that can be found in the LICENSE file.
           this.removeListeners(old);
         }
         this.horizontalChanged();
+        this.isTargetReady = !!this.target;
         if (this.target) {
           this.target.style.overflow = 'hidden';
           this.addListeners(this.target);
@@ -187,6 +188,9 @@ license that can be found in the LICENSE file.
       update: function() {
         if (!this.target || !this.inDocument) {
           return;
+        }
+        if (!this.isTargetReady) {
+          this.targetChanged(); 
         }
         this.horizontalChanged();
         this[this.closed ? 'hide' : 'show']();
