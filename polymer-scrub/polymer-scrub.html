@@ -252,6 +252,9 @@
 							delay: -t
 						});
 					}
+					this.segment.onend = function() {
+						this.fire('polymer-scrub-animation-end');
+					}.bind(this);
 					document.timeline.play(this.segment);
 				},
 				scrubAnimation: function() {
