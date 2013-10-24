@@ -51,6 +51,9 @@
         *
         * Fired when the animation completes
         * @event polymer-animation-end
+        *
+        * Fired when the web animation object changes.
+        * @event polymer-animation-change
         * 
         */
       Polymer('polymer-animation', {
@@ -201,7 +204,7 @@
           // TODO: attributes are not case sensitive.
           // TODO: Sending 'this' with the event because if the children is
           // in ShadowDOM the sender becomes the shadow host.
-          this.fire('animationchange', this);
+          this.fire('polymer-animation-change', this);
         },
         targetSelectorChanged: function() {
           if (this.targetSelector) {
