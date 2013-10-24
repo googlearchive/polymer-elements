@@ -8,57 +8,32 @@
 		 *   - test CustomEffect
 		 */
 		(function() {
-			/* utils */
-			var mixinProps = function(inObject, inProps) {
-				if (inProps) {
-					Object.keys(inProps).forEach(function(key) {
-						inObject[key] = inProps[key];
-					});
-				}
-			}
-
-			var invoke = function(inObject, inEventName /* args */) {
-				var fn = inObject[inEventName];
-				if (fn) {
-					var args = Array.prototype.slice.call(arguments, 2);
-					fn.apply(inObject.context || window, args);
-				}
-			}
-
 			var clamp = function(inValue, inMin, inMax) {
 				return Math.max(inMin, Math.min(inValue, inMax));
 			}
 			
-			/* Scrubbed Animation */
-			var Scrub = function(inProps) {
-				// fallback to scrubbing x if zooming not available.
-				if (inProps.scrubType) {
-					if (!('ontouchstart' in window) && (inProps.scrubType == 'zoom')) {
-						inProps.scrubType = 'x';
-					}
-					this.scrubType = inProps.scrubType;
-				}
-				mixinProps(this, inProps);
-				if (!this.snapPoints) {
-					this.snapPoints = [];
-				}
-				if (this.animation) {
-					// create a player and pause the animation
-					document.timeline.play(this.animation).paused = true;
-					if (this.startSnap) {
-						this.currentTime = this.startSnap * this.duration;
-					}
-				} else {
-					console.warn('No animation set for scrub');
-				}
-			};
-
-			Scrub.prototype = {
+			Polymer('polymer-scrub', {
+				target: null,
+				animation: null,
 				scale: 1,
 				scrubType: 'x',
-				wrap: false,
 				nudgeTime: 1e-6,
-				get node () {
+				snapPoints: null,
+				startSnap: 0,
+				snapThreshold: 0,
+				wrap: false,
+				observe: {
+					target: 'makeScrub',
+					animation: 'makeScrub',
+					scale: 'makeScrub',
+					scrubType: 'makeScrub',
+					nudgeTime: 'makeScrub',
+					snapPoints: 'makeScrub',
+					startSnap: 'makeScrub',
+					snapThreshold: 'makeScrub',
+					wrap: 'makeScrub'
+				},
+				get node() {
 					return this._node;
 				},
 				set node(inNode) {
@@ -165,7 +140,7 @@
 					this.scrubEvent = e;
 					var d = this.calcDirection(e);
 					this.forward = d < 0;
-					invoke(this, "onStartScrub", this);
+					// invoke(this, "onStartScrub", this);
 					var length = this.node[this.scrubType == 'y' ? 
 							'offsetHeight' : 'offsetWidth'];
 					if (!this.scrubbingStopped) {
@@ -200,7 +175,7 @@
 							this.scrubAnimation();
 							this.forward = 1;
 							this.scrubEvent = e;
-							invoke(this, "onStartScrub", this);
+							// invoke(this, "onStartScrub", this);
 							if (!this.scrubbingStopped) {
 								this.playTo(3);
 							}
@@ -336,47 +311,32 @@
 				},
 				get maxTime() {
 					return this.duration - (this.wrap ? 0 : this.nudgeTime);
-				}
-			};
-
-			Polymer('polymer-scrub', {
-				target: null,
-				animation: null,
-				scale: 1,
-				scrubType: 'x',
-				nudgeTime: 1e-6,
-				snapPoints: null,
-				startSnap: 0,
-				snapThreshold: 0,
-				observe: {
-					target: 'makeScrub',
-					animation: 'makeScrub',
-					scale: 'makeScrub',
-					scrubType: 'makeScrub',
-					nudgeTime: 'makeScrub',
-					snapPoints: 'makeScrub',
-					startSnap: 'makeScrub',
-					snapThreshold: 'makeScrub'
 				},
 				makeScrub: function() {
-					if (this.scrub) {
-						this.scrub.destroy();
-						this.scrub = null;
-					}
+					this.destroy();
 					if (this.target && this.animation) {
-						this.scrub = new Scrub({
-							node: this.target,
-							animation: this.animation,
-							scale: this.scale,
-							scrubType: this.scrubType,
-							nudgeTime: this.nudgeTime,
-							snapPoints: this.snapPoints,
-							snapThreshold: this.snapThreshold,
-							startSnap: this.startSnap
-						});
+						// fallback to scrubbing x if zooming not available.
+						if (this.scrubType) {
+							if (!('ontouchstart' in window) && (this.scrubType == 'zoom')) {
+								this.scrubType = 'x';
+							}
+						}
+						if (!this.snapPoints) {
+							this.snapPoints = [];
+						}
+						if (this.animation) {
+							// create a player and pause the animation
+							document.timeline.play(this.animation).paused = true;
+							if (this.startSnap) {
+								this.currentTime = this.startSnap * this.duration;
+							}
+						} else {
+							console.warn('No animation set for scrub');
+						}
+						this.node = this.target;
 					}
 				}
-			})
+			});
 		})();
 	</script>
 </polymer-element>
