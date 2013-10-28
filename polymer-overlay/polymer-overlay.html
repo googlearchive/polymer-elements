@@ -272,7 +272,7 @@ license that can be found in the LICENSE file.
           this.target.style.top = this.target.style.left = null;
         },
         get transition() {
-          return (this.transitions && !Array.isArray(this.transitions)
+          return (!Array.isArray(this.transitions) && this.transitions
               || this.opened && this.transitions && this.transitions[0]
               || !this.opened && this.transitions && this.transitions[1]);
         },
@@ -280,11 +280,12 @@ license that can be found in the LICENSE file.
           var animation = typeof this.transition === 'string' ?
               document.createElement(this.transition) : this.transition;
           // FIXME: Apply a default duration.
-          console.log('animation', animation.duration, animation.type);
           if ((!animation.duration || animation.duration === 'auto') && !animation.type) {
             animation.duration = 0.3;
           }
-          animation.target = this.target;
+          if (!animation.hasTarget()) {
+            animation.target = this.target;
+          }
           // Make the overlay visible while the animation is running.
           var transition = new ParGroup([
             animation.makeAnimation(),

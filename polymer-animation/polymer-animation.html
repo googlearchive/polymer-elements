@@ -188,6 +188,9 @@
             this.player.source = null;
           }
         },
+        hasTarget: function() {
+          return this.target !== null;
+        },
         apply: function() {
           this.animation = null;
           this.animation = this.makeAnimation();

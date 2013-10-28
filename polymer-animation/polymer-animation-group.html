@@ -73,6 +73,15 @@
         makeAnimation: function() {
           return new ANIMATION_GROUPS[this.type](this.childAnimations, this.timingProps);
         },
+        hasTarget: function() {
+          var ht = this.target !== null;
+          if (!ht) {
+            this.doOnChildren(function(c) {
+              ht = ht || c.hasTarget();
+            }.bind(this));
+          }
+          return ht;
+        },
         apply: function() {
           // Propagate target and duration to child animations first.
           this.durationChanged();
