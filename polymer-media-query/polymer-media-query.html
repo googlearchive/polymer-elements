@@ -57,7 +57,11 @@ license that can be found in the LICENSE file.
         if (this._mq) {
           this._mq.removeListener(this._mqHandler);
         }
-        this._mq = window.matchMedia('(' + this.query + ')');
+        var query = this.query;
+        if (query[0] !== '(') {
+          query = '(' + this.query + ')';
+        }
+        this._mq = window.matchMedia(query);
         this._mq.addListener(this._mqHandler);
         this.queryHandler(this._mq);
       },
