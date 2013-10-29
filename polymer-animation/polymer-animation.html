@@ -212,7 +212,7 @@
             var array = [];
             this.target.forEach(function(t) {
               array.push(this.makeSingleAnimation(t));
-            });
+            }.bind(this));
             animation = new ParGroup(array);
           } else {
             animation = this.makeSingleAnimation(this.target);
