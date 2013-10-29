@@ -58,9 +58,9 @@
         */
       Polymer('polymer-animation', {
         /**
-         * The node being animated.
+         * One or more nodes to animate.
          * @property target
-         * @type HTMLElement|Node
+         * @type HTMLElement|Node|Array<HTMLElement|Node>
          */
         target: null,
         /**
@@ -199,9 +199,26 @@
           }
           return this.animation;
         },
+        makeSingleAnimation: function(target) {
+          return new Animation(target, this.animationEffect, this.timingProps);
+        },
         makeAnimation: function() {
           // this.target && console.log('makeAnimation target', this.target, 'animation', this.animationEffect, 'timing', this.timingProps);
-          return this.target ? new Animation(this.target, this.animationEffect, this.timingProps) : null;
+          if (!this.target) {
+            return null;
+          }
+          var animation;
+          if (Array.isArray(this.target)) {
+            var array = [];
+            this.target.forEach(function(t) {
+              array.push(this.makeSingleAnimation(t));
+            });
+            animation = new ParGroup(array);
+          } else {
+            animation = this.makeSingleAnimation(this.target);
+          }
+          return animation;
+          // return this.target ? new Animation(this.target, this.animationEffect, this.timingProps) : null;
         },
         animationChanged: function() {
           // TODO: attributes are not case sensitive.
