@@ -288,7 +288,7 @@ license that can be found in the LICENSE file.
           }
           // Make the overlay visible while the animation is running.
           var transition = new ParGroup([
-            animation.makeAnimation(),
+            animation.apply(),
             new Animation(this.target, [{'visibility': 'visible', 'display':'block'}])
           ], {fill: 'none'});
           document.timeline.play(transition);
