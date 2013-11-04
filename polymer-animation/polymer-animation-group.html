@@ -89,7 +89,7 @@
           this.doOnChildren(function(c) {
             c.apply();
           });
-          this.super();
+          return this.super();
         },
         get childAnimationElements() {
           var list = [];
