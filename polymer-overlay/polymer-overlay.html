@@ -291,6 +291,8 @@ license that can be found in the LICENSE file.
             animation.apply(),
             new Animation(this.target, [{'visibility': 'visible', 'display':'block'}])
           ], {fill: 'none'});
+          transition.onend = this.completeOpening.bind(this);
+          this.target.classList.add('animating');
           document.timeline.play(transition);
         },
         renderOpened: function() {
@@ -315,6 +317,7 @@ license that can be found in the LICENSE file.
           }
         },
         completeOpening: function() {
+          this.target.classList.remove('animating');
           this.target.classList.toggle('revealed', this.opened);
           if (!this.opened) {
             this.resetTargetPosition();
