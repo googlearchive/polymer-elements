@@ -60,7 +60,7 @@ license that can be found in the LICENSE file.
 <link rel="import" href="../polymer-selection/polymer-selection.html">
 
 <polymer-element name="polymer-selector"
-    attributes="selected multi valueattr selectedClass selectedProperty selectedItem selectedModel notap target itemsSelector activateEvent">
+    attributes="selected multi valueattr selectedClass selectedProperty selectedItem selectedModel selectedIndex notap target itemsSelector activateEvent">
   <template>
     <polymer-selection id="selection" multi="{{multi}}" on-polymer-select="{{selectionSelect}}"></polymer-selection>
     <content id="items" select="*"></content>
@@ -150,6 +150,14 @@ license that can be found in the LICENSE file.
        * @default null
        */
       selectedModel: null,
+      /**
+       * In single selection, this returns the selected index.
+       *
+       * @attribute selectedIndex
+       * @type number
+       * @default -1
+       */
+      selectedIndex: -1,
       /**
        * The target element that contains items.  If this is not set 
        * polymer-selector is the container.
@@ -269,6 +277,8 @@ license that can be found in the LICENSE file.
         } else {
           this.selectedModel = null;
         }
+        this.selectedIndex = this.selectedItem ? 
+            parseInt(this.valueToIndex(this.selected)) : -1;
       },
       valueToIndex: function(value) {
         // find an item with value == value and return it's index
