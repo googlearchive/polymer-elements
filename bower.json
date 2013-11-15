@@ -1,27 +1,35 @@
 {
   "name": "polymer-elements",
-  "version": "0.0.20131108",
-  "homepage": "https://github.com/Polymer/polymer-elements",
+  "version": "0.0.0",
   "authors": [
-    "Polymer Authors <polymer-dev@googlegroups.com>"
-  ],
-  "keywords": [
-    "polymer",
-    "web-components",
-    "web components"
+    "The Polymer Authors"
   ],
   "dependencies": {
-    "polymer": ">=0.0.20131107"
+    "polymer-ajax": "polymer/polymer-ajax#master",
+    "polymer-anchor-point": "polymer/polymer-anchor-point#master",
+    "polymer-animation": "polymer/polymer-animation#master",
+    "polymer-collapse": "polymer/polymer-collapse#master",
+    "polymer-cookie": "polymer/polymer-cookie#master",
+    "polymer-file": "polymer/polymer-file#master",
+    "polymer-flex-layout": "polymer/polymer-flex-layout#master",
+    "polymer-google-jsapi": "polymer/polymer-google-jsapi#master",
+    "polymer-grid-layout": "polymer/polymer-grid-layout#master",
+    "polymer-jsonp": "polymer/polymer-jsonp#master",
+    "polymer-key-helper": "polymer/polymer-key-helper#master",
+    "polymer-layout": "polymer/polymer-layout#master",
+    "polymer-localstorage": "polymer/polymer-localstorage#master",
+    "polymer-media-query": "polymer/polymer-media-query#master",
+    "polymer-meta": "polymer/polymer-meta#master",
+    "polymer-mock-data": "polymer/polymer-mock-data#master",
+    "polymer-overlay": "polymer/polymer-overlay#master",
+    "polymer-page": "polymer/polymer-page#master",
+    "polymer-scrub": "polymer/polymer-scrub#master",
+    "polymer-selection": "polymer/polymer-selection#master",
+    "polymer-selector": "polymer/polymer-selector#master",
+    "polymer-shared-lib": "polymer/polymer-shared-lib#master",
+    "polymer-signals": "polymer/polymer-signals#master",
+    "polymer-view-source-link": "polymer/polymer-view-source-link#master"
   },
-  "description": "A common set of non-visual polymer utility elements",
   "license": "BSD",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests",
-    "docs",
-    "tools"
-  ]
+  "private": true
 }
